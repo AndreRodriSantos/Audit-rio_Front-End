@@ -1,30 +1,23 @@
 import './App.css';
+import {Routes,Route,Link} from 'react-router-dom'
+import Login from './Login'
+import Principal from './Principal'
+import Reserva from './Reserva' 
+
 
 function App() {
   return (
     <div className="App">
-
-      <div class="base_form">
-        <div class="form">
-          <div class="title_form">
-            <h1 class="effect">Login</h1>
-          </div>
-
-          <div class="formAdmin">
-            <form action="">
-              <div class="User">
-                <i class="fa-solid fa-user-large"></i>
-                <input type="text" placeholder="NIF" required />
-              </div>
-              <div class="User">
-                <i class="fa-solid fa-lock"></i>
-                <input type="Senha" placeholder="Senha" required />
-              </div>
-              <button type="submit" class="btn">Login</button>
-            </form>
-          </div>
-        </div>
-      </div>
+      <header className='header'>
+        <Link className='link' to='/Login'>Login</Link>
+        <Link className='link' to='/Principal'>Principal</Link>
+        <Link className='link' to='/Reserva'>Reserva</Link>
+      </header>
+        <Routes>
+          <Route path='/Login' element={<Login/>}></Route>
+          <Route path='/Principal' element={<Principal/>}></Route>
+          <Route path='/Reserva' element={<Reserva/>}></Route>
+        </Routes>
     </div>
   );
 }

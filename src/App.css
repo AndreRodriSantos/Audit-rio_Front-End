@@ -1,14 +1,35 @@
 .App {
   text-align: center;
-  background-color: gray;
+  margin: 0;
 }
 input {
   outline: none;
   margin-top: 10px;
+  border: none;
+  border-bottom: 2px solid black;
 }
 button {
   margin-top: 10px;
+  border-radius: 10px;
+  color: white;
+  background-color: rgb(0, 60, 255);
+  font-weight: bold;
+  border: none;
+  padding: 5px;
 }
 div{
   margin: auto;
+}
+
+.link{
+  margin-left: 50px;
+  font-weight: bold;
+  outline: none;
+  text-decoration: none;
+  color: rgb(0, 60, 255);
+  border-radius: 10px;
+  padding: 5px;
+}
+.link:hover{
+  background-color: lightblue;
 }
