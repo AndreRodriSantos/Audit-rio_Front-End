@@ -1,95 +1,82 @@
 import React from "react";
-import "./css/Style_Reserva.css"
-import "./css/Style_confirmacao.css"
+/* import "./css/Style_Reserva.css"*/
+import "./css/Style_confirmacao.css" 
+import { mostraReservas, reserva } from "./Js/API";
 
 function Reserva() {
   return (
-    <div class="principal">
-      <div class="Reserva">
-        <div class="base_form">
-            <div class="form">
-                <div class="title_form">
-                    <h1 class="novaRS">Criar uma nova reserva</h1>
+    
+    <div className="principal">
+      <div className="Reserva">
+        <div className="base_form">
+            <div className="form">
+                <div className="title_form">
+                    <h1 className="novaRS">Criar uma nova reserva</h1>
                 </div>
 
-                <div class="formAdmin">
-                    <form action="">
-                        
-                        <div class="User">
-                            <h5 class="title_I">Início</h5>
-                            <input type="date" required class="Data_Inicio"/><br/>
-                            <select name="cars" id="cars" class="Tempo_Inicio">
-                                <option value="volvo">13:00</option>
-                                <option value="saab">13:30</option>
-                                <option value="mercedes">14:00</option>
-                            </select>
+                <div className="formAdmin">
+                    <form onSubmit={reserva}>
+                        <input type="hidden" name="id" ></input>
+                        <div className="User">
+                            <h5 className="title_I">Início</h5>
+                            <input type="date" id="dataInicio" name="dataInicio" required className="Data_Inicio"/><br/>
+                            
                             <br/>
                         </div>
 
                         
-                        <div class="User">
-                            <h5 class="title_F">Final</h5>
-                            <input type="date" required class="Data_final"/><br/>
-
-                            <select name="cars" id="cars" class="Tempo_final">
-                                <option value="volvo">13:00</option>
-                                <option value="saab">13:30</option>
-                                <option value="mercedes">14:00</option>
-                            </select>
+                        <div className="User">
+                            <h5 className="title_F">Final</h5>
+                            <input type="date" name="dataTermino" id="dataTermino" required className="Data_Inicio"/>
                             <br/>
                         </div>
 
                         
-                        <div class="User">
-                            <h5 class="title_DA">Duração da reserva</h5>
-                            <span class="Tempo">0 dias 3 horas 0 minutos</span>
-
+                        <div className="User">
+                            <h5 className="title_DA">Duração da reserva</h5>
+                            <span className="Tempo">0 dias 3 horas 0 minutos</span>
                         </div>
-
                         
-                        <div class="User">
-                            <h5 class="title_RR">Repetir</h5>
-                            <select name="cars" id="cars" class="Repetir">
+                        <div className="User">
+                            <h5 className="title_RR" >Repetir</h5>
+                            {/* <select name="repetir" id="cars" class="Repetir">
                                 <option value="volvo">Não Repetir</option>
                                 <option value="saab">Repetir</option>
                                 <option value="mercedes">Repetir Dia Inteiro</option>
-                            </select>
+                            </select> */}
+
+                            { <input  type="checkbox" name="repetir" id="repetir" ></input> }
+                            
                             <br/>
                         </div>
 
                         
-                        <div class="User">
-                            <h5 class="title_TR">Titulo da Reserva</h5>
-                            <input type="text" placeholder="Nome da Reserva" required class="Nome_Reserva"/>
+                        <div className="User">
+                            <h5 className="title_TR">Titulo da Reserva</h5>
+                            <input type="text" name="titulo" placeholder="Nome da Reserva" id="titulo" required className="Nome_Reserva"/>
                             <br/>
                         </div>
 
                         
-                        <div class="User">
-                            <h5 class="title_DR">Descricao da Reserva</h5>
-                            <textarea id="w3review" name="w3review" rows="4" cols="50" class="Descricao">
+                        <div className="User">
+                            <h5 className="title_DR">Descricao da Reserva</h5>
+                            <textarea name="descricao" rows="4" cols="50" id="descricao" className="Descricao" >
                             </textarea> 
                         </div>
 
                       
-                        <h4 class="title_PT">Participantes</h4>
-                        <div class="User">
-                            <h5 class="Adicionar">Adicionar</h5>
-                            <input type="text" placeholder="Número de Participantes" required class="Participantes"/>
+                        <h4 className="title_PT">Participantes</h4>
+                        <div className="User">
+                            <h5 className="Adicionar">Adicionar</h5>
+                            <input type="text" name="participantes" placeholder="Número de Participantes" id="participantes" required className="Participantes"/>
                             <br/>
                         </div>
 
-                        
-                        <button type="submit" class="btn Pessoa">User</button>
-
-                      
-                        <button type="submit" class="btn Grupos">Grupos</button>
+                        <button type="submit" className="btn cancelar">Cancelar</button>
 
                         
-                        <button type="submit" class="btn cancelar">Cancelar</button>
-
-                        
-                        <button type="submit" class="btn criar buy" onClick={Confirmacao}>Criar</button>
+                        <button type="submit" className="btn criar buy" onClick={Confirmacao}>Criar</button>
+                        <button type="submit" className="btn criar buy" onClick={mostraReservas}>Mostrar Reservas</button>
                         
                     </form>
                 </div>
@@ -97,24 +84,24 @@ function Reserva() {
         </div>
     </div>
 
-      <form class="payment" action="cadastro">
-        <span class="close" onClick={Fechar}>X</span>
-        <div class="Confirmacao">
+      <form className="payment" action="cadastro">
+        <span className="close" onClick={Fechar}>X</span>
+        <div className="Confirmacao">
           <img src="./IMG/OK.png" alt="" />
         </div>
-        <div class="conteudo">
-          <h1 class="title_CO">Confirmação da Operação</h1>
-          <h3 class="Descricao_EC">Evento de Confirmação da Operação do Auditorio</h3>
-          <h5 class="title_COnfig">Data/Hora:</h5>
-          <span class="Tempo_COnfig">23/09/2022 13:30</span>
+        <div className="conteudo">
+          <h1 className="title_CO">Confirmação da Operação</h1>
+          <h3 className="Descricao_EC">Evento de Confirmação da Operação do Auditorio</h3>
+          <h5 className="title_COnfig">Data/Hora:</h5>
+          <span className="Tempo_COnfig">23/09/2022 13:30</span>
 
         </div>
-        <button class="btn_Confirmacao Fechar">Fechar</button>
-        <button class="btn_Confirmacao DE">Detalhes do Evento</button>
+        <button className="btn_Confirmacao Fechar">Fechar</button>
+        <button className="btn_Confirmacao DE">Detalhes do Evento</button>
       </form>
     </div>
+    
   );
-
 }
 
 function Confirmacao(){

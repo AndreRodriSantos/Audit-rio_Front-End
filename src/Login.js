@@ -1,10 +1,8 @@
 import React from "react";
-import cadastraUsuario, {cadUser, fazGet, pegaTypes} from './Js/API.js'
+import cadastraUsuario, {cadUser, fazGet, login, pegaTypes} from './Js/API.js'
 
 function Login() {
-    
     return (
-        
         <div className="Login">
             <div className="base_form">
                 <div className="form">
@@ -13,14 +11,14 @@ function Login() {
                     </div>
 
                     <div className="formAdmin">
-                        <form>
+                        <form onSubmit={login}>
                             <div className="User">
                                 <i className="fa-solid fa-user-large"></i>
-                                <input type="text" placeholder="NIF" required id="loginNif"/>
+                                <input type="text" placeholder="NIF" name="nif" required id="loginNif"/>
                             </div>
                             <div className="User">
                                 <i className="fa-solid fa-lock"></i>
-                                <input type="Senha" placeholder="Senha" required id="loginSenha"/>
+                                <input type="Senha" placeholder="Senha" required name="senha" id="loginSenha"/>
                             </div>
                             <button type="submit" className="btn">Login</button>
                         </form>
@@ -53,12 +51,9 @@ function Login() {
                             </div>
                             <br/>
                             
-                            {}
-                            { 
-                            
-                            <select className="User" id="types" name="type" onMouseDown={pegaTypes}>
+                            <select className="User" id="type" name="type" onMouseDown={pegaTypes}>
                                     
-                            </select> }
+                            </select> 
                             <br/>
                             
                             <button type="submit" className="btn">Cadastrar</button>
