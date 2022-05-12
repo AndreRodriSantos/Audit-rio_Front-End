@@ -5,7 +5,6 @@ import { mostraReservas, reserva } from "./Js/API";
 
 function Reserva() {
   return (
-    
     <div className="principal">
       <div className="Reserva">
         <div className="base_form">
@@ -39,11 +38,6 @@ function Reserva() {
                         
                         <div className="User">
                             <h5 className="title_RR" >Repetir</h5>
-                            {/* <select name="repetir" id="cars" class="Repetir">
-                                <option value="volvo">Não Repetir</option>
-                                <option value="saab">Repetir</option>
-                                <option value="mercedes">Repetir Dia Inteiro</option>
-                            </select> */}
 
                             { <input  type="checkbox" name="repetir" id="repetir" ></input> }
                             

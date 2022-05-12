@@ -50,19 +50,18 @@ function Login() {
                                 <input type="password" placeholder="Senha" name="senha" required id="senha" />
                             </div>
                             <br/>
-                            
-                            <select className="User" id="type" name="type" onMouseDown={pegaTypes}>
-                                    
+                            <select className="User" id="type" name="type" >
                             </select> 
                             <br/>
-                            
-                            <button type="submit" className="btn">Cadastrar</button>
+                            <button type="submit" className="btn" onChange={pegaTypes()}
+                            >Cadastrar</button>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div>   
     );
+    
 }
+
 export default Login;

@@ -7,7 +7,7 @@ function fazPost(url, body) {
     request.setRequestHeader("Content-type", "application/json")
     request.send(JSON.stringify(body))
 
-    request.onload = function() {
+    request.onload = function () {
         console.log(this.responseText)
     }
     return request.responseText
@@ -15,13 +15,13 @@ function fazPost(url, body) {
 
 export default function cadastraUsuario(event) {
     event.preventDefault()
-    const url= "http://10.92.198.20:8080/api/user/cadastrar"
-    
+    const url = "http://10.92.198.20:8080/api/user/cadastrar"
+
     let nif = document.getElementById("nif").value
     let email = document.getElementById("email").value
     let senha = document.getElementById("senha").value
     let type = document.getElementById("type").value
-    
+
 
     var body = {
         "nif": nif,
@@ -43,7 +43,7 @@ export function fazGet(url) {
 
 export function login(event) {
     event.preventDefault()
-    let url = ("http://localhost:8080/api/user/login"); 
+    let url = ("http://localhost:8080/api/user/login");
     let nif = document.getElementById("loginNif").value
     let senha = document.getElementById("loginSenha").value
     var body = {
@@ -53,9 +53,9 @@ export function login(event) {
     fazPost(url, body)
 }
 
-export function reserva(event){
+export function reserva(event) {
     event.preventDefault();
-    let url = ("http://localhost:8080/api/reservation/save"); 
+    let url = ("http://localhost:8080/api/reservation/save");
     let titulo = document.getElementById("titulo").value
     let descricao = document.getElementById("descricao").value
     let dataInicio = document.getElementById("dataInicio").value
@@ -65,32 +65,31 @@ export function reserva(event){
 
     var body = {
         "titulo": titulo,
-        "descricao" : descricao,
-        "dataInicio" : dataInicio,
-        "dataTermino" : dataTermino,
-        "participantes" : participantes,
-        "repetir" : repetir
+        "descricao": descricao,
+        "dataInicio": dataInicio,
+        "dataTermino": dataTermino,
+        "participantes": participantes,
+        "repetir": repetir
     }
     fazPost(url, body)
 }
-export function mostraReservas(){
+export function mostraReservas() {
     let data = fazGet("http://localhost:8080/api/reservation")
     let reserva = JSON.parse(data)
     console.log(reserva)
 }
- 
 
-export function pegaTypes(){
-    let data = fazGet("http://localhost:8080/api/types/findAll");
+export function pegaTypes() {
+    setTimeout(() => {
+        let data = fazGet("http://localhost:8080/api/types/findAll");
     let types = JSON.parse(data)
-    const select = document.getElementById("type")
-    
-    if(select.childElementCount == 0){
+    let select = document.getElementById("type")
     for (let i = 0; i < types.length; i++) {
         const option = document.createElement("option")
         option.innerHTML = types[i]
-        console.log(types)
+        console.log(select)
         select.appendChild(option)
     }
-} 
+    }, 1);
+    
 }
