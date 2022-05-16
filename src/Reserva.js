@@ -1,7 +1,7 @@
 import React from "react";
 /* import "./css/Style_Reserva.css"*/
 import "./css/Style_confirmacao.css" 
-import { mostraReservas, reserva } from "./Js/API";
+import { mostraReservas, reserva } from "./Js/api";
 
 function Reserva() {
   return (

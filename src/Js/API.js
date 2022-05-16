@@ -1,5 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type"
-
 function fazPost(url, body) {
     console.log("Body=", body)
     let request = new XMLHttpRequest()
@@ -7,15 +5,22 @@ function fazPost(url, body) {
     request.setRequestHeader("Content-type", "application/json")
     request.send(JSON.stringify(body))
 
-    request.onload = function () {
-        console.log(this.responseText)
+    if (url == "http://localhost:8080/api/user/login") {
+        request.onload = function () {
+            if (request.status == 200) {
+                sessionStorage.setItem("token", this.responseText)
+                console.log("Usuário Logado!!")
+            } else {
+                console.error("Erro: Esse Usuário não existe")
+            }
+        }
     }
     return request.responseText
 }
 
 export default function cadastraUsuario(event) {
     event.preventDefault()
-    const url = "http://10.92.198.20:8080/api/user/cadastrar"
+    const url = "http://localhost:8080/api/user/cadastrar"
 
     let nif = document.getElementById("nif").value
     let email = document.getElementById("email").value
@@ -27,7 +32,7 @@ export default function cadastraUsuario(event) {
         "nif": nif,
         "email": email,
         "senha": senha,
-        "type": type
+        "type": type,
     }
     console.log(body)
     fazPost(url, body)
@@ -43,14 +48,24 @@ export function fazGet(url) {
 
 export function login(event) {
     event.preventDefault()
-    let url = ("http://localhost:8080/api/user/login");
-    let nif = document.getElementById("loginNif").value
-    let senha = document.getElementById("loginSenha").value
-    var body = {
-        "nif": nif,
-        "senha": senha
+    if (sessionStorage.getItem("token") == null) {
+        let url = ("http://localhost:8080/api/user/login");
+        let nif = document.getElementById("loginNif").value
+        let senha = document.getElementById("loginSenha").value
+
+        var body = {
+            "nif": nif,
+            "senha": senha,
+        }
+
+        fazPost(url, body)
+    } else {
+        console.error("Você já está Logado")
     }
-    fazPost(url, body)
+}
+
+export function logout() {
+    sessionStorage.removeItem("token")
 }
 
 export function reserva(event) {
@@ -82,14 +97,15 @@ export function mostraReservas() {
 export function pegaTypes() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/types/findAll");
-    let types = JSON.parse(data)
-    let select = document.getElementById("type")
-    for (let i = 0; i < types.length; i++) {
-        const option = document.createElement("option")
-        option.innerHTML = types[i]
-        console.log(select)
-        select.appendChild(option)
-    }
+        let types = JSON.parse(data)
+        let select = document.getElementById("type")
+        for (let i = 0; i < types.length; i++) {
+            const option = document.createElement("option")
+            option.innerHTML = types[i]
+            select.appendChild(option)
+        }
     }, 1);
-    
+
 }
+
+
