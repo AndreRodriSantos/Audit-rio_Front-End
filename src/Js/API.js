@@ -1,3 +1,5 @@
+import {history} from '../Js/history'
+
 function fazPost(url, body) {
     console.log("Body=", body)
     let request = new XMLHttpRequest()
@@ -9,7 +11,8 @@ function fazPost(url, body) {
         request.onload = function () {
             if (request.status == 200) {
                 sessionStorage.setItem("token", this.responseText)
-                console.log("Usuário Logado!!")
+                console.log("Usuário Logado!!");
+                history.push("/Principal")
             } else {
                 console.error("Erro: Esse Usuário não existe")
             }
@@ -66,6 +69,7 @@ export function login(event) {
 
 export function logout() {
     sessionStorage.removeItem("token")
+    history.push("/")
 }
 
 export function reserva(event) {

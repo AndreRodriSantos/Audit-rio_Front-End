@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  margin: 0;
 }
 input {
   outline: none;
@@ -18,16 +17,16 @@ button {
   padding: 5px;
 }
 .sair{
-  margin-left: 50px;
+  width: 45px;
   font-weight: bold;
   outline: none;
   text-decoration: none;
-  color: rgb(0, 60, 255);
+  color: white;
   border-radius: 10px;
   padding: 5px;
-}
-div{
-  margin: auto;
+  background-color:rgb(0, 60, 255);
+  display: flex;
+  align-content:space-between;
 }
 
 .link{
@@ -41,4 +40,7 @@ div{
 }
 .link:hover{
   background-color: lightblue;
+}
+header{
+  width: 100%;
 }
