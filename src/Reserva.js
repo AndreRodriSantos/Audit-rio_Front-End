@@ -18,7 +18,7 @@ function Reserva() {
                         <input type="hidden" name="id" ></input>
                         <div className="User">
                             <h5 className="title_I">Início</h5>
-                            <input type="date" id="dataInicio" name="dataInicio" required className="Data_Inicio"/><br/>
+                            <input type="datetime-local" id="dataInicio" name="dataInicio" required className="Data_Inicio"/><br/>
                             
                             <br/>
                         </div>
@@ -26,16 +26,10 @@ function Reserva() {
                         
                         <div className="User">
                             <h5 className="title_F">Final</h5>
-                            <input type="date" name="dataTermino" id="dataTermino" required className="Data_Inicio"/>
+                            <input type="datetime-local" name="dataTermino" id="dataTermino" required className="Data_Inicio"/>
                             <br/>
                         </div>
 
-                        
-                        <div className="User">
-                            <h5 className="title_DA">Duração da reserva</h5>
-                            <span className="Tempo">0 dias 3 horas 0 minutos</span>
-                        </div>
-                        
                         <div className="User">
                             <h5 className="title_RR" >Repetir</h5>
 

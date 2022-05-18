@@ -1,14 +1,16 @@
 import './App.css';
 import { logout } from './Js/api';
-import { Link } from 'react-router-dom';
 import Routes from './routes';
 
 function App() {
   return (
       <div className='App'>
         <header className='header'>
-          <div></div>
-          <a onClick={logout} className="sair">Sair</a>
+          <a href='/Login'>Login</a>
+          <a href='/Cadastro'>Cadastro</a>
+          <a href='/Principal'>Principal</a>
+          <a href='/Reserva'>Reserva</a>
+          <a onClick={logout}>Sair</a>
         </header>
         <Routes></Routes>
         </div>

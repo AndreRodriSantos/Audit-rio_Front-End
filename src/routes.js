@@ -6,8 +6,8 @@ import Cadastro from './Cadastro';
 import { isAuthenticated } from './Js/auth';
 import {history} from './Js/history'
 
-const PrivateRoute = (props) => { 
-    return isAuthenticated() ? <Route {...props}/> : <Redirect to="/Login" push></Redirect>
+const PrivateRoute = (props) => {
+    return isAuthenticated() ? <Route {...props}/>: <Redirect to="/Login" push></Redirect> && console.error("Acesso negado: Você precisa estar logado")
 }
 
 export default function Routes() {
@@ -17,7 +17,7 @@ export default function Routes() {
             <Route path='/' exact component={Login}></Route>
             <Route path='/Login' component={Login}></Route>
             <PrivateRoute path='/Cadastro' component={Cadastro}/>
-            <PrivateRoute path='/Principal' component={Principal}/>
+            <Route path='/Principal' component={Principal}/>
             <PrivateRoute path='/Reserva' component={Reserva}/>
         </Switch>
         </Router>

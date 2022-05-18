@@ -1,4 +1,4 @@
-import {history} from '../Js/history'
+import { history } from './history'
 
 function fazPost(url, body) {
     console.log("Body=", body)
@@ -11,7 +11,7 @@ function fazPost(url, body) {
         request.onload = function () {
             if (request.status == 200) {
                 sessionStorage.setItem("token", this.responseText)
-                console.log("Usuário Logado!!");
+                window.alert("Usuário Logado!!")
                 history.push("/Principal")
             } else {
                 console.error("Erro: Esse Usuário não existe")
@@ -55,12 +55,10 @@ export function login(event) {
         let url = ("http://localhost:8080/api/user/login");
         let nif = document.getElementById("loginNif").value
         let senha = document.getElementById("loginSenha").value
-
         var body = {
             "nif": nif,
             "senha": senha,
         }
-
         fazPost(url, body)
     } else {
         console.error("Você já está Logado")
@@ -69,6 +67,7 @@ export function login(event) {
 
 export function logout() {
     sessionStorage.removeItem("token")
+    console.log("Usuario Deslogado")
     history.push("/")
 }
 
@@ -81,6 +80,7 @@ export function reserva(event) {
     let dataTermino = document.getElementById("dataTermino").value
     let participantes = document.getElementById("participantes").value
     let repetir = document.getElementById("repetir").checked
+
 
     var body = {
         "titulo": titulo,
