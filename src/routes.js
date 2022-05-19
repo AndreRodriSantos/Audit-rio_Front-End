@@ -7,7 +7,7 @@ import { isAuthenticated } from './Js/auth';
 import {history} from './Js/history'
 
 const PrivateRoute = (props) => {
-    return isAuthenticated() ? <Route {...props}/>: <Redirect to="/Login" push></Redirect> && console.error("Acesso negado: Você precisa estar logado")
+    return isAuthenticated() ? <Route {...props}/> : <Redirect to="/" push></Redirect>
 }
 
 export default function Routes() {

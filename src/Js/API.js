@@ -5,21 +5,35 @@ function fazPost(url, body) {
     let request = new XMLHttpRequest()
     request.open("POST", url, true)
     request.setRequestHeader("Content-type", "application/json")
+    request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
     request.send(JSON.stringify(body))
+
+    if (url == "http://localhost:8080/api/reservation/save") {
+        request.onload = function () {
+            if (request.status == 200) {
+                window.alert("Reserva Cadastrada com sucesso")
+            } else {
+                window.alert("Erro: Cadastro inválido")
+            }
+        }
+    }
 
     if (url == "http://localhost:8080/api/user/login") {
         request.onload = function () {
             if (request.status == 200) {
-                sessionStorage.setItem("token", this.responseText)
+                const token = this.responseText
+                sessionStorage.setItem("token", token.substring(10, 182))
                 window.alert("Usuário Logado!!")
                 history.push("/Principal")
             } else {
-                console.error("Erro: Esse Usuário não existe")
+                window.alert("Erro: Esse Usuário não existe")
             }
         }
     }
     return request.responseText
 }
+
+    
 
 export default function cadastraUsuario(event) {
     event.preventDefault()
@@ -45,6 +59,7 @@ export default function cadastraUsuario(event) {
 export function fazGet(url) {
     let request = new XMLHttpRequest()
     request.open("GET", url, false)
+    request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
     request.send()
     return request.responseText
 }
@@ -61,13 +76,13 @@ export function login(event) {
         }
         fazPost(url, body)
     } else {
-        console.error("Você já está Logado")
+        window.alert("Erro:Você já está Logado")
     }
 }
 
 export function logout() {
     sessionStorage.removeItem("token")
-    console.log("Usuario Deslogado")
+    window.alert("Usuário Deslogado")
     history.push("/")
 }
 
@@ -81,6 +96,8 @@ export function reserva(event) {
     let participantes = document.getElementById("participantes").value
     let repetir = document.getElementById("repetir").checked
 
+    console.log(dataInicio)
+    console.log(dataTermino)
 
     var body = {
         "titulo": titulo,
@@ -90,6 +107,7 @@ export function reserva(event) {
         "participantes": participantes,
         "repetir": repetir
     }
+
     fazPost(url, body)
 }
 export function mostraReservas() {
