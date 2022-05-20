@@ -1,5 +1,5 @@
 import React from "react";
-import cadastraUsuario, { cadUser, fazGet, login, pegaTypes } from './Js/api.js'
+import cadastraUsuario, { cadUser, fazGet, login, pegaTypes } from '../Js/api.js'
 
 function Login() {
     return (
@@ -14,7 +14,7 @@ function Login() {
                         </div>
                         <div className="User">
                             <i className="fa-solid fa-lock"></i>
-                            <input type="Senha" placeholder="Senha" required name="senha" id="loginSenha" />
+                            <input type="password" placeholder="Senha" required name="senha" id="loginSenha" />
                         </div>
                         <button type="submit" className="btn">Login</button>
                     </form>

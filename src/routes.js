@@ -1,8 +1,8 @@
 import { BrowserRoute, Route, Switch, BrowserRouter, Redirect, Router } from 'react-router-dom'
-import Login from './Login'
-import Principal from './Principal'
-import Reserva from './Reserva'
-import Cadastro from './Cadastro';
+import Login from './pages/Login'
+import Principal from './pages/Principal'
+import Reserva from './pages/Reserva'
+import Cadastro from './pages/Cadastro';
 import { isAuthenticated } from './Js/auth';
 import {history} from './Js/history'
 

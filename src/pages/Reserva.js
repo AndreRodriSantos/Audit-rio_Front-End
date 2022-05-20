@@ -1,7 +1,5 @@
 import React from "react";
-/* import "./css/Style_Reserva.css"*/
-import "./css/Style_confirmacao.css" 
-import { mostraReservas, reserva } from "./Js/api";
+import { mostraReservas, reserva } from "../Js/api";
 
 function Reserva() {
   return (
@@ -72,21 +70,6 @@ function Reserva() {
         </div>
     </div>
 
-      <form className="payment" action="cadastro">
-        <span className="close" onClick={Fechar}>X</span>
-        <div className="Confirmacao">
-          <img src="./IMG/OK.png" alt="" />
-        </div>
-        <div className="conteudo">
-          <h1 className="title_CO">Confirmação da Operação</h1>
-          <h3 className="Descricao_EC">Evento de Confirmação da Operação do Auditorio</h3>
-          <h5 className="title_COnfig">Data/Hora:</h5>
-          <span className="Tempo_COnfig">23/09/2022 13:30</span>
-
-        </div>
-        <button className="btn_Confirmacao Fechar">Fechar</button>
-        <button className="btn_Confirmacao DE">Detalhes do Evento</button>
-      </form>
     </div>
     
   );

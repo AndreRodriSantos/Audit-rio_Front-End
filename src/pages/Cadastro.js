@@ -1,4 +1,4 @@
-import cadastraUsuario, { pegaTypes } from "./Js/api";
+import cadastraUsuario, { pegaTypes } from "../Js/api";
 
 export default function Cadastro() {
     return (
@@ -17,10 +17,17 @@ export default function Cadastro() {
                         <i className="fa-solid fa-user-large"></i>
                         <input type="text" name="nif" placeholder="NIF" required id="nif" />
                     </div>
+
+                    <div className="User">
+                        <i className="fa-solid fa-user-large"></i>
+                        <input type="text" placeholder="Nome" name="nome" required id="nome" />
+                    </div>
+
                     <div className="User">
                         <i className="fa-solid fa-user-large"></i>
                         <input type="email" placeholder="Email" name="email" required id="email" />
                     </div>
+
                     <div className="User">
                         <i className="fa-solid fa-lock"></i>
                         <input type="password" placeholder="Senha" name="senha" required id="senha" />

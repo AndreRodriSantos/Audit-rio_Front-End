@@ -18,15 +18,31 @@ function fazPost(url, body) {
         }
     }
 
+    if (url == "http://localhost:8080/api/user/cadastrar") {
+        request.onload = function () {
+            if (request.status == 200) {
+                window.alert("Usuário Cadastrado com sucesso")
+                history.push("/Login")
+            } else {
+                window.alert("Erro: Cadastro inválido")
+            }
+        }
+    }
+
     if (url == "http://localhost:8080/api/user/login") {
         request.onload = function () {
             if (request.status == 200) {
-                const token = this.responseText
-                sessionStorage.setItem("token", token.substring(10, 182))
+                let token = this.responseText
+                token = token.replace('{"token":"', "")
+                token = token.replace('"}', "")
+                console.log(token.length)
+                sessionStorage.setItem("token", token)
                 window.alert("Usuário Logado!!")
                 history.push("/Principal")
-            } else {
-                window.alert("Erro: Esse Usuário não existe")
+            } else if(request.status == 401) {
+                window.alert("Erro: Senha incorreta")
+            }else if(request.status == 404){
+                window.alert("Erro: Usuário não existe")
             }
         }
     }
@@ -41,15 +57,17 @@ export default function cadastraUsuario(event) {
 
     let nif = document.getElementById("nif").value
     let email = document.getElementById("email").value
+    let nome = document.getElementById("nome").value
     let senha = document.getElementById("senha").value
     let type = document.getElementById("type").value
 
 
     var body = {
         "nif": nif,
+        "nome": nome,
         "email": email,
         "senha": senha,
-        "type": type,
+        "type": type
     }
     console.log(body)
     fazPost(url, body)
@@ -98,6 +116,8 @@ export function reserva(event) {
 
     console.log(dataInicio)
     console.log(dataTermino)
+    const token = sessionStorage.getItem("token")
+    console.log(token.length)
 
     var body = {
         "titulo": titulo,
@@ -127,7 +147,6 @@ export function pegaTypes() {
             select.appendChild(option)
         }
     }, 1);
-
 }
 
 
