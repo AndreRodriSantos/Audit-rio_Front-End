@@ -2,6 +2,8 @@ import React from "react";
 import logo from '../IMG/logo.png'
 import styles from '../css/Style_Principal.module.css';
 import { logout } from '../Js/api.js'
+import Calendar from 'react-calendar'
+import '../css/Calendar.css'
 
 function Principal() {
   return (
@@ -31,7 +33,7 @@ function Principal() {
 
         <div className={styles.sidebar}>
           <div className={styles.calendario}>
-            Calendario
+            <Calendar className={styles.calendar}/>
           </div>
 
           <div className={styles.users_lista}>
@@ -41,34 +43,43 @@ function Principal() {
         </div>
 
         <div className={styles.div_reservas}>
+        <div className={styles.div_title}>
+            <a className="navigation-link navigation-link-1" href="#">
+              <span data-text="Reservas" className={styles.span}>Reservas</span>
+            </a>
+          </div>
+          <div className={styles.header_lista}>
 
-            <div className={styles.header_lista}>
-
-              <div className={styles.div_pesquisa}>
-              <h2 className={styles.title_pes}>Pesquisar Reservas</h2>
-              <input type="search" placeholder="Pesquisar as Reservas" className={styles.pesquisa_reservas} />
+            <div className={styles.div_pesquisa}>
+              <div className={styles.base_pes}>
+                <div className={styles.lupa}>
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <input type="search" placeholder="Pesquisar as Reservas" className={styles.pesquisa_reservas} />
               </div>
+            </div>
 
-              <button className={styles.imprimir} onClick={window.print}>
+            <button className={styles.imprimir} onClick={window.print}>
               <i class="fa-solid fa-print"></i>
-              </button>
+            </button>
 
-              <button className={styles.download}>
+            <button className={styles.download}>
               <i class="fa-solid fa-download"></i>
-              </button>
+            </button>
 
-              <button className={styles.btn_NovaReserva}>
-                <a href="/Reserva" >Nova Reserva</a> <i class="fa-solid fa-plus"></i>
-              </button>
+            <button className={styles.btn_NovaReserva}>
+              <a href="/Reserva">Nova Reserva</a> <i class="fa-solid fa-plus"></i>
+            </button>
 
-            </div>
+          </div>
+        
+          <div className={styles.reservas}>
 
-            <div className={styles.reservas}>
-              <ul className={styles.lista}>
-                Lista de Reservas
-              </ul>
-            </div>
-            
+            <ul className={styles.lista}>
+              Lista de Reservas
+            </ul>
+          </div>
+
         </div>
 
       </div>

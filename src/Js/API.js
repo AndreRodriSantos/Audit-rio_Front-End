@@ -1,3 +1,4 @@
+import { createElement } from 'react'
 import { history } from './history'
 
 function fazPost(url, body) {
@@ -133,6 +134,19 @@ export function mostraReservas() {
     console.log(reserva)
 }
 
+export function ListaUsuarios() {
+    let data = fazGet("http://localhost:8080/api/user/verifica")
+    let users = JSON.parse(data)
+    let lista = document.getElementById("lista")
+    console.log(users)
+
+    for(let i; i < users.length; i++){
+        const linha = document.createElement("li")
+        linha.innerHTML = users[i]
+        lista.appendChild(linha)
+    }
+}
+
 export function pegaTypes() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/types/findAll");
@@ -146,6 +160,7 @@ export function pegaTypes() {
         }
     }
     }, 1);
+
 }
 
 

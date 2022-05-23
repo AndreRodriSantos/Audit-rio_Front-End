@@ -5,6 +5,7 @@ import Reserva from './pages/Reserva'
 import Cadastro from './pages/Cadastro';
 import { isAuthenticated } from './Js/auth';
 import {history} from './Js/history'
+import Verifica from './pages/Verifica';
 
 const PrivateRoute = (props) => {
     return isAuthenticated() ? <Route {...props}/> : <Redirect to="/" push></Redirect>
@@ -19,6 +20,7 @@ export default function Routes() {
             <PrivateRoute path='/Cadastro' component={Cadastro}/>
             <Route path='/Principal' component={Principal}/>
             <PrivateRoute path='/Reserva' component={Reserva}/>
+            <PrivateRoute path='/Verifica' component={Verifica}/>
         </Switch>
         </Router>
     )

@@ -7,7 +7,7 @@
 
 .header{
     width: 100%;
-    height: 100px;
+    height:70px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -45,6 +45,7 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
+
 }
 .menu{
     width: 300px;
@@ -67,8 +68,8 @@ a{
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: 50px;
-    height: 100%;
+    width: 40px;
+    height: 80%;
 }
 .cadastro{   
     color: #2884B2;
@@ -79,8 +80,8 @@ a{
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: 50px;
-    height: 100%;
+    width: 40px;
+    height: 80%;
 }
 .log_off{
     font-size: 22px;
@@ -91,19 +92,26 @@ a{
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: 50px;
-    height: 100%;
+    width: 40px;
+    height: 80%;
 }
 
 .calendario{
-    height: 50%;
-    width: 100%;
+    height: 35%;
+    margin: 20px auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
 }
 
 .users_lista{
     height: 50%;
     width: 100%;
 }
+
+/* HEADER LIST */
 
 .header_lista{
     position: relative;
@@ -112,18 +120,23 @@ a{
     display: flex;
     justify-content: space-around;
     align-items: center;
+   /*  background-color: #b3b3b3; */
 }
 
 .btn_NovaReserva{
+    position: relative;
     display: flex;
     width: 150px;
     height: 35px;
+    border-radius: 50px;
     background-color: red;
     text-align: center;
     align-items: center;
     justify-content: center;
     border: none;
+    right: 15px;
 }
+
 
 .btn_NovaReserva a{
     position: relative;
@@ -145,41 +158,133 @@ a{
     width: 50%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+   
 }
 
-.title_pes{
-    color: #444444;
-    left: 50px;
-    top: 10px;
-
-}
-
-.title_RS{
-    font-size: 14px;
-    color: #000;
+.base_pes{
+    top: 30px;
+    margin-left: 10px;
+    position:absolute;
+    width: 600px; 
+    height: 40px;
+    border-radius: 50px;   
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 40px 5px  rgba(0, 0, 0, 0.2);
+    display: flex;
 }
 
 .pesquisa_reservas{
-    width: 100%;
-    height: 35px;
+    position: relative;
+    left: 50px;
+    width: 400px;
     border: none;
     outline: none;
-    background-color: #e6e6e6;
+    font-size: 18px;
+    color: #000;
+}
+
+.pesquisa_reservas::placeholder{
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.459);
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance:none;
+}
+
+.lupa{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 20px;
 }
 
 .imprimir{
     width: 35px;
     height: 35px;
     right: 30px;
+    cursor: pointer;
+    border: 2px solid #2884B2;
+    border-radius: 50px;
+    background-color: transparent;
+    color: #2884B2;
+}
+
+.imprimir:hover{
+    font-size: 16px;
 }
 
 .download{
     width: 35px;
     height: 35px;
-    right: 350px;
-    bottom: 20px;
+    right: 30px;
+    cursor: pointer;
+    border: 2px solid #2884B2;
+    border-radius: 50px;
+    background-color: transparent;
+    color: #2884B2;
 }
+.download:hover{
+    font-size: 16px;
+}
+
+/* LISTA */
+.div_title{
+    position: relative;
+    top: 10px;
+    height: 30px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+ }
+ 
+ 
+ .div_title a{
+     font-family: "Cosi Azure";
+     font-size: 40px;
+     font-weight: 800;
+     text-decoration: none;
+     text-transform: uppercase;
+     color: #fefefe00;
+     -webkit-text-stroke: 1px #000; 
+     margin-right: 100%;
+ }
+ 
+ .div_title span::before{
+     width: 0;
+     color: #000;
+     overflow: hidden;
+     position: absolute;
+     content: attr(data-text);
+     transition: all 1s cubic-bezier(0.84, 0 , 0.08, 0.99);
+ }
+ 
+ .div_title span:hover::before{
+     width: 100%;
+ }
+ 
+ .span{
+    width: 250px; 
+    position: relative;
+    display: block;
+    margin: 70px;
+
+ }
+ 
+.title_pes{
+    position: relative;
+    font-size: 40px;
+    left: 35%;
+}
+
 .reservas{
     position: relative;
     width: 100%;
@@ -189,8 +294,15 @@ a{
 }
 
 .lista{
+    position: relative;
+    top: 30px;
     background-color: rgb(255, 255, 255);
     width: 90%;
-    height: 80%;
+    height: 75%;
     border: 3px solid rgb(230, 230, 230);
+}
+
+.title_RS{
+    font-size: 14px;
+    color: #000;
 }
