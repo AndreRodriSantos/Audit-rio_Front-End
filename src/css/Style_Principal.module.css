@@ -1,0 +1,196 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.header{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.principal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #f2f2f2;
+    border: 3px solid rgb(230, 230, 230);
+}
+
+.sidebar{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: 3px solid rgb(230, 230, 230);
+
+}
+
+.div_reservas{
+    width: 80%;
+    height: 100%;
+}
+
+.logo_A{
+    position: relative;
+    width: 170px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.menu{
+    width: 300px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+a{
+    text-decoration: none;
+}
+.help{
+    color: red;
+    font-size: 22px;
+    border: 3px solid red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 50px;
+    height: 100%;
+}
+.cadastro{   
+    color: #2884B2;
+    font-size: 22px;
+    border: 3px solid #2884B2;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 50px;
+    height: 100%;
+}
+.log_off{
+    font-size: 22px;
+    color: #2884B2;
+    border: 3px solid #2884B2;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 50px;
+    height: 100%;
+}
+
+.calendario{
+    height: 50%;
+    width: 100%;
+}
+
+.users_lista{
+    height: 50%;
+    width: 100%;
+}
+
+.header_lista{
+    position: relative;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.btn_NovaReserva{
+    display: flex;
+    width: 150px;
+    height: 35px;
+    background-color: red;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.btn_NovaReserva a{
+    position: relative;
+    font-family: sans-serif;
+    font-size: 16px;
+    margin-left: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn_NovaReserva i{
+    font-size: 16px;
+    margin-left: 5px;
+    color: #fff;
+}
+
+.div_pesquisa{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.title_pes{
+    color: #444444;
+    left: 50px;
+    top: 10px;
+
+}
+
+.title_RS{
+    font-size: 14px;
+    color: #000;
+}
+
+.pesquisa_reservas{
+    width: 100%;
+    height: 35px;
+    border: none;
+    outline: none;
+    background-color: #e6e6e6;
+}
+
+.imprimir{
+    width: 35px;
+    height: 35px;
+    right: 30px;
+}
+
+.download{
+    width: 35px;
+    height: 35px;
+    right: 350px;
+    bottom: 20px;
+}
+.reservas{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.lista{
+    background-color: rgb(255, 255, 255);
+    width: 90%;
+    height: 80%;
+    border: 3px solid rgb(230, 230, 230);
+}

@@ -24,7 +24,7 @@ function fazPost(url, body) {
                 window.alert("Usuário Cadastrado com sucesso")
                 history.push("/Login")
             } else {
-                window.alert("Erro: Cadastro inválido")
+                window.alert("Erro: Cadastro inválido. \n Verifique os campos")
             }
         }
     }
@@ -40,7 +40,7 @@ function fazPost(url, body) {
                 window.alert("Usuário Logado!!")
                 history.push("/Principal")
             } else if(request.status == 401) {
-                window.alert("Erro: Senha incorreta")
+                window.alert("Erro: Senha ou NIF incorretos")
             }else if(request.status == 404){
                 window.alert("Erro: Usuário não existe")
             }
@@ -49,18 +49,15 @@ function fazPost(url, body) {
     return request.responseText
 }
 
-    
-
 export default function cadastraUsuario(event) {
     event.preventDefault()
     const url = "http://localhost:8080/api/user/cadastrar"
 
     let nif = document.getElementById("nif").value
-    let email = document.getElementById("email").value
     let nome = document.getElementById("nome").value
+    let email = document.getElementById("email").value
     let senha = document.getElementById("senha").value
     let type = document.getElementById("type").value
-
 
     var body = {
         "nif": nif,
@@ -141,11 +138,13 @@ export function pegaTypes() {
         let data = fazGet("http://localhost:8080/api/types/findAll");
         let types = JSON.parse(data)
         let select = document.getElementById("type")
+        if(select.childElementCount == 0){
         for (let i = 0; i < types.length; i++) {
             const option = document.createElement("option")
             option.innerHTML = types[i]
             select.appendChild(option)
         }
+    }
     }, 1);
 }
 

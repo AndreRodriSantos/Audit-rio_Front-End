@@ -1,0 +1,221 @@
+.principal{
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.div_form{
+    width: 70%;
+    height: 100%;
+    display: flex;
+}
+.div_projetor{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.div_direita{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+}
+.projetor{
+    margin-bottom: 5%;
+    margin-left: 55.5%;
+    width: 45%;
+    height: 70%;
+    transform: matrix(-1, 0, 0, 1, 0 , 0);
+}
+
+.div_title{
+   height: 20%;
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   justify-items: center;
+}
+
+
+.div_title a{
+    font-family: "Cosi Azure";
+    font-size: 100px;
+    font-weight: 800;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fefefe00;
+    -webkit-text-stroke: 1px #FFF; 
+    margin-right: 100%;
+}
+
+.div_title span::before{
+    width: 0;
+    color: #fff;
+    overflow: hidden;
+    position: absolute;
+    content: attr(data-text);
+    transition: all 1s cubic-bezier(0.84, 0 , 0.08, 0.99);
+}
+
+.div_title span:hover::before{
+    width: 100%;
+}
+
+.span{
+    width: 670px;
+    position: relative;
+    display: block;
+}
+
+html{
+    overflow: hidden;
+}
+.trianguloEsquerda{
+    width: 100%;
+    height: 100%;
+}
+
+.video_div{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1000;
+}
+.video{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  
+}
+
+.form_base {
+    position: absolute;
+    right: 3%;
+    top: 0;
+    width: 30%;
+    min-width: 600px;
+    min-height: 600px;
+    height: 85%;
+    background-color: #f6f6f69c;
+    margin: 3% auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.form {
+    width: 50%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.950);
+    border-radius: 10px;
+    padding: 80px;
+    margin-top: 70px;
+}
+
+.user_div{
+    width: 200px;
+    height: 200px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 70px;
+    right: 210px;
+    margin: -60px  auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user_img{
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+
+}
+
+.select{
+    margin-left: 20%;
+    width: 80%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background-color: #F9F4F4;
+}
+
+option{
+    margin-left: 20%;
+    width: 80%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background-color: #F9F4F4;
+}
+
+.formAdmin {
+    margin: 0 auto;
+    width: 400px;
+    height: 100%;
+}
+
+.User {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    border: 2px solid #000;
+    margin: 40px auto;
+}
+
+.input {
+    margin-left: 20%;
+    width: 80%;
+    height: 100%;
+    border: none;
+    outline: none;
+}
+
+#user_ico{
+    position: absolute;
+    bottom: 6px;
+    left: 5px;
+}
+
+#lock_ico{
+    position: absolute;
+    bottom: 6px;
+    left: 5px;
+}
+
+#sign_ico{
+    margin-right: 20px;
+}
+
+.btn {
+    position: relative;
+    width: 100%;
+    height: 45px;
+    background-color: #FF0000;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+}
+
+.btn:hover {
+    background-color: #d30202;
+}
+
+.btn:active {
+    background-color: #9e1401;
+    color: #000;
+}
+
+
