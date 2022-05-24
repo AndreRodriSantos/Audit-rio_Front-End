@@ -1,5 +1,5 @@
 import React from "react";
-import { mostraReservas, reserva } from "../Js/api";
+import {reserva} from "../Js/api";
 
 function Reserva() {
   return (
@@ -30,9 +30,7 @@ function Reserva() {
 
                         <div className="User">
                             <h5 className="title_RR" >Repetir</h5>
-
                             { <input  type="checkbox" name="repetir" id="repetir" ></input> }
-                            
                             <br/>
                         </div>
 
@@ -60,9 +58,7 @@ function Reserva() {
 
                         <button type="submit" className="btn cancelar">Cancelar</button>
 
-                        
                         <button type="submit" className="btn criar buy" onClick={Confirmacao}>Criar</button>
-                        <button type="submit" className="btn criar buy" onClick={mostraReservas}>Mostrar Reservas</button>
                         
                     </form>
                 </div>

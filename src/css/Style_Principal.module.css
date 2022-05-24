@@ -158,13 +158,13 @@ a{
     width: 50%;
     display: flex;
     flex-direction: column;
-   
+   position: relative;
 }
 
 .base_pes{
     top: 30px;
     margin-left: 10px;
-    position:absolute;
+    position:relative;
     width: 600px; 
     height: 40px;
     border-radius: 50px;   
@@ -291,6 +291,7 @@ input[type="search"]::-webkit-search-results-decoration {
     height: 100%;
     display: flex;
     justify-content: center;
+    overflow: scroll;
 }
 
 .lista{
@@ -305,4 +306,12 @@ input[type="search"]::-webkit-search-results-decoration {
 .title_RS{
     font-size: 14px;
     color: #000;
+}
+
+.tabela{
+    overflow: scroll;
+}
+
+.lista tr{
+    max-height: 10%;
 }

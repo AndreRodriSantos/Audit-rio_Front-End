@@ -40,9 +40,9 @@ function fazPost(url, body) {
                 sessionStorage.setItem("token", token)
                 window.alert("Usuário Logado!!")
                 history.push("/Principal")
-            } else if(request.status == 401) {
+            } else if (request.status == 401) {
                 window.alert("Erro: Senha ou NIF incorretos")
-            }else if(request.status == 404){
+            } else if (request.status == 404) {
                 window.alert("Erro: Usuário não existe")
             }
         }
@@ -125,42 +125,96 @@ export function reserva(event) {
         "participantes": participantes,
         "repetir": repetir
     }
-
     fazPost(url, body)
 }
-export function mostraReservas() {
-    let data = fazGet("http://localhost:8080/api/reservation")
-    let reserva = JSON.parse(data)
-    console.log(reserva)
+
+
+export function listaReservas() {
+    setTimeout(() => {
+        let data = fazGet("http://localhost:8080/api/reservation")
+        let reservas = JSON.parse(data)
+        let lista = document.getElementById("lista")
+
+        if (lista.childElementCount == 0) {
+            for (let i = 0; i < reservas.length; i++) {
+                let reserva = reservas[i]
+                const linha = document.createElement("tr")
+
+                const tdId = document.createElement("td")
+                tdId.innerHTML = reserva.id
+                linha.appendChild(tdId)
+
+                const tdTitulo = document.createElement("td")
+                tdTitulo.innerHTML = reserva.titulo
+                linha.appendChild(tdTitulo)
+
+                const tdData_i = document.createElement("td")
+                tdData_i.innerHTML = reserva.dataInicio
+                linha.appendChild(tdData_i)
+
+                const tdData_t = document.createElement("td")
+                tdData_t.innerHTML = reserva.dataInicio
+                linha.appendChild(tdData_t)
+
+                const status = document.createElement("td")
+                status.innerHTML = reserva.status
+                linha.appendChild(status)
+                lista.appendChild(linha)
+            }
+        }
+    }, 1);
+
 }
 
-export function ListaUsuarios() {
-    let data = fazGet("http://localhost:8080/api/user/verifica")
-    let users = JSON.parse(data)
-    let lista = document.getElementById("lista")
-    console.log(users)
+export function listaUsuarios() {
+    setTimeout(() => {
+        let data = fazGet("http://localhost:8080/api/user/verifica")
+        let users = JSON.parse(data)
+        let lista = document.getElementById("lista")
 
-    for(let i; i < users.length; i++){
-        const linha = document.createElement("li")
-        linha.innerHTML = users[i]
-        lista.appendChild(linha)
-    }
+        if (lista.childElementCount == 0) {
+            for (let i = 0; i < users.length; i++) {
+                let usuario = users[i]
+                const linha = document.createElement("tr")
+
+                const tdId = document.createElement("td")
+                tdId.innerHTML = usuario.id
+                linha.appendChild(tdId)
+
+                const tdNif = document.createElement("td")
+                tdNif.innerHTML = usuario.nif
+                linha.appendChild(tdNif)
+
+                const tdNome = document.createElement("td")
+                tdNome.innerHTML = usuario.nome
+                linha.appendChild(tdNome)
+
+                const tdEmail = document.createElement("td")
+                tdEmail.innerHTML = usuario.email
+                linha.appendChild(tdEmail)
+
+                const tdExcluir = document.createElement("td")
+                tdExcluir.innerHTML = "Excluir"
+                linha.appendChild(tdExcluir)
+
+                lista.appendChild(linha)
+            }
+        }
+    }, 1);
 }
-
 export function pegaTypes() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/types/findAll");
         let types = JSON.parse(data)
         let select = document.getElementById("type")
-        if(select.childElementCount == 0){
-        for (let i = 0; i < types.length; i++) {
-            const option = document.createElement("option")
-            option.innerHTML = types[i]
-            select.appendChild(option)
+        if (select.childElementCount == 0) {
+            for (let i = 0; i < types.length; i++) {
+                const option = document.createElement("option")
+                option.innerHTML = types[i]
+                select.appendChild(option)
+            }
         }
-    }
     }, 1);
-
 }
 
 
