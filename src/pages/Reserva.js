@@ -1,5 +1,5 @@
 import React from "react";
-import {reserva} from "../Js/api";
+import {reserva} from "../Js/API";
 
 function Reserva() {
   return (

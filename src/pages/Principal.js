@@ -1,7 +1,7 @@
 import React from "react";
 import logo from '../IMG/logo.png'
 import styles from '../css/Style_Principal.module.css';
-import { logout,listaReservas } from '../Js/api.js'
+import { logout,listaReservas } from '../Js/API.js'
 import Calendar from 'react-calendar'
 import '../css/Calendar.css'
 

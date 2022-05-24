@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import cadastraUsuario, { cadUser, fazGet, login, pegaTypes } from '../Js/api.js';
+import cadastraUsuario, { cadUser, fazGet, login, pegaTypes } from '../Js/API.js';
 import styles from '../css/Style_Login.module.css';
 import triangulo from '../IMG/trianguloEsquerda.png'
 import projetor from '../IMG/projetor.gif'

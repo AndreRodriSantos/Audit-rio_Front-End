@@ -128,7 +128,6 @@ export function reserva(event) {
     fazPost(url, body)
 }
 
-
 export function listaReservas() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/reservation")
@@ -160,8 +159,13 @@ export function listaReservas() {
                 status.innerHTML = reserva.status
                 linha.appendChild(status)
                 lista.appendChild(linha)
+
+                if(status){
+
+                }
             }
         }
+        
     }, 1);
 
 }
@@ -171,6 +175,7 @@ export function listaUsuarios() {
         let data = fazGet("http://localhost:8080/api/user/verifica")
         let users = JSON.parse(data)
         let lista = document.getElementById("lista")
+        console.log(users)
 
         if (lista.childElementCount == 0) {
             for (let i = 0; i < users.length; i++) {
@@ -194,14 +199,18 @@ export function listaUsuarios() {
                 linha.appendChild(tdEmail)
 
                 const tdExcluir = document.createElement("td")
-                tdExcluir.innerHTML = "Excluir"
-                linha.appendChild(tdExcluir)
+                let btn_delete = document.createElement("button")
+                btn_delete.innerHTML = "X"
+
+                tdExcluir.appendChild(btn_delete)
+                linha.append(tdExcluir)
 
                 lista.appendChild(linha)
             }
         }
     }, 1);
 }
+
 export function pegaTypes() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/types/findAll");

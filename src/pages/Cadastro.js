@@ -1,4 +1,4 @@
-import cadastraUsuario, { pegaTypes } from "../Js/api";
+import cadastraUsuario, { pegaTypes } from "../Js/API";
 import styles from '../css/Style_Cadastro.module.css';
 import triangulo from '../IMG/trianguloDireita.png'
 import projetor from '../IMG/projetor.gif'
