@@ -86,7 +86,7 @@ function Principal() {
         
           <div className={styles.reservas}>
             <table className={styles.lista} id="tabela">
-              <tbody id="lista" onLoad={listaReservas()} >
+              <tbody id="lista" className={styles.body} onLoad={listaReservas()} >
 
               </tbody>
             </table>

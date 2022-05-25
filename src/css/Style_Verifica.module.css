@@ -11,7 +11,7 @@
     width: 90%;
     height: 100px;
     margin: 20px;
-    background-color: #D9D9D9;
+    background-color: #2884B2;
     border-radius: 20px;
     box-shadow: 0px 0px 40px 5px  rgba(0, 0, 0, 0.2);
     
@@ -22,6 +22,7 @@
     height: 50px;
     top: 20px;
     display: flex;
+    font-weight: bold;
     align-items: center;
     justify-content: center;
 }
@@ -35,9 +36,9 @@
 .corpo{
     position: relative;
     top: 120px;
-    width: 90%;
+    width: 98%;
     height: 700px;
-    background-color: #f2f2f259;
+    background-color: #f2f2f286;
 
 }
 .corpo td{
@@ -47,8 +48,9 @@
     text-align: center;
     font-size: 18px;
     border: 5px solid transparent;
-    background-color: #646464b9;
-    color: #fff;
+    background-color: #c4c4c4b9;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
 }
 td button{
     width: 50px;
@@ -57,13 +59,14 @@ td button{
     border-radius: 50px;
     border: none;
     font-size: 20px;
-    color: #fff;
-    border: 2px solid #fff;
+    color: rgb(255, 0, 0);
+    border: 3px solid rgb(255, 0, 0);
     cursor: pointer;
+    font-weight: bold;
 }
 
 td button:hover{
     font-size: 25px;
-    color: #000;
-    border: 2px solid #000;
+    color: rgb(255, 0, 0);
+    border: 5px solid rgb(255, 0, 0);
 }

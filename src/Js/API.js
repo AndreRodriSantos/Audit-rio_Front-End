@@ -160,12 +160,15 @@ export function listaReservas() {
                 linha.appendChild(status)
                 lista.appendChild(linha)
 
-                if(status){
-
+                if(status.textContent == "CONFIRMADO"){
+                    status.style.backgroundColor = "green"
+                }else if (status.textContent == "FINALIZADO"){
+                    status.style.backgroundColor = "red"
+                }else{
+                    status.style.backgroundColor = "#fccd32"
                 }
             }
         }
-        
     }, 1);
 
 }

@@ -26,11 +26,14 @@
     justify-content: center;
     justify-items: center;
 }
+
 .projetor{
-    margin-bottom: 5%;
+    margin-bottom: 28%;
     margin-left: 55.5%;
     width: 45%;
-    height: 70%;
+    min-width: 100px;
+    height: 80%;
+    min-height: 400px;
     transform: matrix(-1, 0, 0, 1, 0 , 0);
 }
 
