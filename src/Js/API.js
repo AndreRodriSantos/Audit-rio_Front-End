@@ -1,5 +1,6 @@
 import { createElement } from 'react'
 import { history } from './history'
+import $ from "jquery"
 
 function fazPost(url, body) {
     console.log("Body=", body)
@@ -214,6 +215,7 @@ export function listaUsuarios() {
     }, 1);
 }
 
+
 export function pegaTypes() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/types/findAll");
@@ -228,5 +230,28 @@ export function pegaTypes() {
         }
     }, 1);
 }
+
+
+ 
+export function img(){
+    const token ='EAAcMsX26zZA0BALBu6r4R2ZAZAAr0Nrwz6lVmWGnFZBLPI3OV7ca4H13eiE0TQfuB0ES0u8XGE7KKU3K0qv1ziGeLXsPPA8ZBcqLrTQvDvXBoqkZAM5uWrgHifD9grODwBOOUDft709LgKm2lnGUJvrvcZCSb4aTKLooCXs9Pr1xCYaCzhZBqhrpcccdlNOacTSWgX6AuMsctnqg4rBes4QPusSIGMb5LpoZD'
+    const url ='https://graph.facebook.com/17903255252601782/recent_media?user_id=17841453104072947&fields=id,media_type,comments_count,like_count,permalink,media_url&access_token='+token
+
+    $.get(url).then(function(response){
+        console.log (response.data);
+        const dados=response.data
+        let conteudo ='<div>'
+            
+            for(let i =0 ; i < dados.length;i++){
+                let feed = dados[i]
+                console.log(feed);
+                let tipo = feed.media_type;
+            conteudo+='<div><img src="'+feed.media_url+'" onclick="window.open(\''+feed.permalink+'\');"></div>';
+            }
+            conteudo+='</div>'
+            $('#insta').html(conteudo)
+    })
+}
+
 
 

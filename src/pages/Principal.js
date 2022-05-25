@@ -1,7 +1,7 @@
 import React from "react";
 import logo from '../IMG/logo.png'
 import styles from '../css/Style_Principal.module.css';
-import { logout,listaReservas } from '../Js/API.js'
+import { logout,listaReservas, img } from '../Js/API.js'
 import Calendar from 'react-calendar'
 import '../css/Calendar.css'
 
@@ -26,7 +26,7 @@ function Principal() {
             <i className="fa-solid fa-list"></i>
           </a>
 
-          <a href="#" className={styles.help} title="Informações">
+          <a href="#" className={styles.help} title="Informações" onClick={img}>
             <i className="fa-solid fa-info"></i>
           </a>
 
