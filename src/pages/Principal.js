@@ -1,7 +1,7 @@
 import React from "react";
 import logo from '../IMG/logo.png'
 import styles from '../css/Style_Principal.module.css';
-import { logout,listaReservas, img } from '../Js/API.js'
+import { logout, listaReservas, img } from '../Js/API.js'
 import Calendar from 'react-calendar'
 import '../css/Calendar.css'
 
@@ -14,11 +14,11 @@ function Principal() {
           <img className="img__logo" src={logo} />
         </a>
 
-        
+
 
         <div className={styles.menu}>
 
-        <a href="/Login" className={styles.cadastro} title="Login">
+          <a href="/Login" className={styles.cadastro} title="Login">
             <i className="fa-solid fa-sign-in"></i>
           </a>
 
@@ -44,7 +44,7 @@ function Principal() {
 
         <div className={styles.sidebar}>
           <div className={styles.calendario}>
-            <Calendar className={styles.calendar}/>
+            <Calendar className={styles.calendar} />
           </div>
 
           <div className={styles.users_lista}>
@@ -54,7 +54,7 @@ function Principal() {
         </div>
 
         <div className={styles.div_reservas}>
-        <div className={styles.div_title}>
+          <div className={styles.div_title}>
             <a className="navigation-link navigation-link-1" href="#">
               <span data-text="Reservas" className={styles.span}>Reservas</span>
             </a>
@@ -83,13 +83,95 @@ function Principal() {
             </button>
 
           </div>
-        
-          <div className={styles.reservas}>
-            <table className={styles.lista} id="tabela">
-              <tbody id="lista" className={styles.body} onLoad={listaReservas()} >
 
-              </tbody>
-            </table>
+          <div className={styles.reservas}>
+            <ul className={styles.lista} id="lista" onLoad={listaReservas()}>
+              <table id="Janeiro" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Janeiro</th><th colSpan="4" className={styles.num}>01</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Fevereiro" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Fevereiro</th><th colSpan="4" className={styles.num}>02</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Marco" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Março</th><th colSpan="4" className={styles.num}>03</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Abril" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Abril</th><th colSpan="4" className={styles.num}>04</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Maio" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Maio</th><th colSpan="4" className={styles.num}>05</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Junho" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Junho</th><th colSpan="4" className={styles.num}>06</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Julho" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Julho</th><th colSpan="4" className={styles.num}>07</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Agosto" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Agosto</th><th colSpan="4" className={styles.num}>08</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Setembro" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Setembro</th><th colSpan="4" className={styles.num}>09</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Outubro" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Outubro</th><th colSpan="4" className={styles.num}>10</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Novembro" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Novembro</th><th colSpan="4" className={styles.num}>11</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+              <table id="Dezembro" className={styles.tabela_mes}>
+                <thead><tr><th colSpan="1" className={styles.mes}>Dezembro</th><th colSpan="4" className={styles.num}>12</th></tr></thead>
+                <tbody className={styles.body}>
+
+                </tbody>
+              </table>
+
+            </ul>
+
           </div>
 
         </div>

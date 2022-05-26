@@ -292,18 +292,52 @@ input[type="search"]::-webkit-search-results-decoration {
     height: 100%;
     display: flex;
     justify-content: center;
+}
+
+.tabela_mes{
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 3px solid rgb(230, 230, 230); 
+}
+
+
+.lista{
     overflow: scroll;
+}
+
+.tabela_mes thead{
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tabela_mes tr{
+    border: 3px solid rgb(230, 230, 230);
+    height: 50px;
+}
+
+.num{
+    text-align: end;
+    padding-right: 10px;
+    color: lightgray;
+    font-size: 30px;
+    column-span: 4;
+}
+.mes{
+    text-align: start;
+    padding-left: 10px;
 }
 
 .lista{
     position: relative;
     top: 30px;
-    background-color: rgb(255, 255, 255);
     width: 90%;
     height: 75%;
-    border: 3px solid rgb(230, 230, 230);
-    
 }
+
 
 .body tr{
     width: 100%;
@@ -311,9 +345,6 @@ input[type="search"]::-webkit-search-results-decoration {
     display: block;
 }
 
-.body td{
-    width: 300px;
-}
 
 .title_RS{
     font-size: 14px;

@@ -10,6 +10,7 @@ function fazPost(url, body) {
     request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
     request.send(JSON.stringify(body))
 
+
     if (url == "http://localhost:8080/api/reservation/save") {
         request.onload = function () {
             if (request.status == 200) {
@@ -133,45 +134,102 @@ export function listaReservas() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/reservation")
         let reservas = JSON.parse(data)
-        let lista = document.getElementById("lista")
+        let jan = document.getElementById("Janeiro")
+        let fev = document.getElementById("Fevereiro")
+        let mar = document.getElementById("Marco")
+        let abr = document.getElementById("Abril")
+        let mai = document.getElementById("Maio")
+        let jun = document.getElementById("Junho")
+        let jul = document.getElementById("Julho")
+        let ago = document.getElementById("Agosto")
+        let set = document.getElementById("Setembro")
+        let out = document.getElementById("Outubro")
+        let nov = document.getElementById("Novembro")
+        let dez = document.getElementById("Dezembro")
+        console.log(reservas)
 
-        if (lista.childElementCount == 0) {
-            for (let i = 0; i < reservas.length; i++) {
-                let reserva = reservas[i]
-                const linha = document.createElement("tr")
+        for (let i = 0; i < reservas.length; i++) {
+            let reserva = reservas[i]
+            const linha = document.createElement("tr")
 
-                const tdId = document.createElement("td")
-                tdId.innerHTML = reserva.id
-                linha.appendChild(tdId)
+            const tdId = document.createElement("td")
+            tdId.innerHTML = reserva.id
+            linha.appendChild(tdId)
 
-                const tdTitulo = document.createElement("td")
-                tdTitulo.innerHTML = reserva.titulo
-                linha.appendChild(tdTitulo)
+            const tdTitulo = document.createElement("td")
+            tdTitulo.innerHTML = reserva.titulo
+            linha.appendChild(tdTitulo)
 
-                const tdData_i = document.createElement("td")
-                tdData_i.innerHTML = reserva.dataInicio
-                linha.appendChild(tdData_i)
+            const tdData_i = document.createElement("td")
+            tdData_i.innerHTML = reserva.dataInicio
+            linha.appendChild(tdData_i)
 
-                const tdData_t = document.createElement("td")
-                tdData_t.innerHTML = reserva.dataInicio
-                linha.appendChild(tdData_t)
+            const tdData_t = document.createElement("td")
+            tdData_t.innerHTML = reserva.dataInicio
+            linha.appendChild(tdData_t)
 
-                const status = document.createElement("td")
-                status.innerHTML = reserva.status
-                linha.appendChild(status)
-                lista.appendChild(linha)
+            const status = document.createElement("td")
+            status.innerHTML = reserva.status
+            linha.appendChild(status)
 
-                if(status.textContent == "CONFIRMADO"){
-                    status.style.backgroundColor = "green"
-                }else if (status.textContent == "FINALIZADO"){
-                    status.style.backgroundColor = "red"
-                }else{
-                    status.style.backgroundColor = "#fccd32"
-                }
+
+            if (status.textContent == "CONFIRMADO") {
+                status.style.backgroundColor = "green"
+            } else if (status.textContent == "FINALIZADO") {
+                status.style.backgroundColor = "red"
+            } else {
+                status.style.backgroundColor = "#fccd32"
+            }
+
+            let mes = tdData_i.textContent
+            mes = mes.substring(5, 7)
+            console.log(mes)
+
+            switch (mes) {
+                case "01":
+                    jan.appendChild(linha)
+                    break;
+
+                case "02":
+                    fev.appendChild(linha)
+                    break;
+                case "03":
+                    mar.appendChild(linha)
+                    break;
+                case "04":
+                    abr.appendChild(linha)
+                    break;
+                case "05":
+                    mai.appendChild(linha)
+                    break;
+                case "06":
+                    jun.appendChild(linha)
+                    break;
+                case "07":
+                    jul.appendChild(linha)
+                    break;
+                case "08":
+                    ago.appendChild(linha)
+                    break;
+                case "09":
+                    set.appendChild(linha)
+                    break;
+                case "10":
+                    out.appendChild(linha)
+                    break;
+                case "11":
+                    nov.appendChild(linha)
+                    break;
+                case "12":
+                    dez.appendChild(linha)
+                    break;
+
+                default:
+                    break;
             }
         }
-    }, 1);
 
+    }, 1);
 }
 
 export function listaUsuarios() {
@@ -232,24 +290,24 @@ export function pegaTypes() {
 }
 
 
- 
-export function img(){
-    const token ='EAAcMsX26zZA0BALBu6r4R2ZAZAAr0Nrwz6lVmWGnFZBLPI3OV7ca4H13eiE0TQfuB0ES0u8XGE7KKU3K0qv1ziGeLXsPPA8ZBcqLrTQvDvXBoqkZAM5uWrgHifD9grODwBOOUDft709LgKm2lnGUJvrvcZCSb4aTKLooCXs9Pr1xCYaCzhZBqhrpcccdlNOacTSWgX6AuMsctnqg4rBes4QPusSIGMb5LpoZD'
-    const url ='https://graph.facebook.com/17903255252601782/recent_media?user_id=17841453104072947&fields=id,media_type,comments_count,like_count,permalink,media_url&access_token='+token
 
-    $.get(url).then(function(response){
-        console.log (response.data);
-        const dados=response.data
-        let conteudo ='<div>'
-            
-            for(let i =0 ; i < dados.length;i++){
-                let feed = dados[i]
-                console.log(feed);
-                let tipo = feed.media_type;
-            conteudo+='<div><img src="'+feed.media_url+'" onclick="window.open(\''+feed.permalink+'\');"></div>';
-            }
-            conteudo+='</div>'
-            $('#insta').html(conteudo)
+export function img() {
+    const token = 'EAAcMsX26zZA0BALBu6r4R2ZAZAAr0Nrwz6lVmWGnFZBLPI3OV7ca4H13eiE0TQfuB0ES0u8XGE7KKU3K0qv1ziGeLXsPPA8ZBcqLrTQvDvXBoqkZAM5uWrgHifD9grODwBOOUDft709LgKm2lnGUJvrvcZCSb4aTKLooCXs9Pr1xCYaCzhZBqhrpcccdlNOacTSWgX6AuMsctnqg4rBes4QPusSIGMb5LpoZD'
+    const url = 'https://graph.facebook.com/17903255252601782/recent_media?user_id=17841453104072947&fields=id,media_type,comments_count,like_count,permalink,media_url&access_token=' + token
+
+    $.get(url).then(function (response) {
+        console.log(response.data);
+        const dados = response.data
+        let conteudo = '<div>'
+
+        for (let i = 0; i < dados.length; i++) {
+            let feed = dados[i]
+            console.log(feed);
+            let tipo = feed.media_type;
+            conteudo += '<div><img src="' + feed.media_url + '" onclick="window.open(\'' + feed.permalink + '\');"></div>';
+        }
+        conteudo += '</div>'
+        $('#insta').html(conteudo)
     })
 }
 
