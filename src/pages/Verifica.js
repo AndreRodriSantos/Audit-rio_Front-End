@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
-import { listaUsuarios } from "../Js/API";
+import {listaUsuariosComuns } from "../Js/API";
 import styles from "../css/Style_Verifica.module.css"
 
 function Verifica() {
     return (
         <div>
             <h1>Lista de Usuários</h1>
-            <table id="tabela" className={styles.tabela} onLoad={listaUsuarios()}>
+            <table id="tabela" className={styles.tabela} onLoad={listaUsuariosComuns()}>
                 <thead className={styles.cabecalho}>
                     <tr className={styles.header}>
                         <td className={styles.td}>ID</td>

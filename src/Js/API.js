@@ -146,7 +146,8 @@ export function listaReservas() {
         let out = document.getElementById("Outubro")
         let nov = document.getElementById("Novembro")
         let dez = document.getElementById("Dezembro")
-        console.log(reservas)
+
+
 
         for (let i = 0; i < reservas.length; i++) {
             let reserva = reservas[i]
@@ -160,30 +161,31 @@ export function listaReservas() {
             tdTitulo.innerHTML = reserva.titulo
             linha.appendChild(tdTitulo)
 
-            const tdData_i = document.createElement("td")
-            tdData_i.innerHTML = reserva.dataInicio
-            linha.appendChild(tdData_i)
-
-            const tdData_t = document.createElement("td")
-            tdData_t.innerHTML = reserva.dataInicio
-            linha.appendChild(tdData_t)
+            const tdData = document.createElement("td")
+            let dataInicio = (JSON.stringify(reserva.dataInicio))
+            dataInicio = dataInicio.substring(1, 11).replaceAll("-" ,  "/")
+            console.log(dataInicio)
+            let dataTermino = (JSON.stringify(reserva.dataTermino))
+            dataTermino = dataTermino.substring(1, 11).replaceAll("-" , "/")
+            tdData.innerHTML = dataInicio + " - " + dataTermino
+            console.log(tdData)
+            linha.appendChild(tdData)
 
             const status = document.createElement("td")
             status.innerHTML = reserva.status
+            status.style.fontWeight = "bold"
             linha.appendChild(status)
 
-
             if (status.textContent == "CONFIRMADO") {
-                status.style.backgroundColor = "green"
+                status.style.color = "green"
             } else if (status.textContent == "FINALIZADO") {
-                status.style.backgroundColor = "red"
+                status.style.color = "red"
             } else {
                 status.style.backgroundColor = "#fccd32"
             }
 
-            let mes = tdData_i.textContent
+            let mes = tdData.textContent
             mes = mes.substring(5, 7)
-            console.log(mes)
 
             switch (mes) {
                 case "01":
@@ -228,16 +230,14 @@ export function listaReservas() {
                     break;
             }
         }
-
     }, 1);
 }
 
-export function listaUsuarios() {
+export function listaUsuariosComuns() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/user/verifica")
         let users = JSON.parse(data)
         let lista = document.getElementById("lista")
-        console.log(users)
 
         if (lista.childElementCount == 0) {
             for (let i = 0; i < users.length; i++) {
@@ -273,7 +273,6 @@ export function listaUsuarios() {
     }, 1);
 }
 
-
 export function pegaTypes() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/types/findAll");
@@ -289,7 +288,22 @@ export function pegaTypes() {
     }, 1);
 }
 
-
+export function pegaTodosUsuarios() {
+    setTimeout(() => {
+        let data = fazGet("http://localhost:8080/api/user/lista");
+        let users = JSON.parse(data)
+        let lista = document.getElementById("listaUsuarios")
+        console.log(users)
+        if (lista.childElementCount == 0) {
+            for (let i = 0; i < users.length; i++) {
+                let usuario = users[i];
+                let li = document.createElement("li")
+                li.innerHTML = usuario.nome
+                lista.appendChild(li)
+            }
+        }
+    }, 1);
+}
 
 export function img() {
     const token = 'EAAcMsX26zZA0BALBu6r4R2ZAZAAr0Nrwz6lVmWGnFZBLPI3OV7ca4H13eiE0TQfuB0ES0u8XGE7KKU3K0qv1ziGeLXsPPA8ZBcqLrTQvDvXBoqkZAM5uWrgHifD9grODwBOOUDft709LgKm2lnGUJvrvcZCSb4aTKLooCXs9Pr1xCYaCzhZBqhrpcccdlNOacTSWgX6AuMsctnqg4rBes4QPusSIGMb5LpoZD'

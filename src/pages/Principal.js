@@ -1,7 +1,7 @@
 import React from "react";
 import logo from '../IMG/logo.png'
 import styles from '../css/Style_Principal.module.css';
-import { logout, listaReservas, img } from '../Js/API.js'
+import { logout, listaReservas, img, pegaTodosUsuarios } from '../Js/API.js'
 import Calendar from 'react-calendar'
 import '../css/Calendar.css'
 
@@ -48,7 +48,10 @@ function Principal() {
           </div>
 
           <div className={styles.users_lista}>
-            Lista de usuarios
+            <h1>Usuários</h1>
+            <ul id="listaUsuarios" className={styles.listaUsers} onLoad={pegaTodosUsuarios()}>
+
+            </ul>
           </div>
 
         </div>
@@ -81,7 +84,6 @@ function Principal() {
             <button className={styles.btn_NovaReserva}>
               <a href="/Reserva">Nova Reserva</a> <i className="fa-solid fa-plus"></i>
             </button>
-
           </div>
 
           <div className={styles.reservas}>
@@ -145,37 +147,28 @@ function Principal() {
               <table id="Setembro" className={styles.tabela_mes}>
                 <thead><tr><th colSpan="1" className={styles.mes}>Setembro</th><th colSpan="4" className={styles.num}>09</th></tr></thead>
                 <tbody className={styles.body}>
-
                 </tbody>
               </table>
 
               <table id="Outubro" className={styles.tabela_mes}>
                 <thead><tr><th colSpan="1" className={styles.mes}>Outubro</th><th colSpan="4" className={styles.num}>10</th></tr></thead>
                 <tbody className={styles.body}>
-
                 </tbody>
               </table>
 
               <table id="Novembro" className={styles.tabela_mes}>
                 <thead><tr><th colSpan="1" className={styles.mes}>Novembro</th><th colSpan="4" className={styles.num}>11</th></tr></thead>
                 <tbody className={styles.body}>
-
                 </tbody>
               </table>
-
               <table id="Dezembro" className={styles.tabela_mes}>
                 <thead><tr><th colSpan="1" className={styles.mes}>Dezembro</th><th colSpan="4" className={styles.num}>12</th></tr></thead>
                 <tbody className={styles.body}>
-
                 </tbody>
               </table>
-
             </ul>
-
           </div>
-
         </div>
-
       </div>
     </div>
   );
