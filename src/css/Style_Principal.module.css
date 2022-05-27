@@ -62,6 +62,7 @@
 a{
     text-decoration: none;
 }
+
 .help{
     color: white;
     font-size: 22px;
@@ -320,6 +321,13 @@ input[type="search"]::-webkit-search-results-decoration {
 .tabela_mes tr{
     border: 3px solid rgb(230, 230, 230);
     height: 50px;
+}
+
+.tabela_mes td{
+    box-sizing: border-box;
+    max-width: 5px;
+    overflow-x: hidden;
+    width: 25%;
 }
 
 .num{

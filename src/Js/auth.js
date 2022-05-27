@@ -1,8 +1,8 @@
-export const isAuthenticated = function(){
+export const isAuthenticated = function () {
     const token = sessionStorage.getItem("token")
-    if(token){
+    if (token) {
         return true
-    }else{
+    } else {
         return false
     }
 }

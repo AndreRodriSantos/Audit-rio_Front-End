@@ -2,6 +2,8 @@ import { createElement } from 'react'
 import { history } from './history'
 import $ from "jquery"
 
+let listaCriada = false
+
 function fazPost(url, body) {
     console.log("Body=", body)
     let request = new XMLHttpRequest()
@@ -9,7 +11,6 @@ function fazPost(url, body) {
     request.setRequestHeader("Content-type", "application/json")
     request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
     request.send(JSON.stringify(body))
-
 
     if (url == "http://localhost:8080/api/reservation/save") {
         request.onload = function () {
@@ -36,6 +37,7 @@ function fazPost(url, body) {
         request.onload = function () {
             if (request.status == 200) {
                 let token = this.responseText
+                console.log(token);
                 token = token.replace('{"token":"', "")
                 token = token.replace('"}', "")
                 console.log(token.length)
@@ -114,10 +116,7 @@ export function reserva(event) {
     let participantes = document.getElementById("participantes").value
     let repetir = document.getElementById("repetir").checked
 
-    console.log(dataInicio)
-    console.log(dataTermino)
     const token = sessionStorage.getItem("token")
-    console.log(token.length)
 
     var body = {
         "titulo": titulo,
@@ -146,89 +145,92 @@ export function listaReservas() {
         let out = document.getElementById("Outubro")
         let nov = document.getElementById("Novembro")
         let dez = document.getElementById("Dezembro")
+        let tabelas = document.querySelectorAll("table")
 
-
-
-        for (let i = 0; i < reservas.length; i++) {
-            let reserva = reservas[i]
-            const linha = document.createElement("tr")
-
-            const tdId = document.createElement("td")
-            tdId.innerHTML = reserva.id
-            linha.appendChild(tdId)
-
-            const tdTitulo = document.createElement("td")
-            tdTitulo.innerHTML = reserva.titulo
-            linha.appendChild(tdTitulo)
-
-            const tdData = document.createElement("td")
-            let dataInicio = (JSON.stringify(reserva.dataInicio))
-            dataInicio = dataInicio.substring(1, 11).replaceAll("-" ,  "/")
-            console.log(dataInicio)
-            let dataTermino = (JSON.stringify(reserva.dataTermino))
-            dataTermino = dataTermino.substring(1, 11).replaceAll("-" , "/")
-            tdData.innerHTML = dataInicio + " - " + dataTermino
-            console.log(tdData)
-            linha.appendChild(tdData)
-
-            const status = document.createElement("td")
-            status.innerHTML = reserva.status
-            status.style.fontWeight = "bold"
-            linha.appendChild(status)
-
-            if (status.textContent == "CONFIRMADO") {
-                status.style.color = "green"
-            } else if (status.textContent == "FINALIZADO") {
-                status.style.color = "red"
-            } else {
-                status.style.backgroundColor = "#fccd32"
+        if(listaCriada == false){
+            for (let i = 0; i < reservas.length; i++) {
+                let reserva = reservas[i]
+                const linha = document.createElement("tr")
+    
+                const tdId = document.createElement("td")
+                tdId.innerHTML = reserva.id
+                linha.appendChild(tdId)
+    
+                const tdTitulo = document.createElement("td")
+                tdTitulo.innerHTML = reserva.titulo
+                linha.appendChild(tdTitulo)
+    
+                const tdData = document.createElement("td")
+                let dataInicio = (JSON.stringify(reserva.dataInicio))
+                let horaInicio = dataInicio.substring(12, 17)
+                dataInicio = dataInicio.substring(1, 11).replaceAll("-" ,  "/")
+                let dataTermino = (JSON.stringify(reserva.dataTermino))
+                let horaTermino = dataTermino.substring(12, 17)
+                dataTermino = dataTermino.substring(1, 11).replaceAll("-" , "/")
+                tdData.innerHTML = dataInicio + "  -  " + dataTermino + "<br/>" + horaInicio + "  -  " + horaTermino
+                tdData.style.textAlign = "center"
+                linha.appendChild(tdData)
+    
+                const status = document.createElement("td")
+                status.innerHTML = reserva.status
+                status.style.fontWeight = "bold"
+                linha.appendChild(status)
+    
+                if (status.textContent == "CONFIRMADO") {
+                    status.style.color = "green"
+                } else if (status.textContent == "FINALIZADO") {
+                    status.style.color = "red"
+                } else {
+                    status.style.backgroundColor = "#fccd32"
+                }
+    
+                let mes = tdData.textContent
+                mes = mes.substring(5, 7)
+    
+                switch (mes) {
+                    case "01":
+                        jan.appendChild(linha)
+                        break;
+    
+                    case "02":
+                        fev.appendChild(linha)
+                        break;
+                    case "03":
+                        mar.appendChild(linha)
+                        break;
+                    case "04":
+                        abr.appendChild(linha)
+                        break;
+                    case "05":
+                        mai.appendChild(linha)
+                        break;
+                    case "06":
+                        jun.appendChild(linha)
+                        break;
+                    case "07":
+                        jul.appendChild(linha)
+                        break;
+                    case "08":
+                        ago.appendChild(linha)
+                        break;
+                    case "09":
+                        set.appendChild(linha)
+                        break;
+                    case "10":
+                        out.appendChild(linha)
+                        break;
+                    case "11":
+                        nov.appendChild(linha)
+                        break;
+                    case "12":
+                        dez.appendChild(linha)
+                        break;
+    
+                    default:
+                        break;
+                }
             }
-
-            let mes = tdData.textContent
-            mes = mes.substring(5, 7)
-
-            switch (mes) {
-                case "01":
-                    jan.appendChild(linha)
-                    break;
-
-                case "02":
-                    fev.appendChild(linha)
-                    break;
-                case "03":
-                    mar.appendChild(linha)
-                    break;
-                case "04":
-                    abr.appendChild(linha)
-                    break;
-                case "05":
-                    mai.appendChild(linha)
-                    break;
-                case "06":
-                    jun.appendChild(linha)
-                    break;
-                case "07":
-                    jul.appendChild(linha)
-                    break;
-                case "08":
-                    ago.appendChild(linha)
-                    break;
-                case "09":
-                    set.appendChild(linha)
-                    break;
-                case "10":
-                    out.appendChild(linha)
-                    break;
-                case "11":
-                    nov.appendChild(linha)
-                    break;
-                case "12":
-                    dez.appendChild(linha)
-                    break;
-
-                default:
-                    break;
-            }
+            listaCriada = true
         }
     }, 1);
 }
@@ -293,7 +295,6 @@ export function pegaTodosUsuarios() {
         let data = fazGet("http://localhost:8080/api/user/lista");
         let users = JSON.parse(data)
         let lista = document.getElementById("listaUsuarios")
-        console.log(users)
         if (lista.childElementCount == 0) {
             for (let i = 0; i < users.length; i++) {
                 let usuario = users[i];
@@ -310,13 +311,11 @@ export function img() {
     const url = 'https://graph.facebook.com/17903255252601782/recent_media?user_id=17841453104072947&fields=id,media_type,comments_count,like_count,permalink,media_url&access_token=' + token
 
     $.get(url).then(function (response) {
-        console.log(response.data);
         const dados = response.data
         let conteudo = '<div>'
 
         for (let i = 0; i < dados.length; i++) {
             let feed = dados[i]
-            console.log(feed);
             let tipo = feed.media_type;
             conteudo += '<div><img src="' + feed.media_url + '" onclick="window.open(\'' + feed.permalink + '\');"></div>';
         }

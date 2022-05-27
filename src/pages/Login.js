@@ -45,6 +45,10 @@ function Login() {
             </div>
 
             <div className={styles.div_direita}>
+
+                <a href="/Principal" className={styles.home} title="Principal/Home">
+                    <i className="fa-solid fa-home"></i>
+                </a>
                 <div className={styles.div_title}>
                     <a className="navigation-link navigation-link-1" href="#">
                         <span data-text="Login" className={styles.span}>Login</span>

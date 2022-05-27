@@ -14,6 +14,9 @@ export default function Cadastro() {
             </div>
 
             <div className={styles.div_direita}>
+                <a href="/Principal" className={styles.home} title="Principal/Home">
+                    <i className="fa-solid fa-home"></i>
+                </a>
                 <div className={styles.div_title}>
                     <a className="navigation-link navigation-link-1" href="#">
                         <span data-text="Cadastro" className={styles.span}>Cadastro</span>
@@ -26,7 +29,7 @@ export default function Cadastro() {
             </div>
 
             <div className={styles.div_form}>
-                
+
 
                 <div className={styles.form_base}>
 

@@ -36,10 +36,14 @@
     min-height: 400px;
     transform: matrix(-1, 0, 0, 1, 0 , 0);
 }
+.div_direita a:hover{
+    font-size: 28px;
+}
 
 .div_title{
    height: 20%;
-   width: 100%;
+   width: 70%;
+   margin-left: 25%;
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -198,8 +202,26 @@ option{
     left: 5px;
 }
 
+
+
 #sign_ico{
     margin-right: 20px;
+}
+
+.home{
+    position: absolute; 
+    top: 5px;  
+    left: 5px;
+    font-size: 24px;
+    color: white;
+    background-color: red;  
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
 }
 
 .btn {
