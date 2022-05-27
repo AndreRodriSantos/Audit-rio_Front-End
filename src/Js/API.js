@@ -37,10 +37,8 @@ function fazPost(url, body) {
         request.onload = function () {
             if (request.status == 200) {
                 let token = this.responseText
-                console.log(token);
                 token = token.replace('{"token":"', "")
                 token = token.replace('"}', "")
-                console.log(token.length)
                 sessionStorage.setItem("token", token)
                 window.alert("Usuário Logado!!")
                 history.push("/Principal")
@@ -130,6 +128,7 @@ export function reserva(event) {
 }
 
 export function listaReservas() {
+    
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/reservation")
         let reservas = JSON.parse(data)
@@ -145,37 +144,37 @@ export function listaReservas() {
         let out = document.getElementById("Outubro")
         let nov = document.getElementById("Novembro")
         let dez = document.getElementById("Dezembro")
-        let tabelas = document.querySelectorAll("table")
 
-        if(listaCriada == false){
+        if (listaCriada == false) {
             for (let i = 0; i < reservas.length; i++) {
                 let reserva = reservas[i]
                 const linha = document.createElement("tr")
-    
+
                 const tdId = document.createElement("td")
                 tdId.innerHTML = reserva.id
                 linha.appendChild(tdId)
-    
+
                 const tdTitulo = document.createElement("td")
                 tdTitulo.innerHTML = reserva.titulo
                 linha.appendChild(tdTitulo)
-    
+
                 const tdData = document.createElement("td")
                 let dataInicio = (JSON.stringify(reserva.dataInicio))
                 let horaInicio = dataInicio.substring(12, 17)
-                dataInicio = dataInicio.substring(1, 11).replaceAll("-" ,  "/")
+                dataInicio = dataInicio.substring(1, 11).replaceAll("-", "/")
                 let dataTermino = (JSON.stringify(reserva.dataTermino))
                 let horaTermino = dataTermino.substring(12, 17)
-                dataTermino = dataTermino.substring(1, 11).replaceAll("-" , "/")
+                dataTermino = dataTermino.substring(1, 11).replaceAll("-", "/")
                 tdData.innerHTML = dataInicio + "  -  " + dataTermino + "<br/>" + horaInicio + "  -  " + horaTermino
                 tdData.style.textAlign = "center"
                 linha.appendChild(tdData)
-    
+
                 const status = document.createElement("td")
                 status.innerHTML = reserva.status
                 status.style.fontWeight = "bold"
+                status.style.textAlign = "center"
                 linha.appendChild(status)
-    
+
                 if (status.textContent == "CONFIRMADO") {
                     status.style.color = "green"
                 } else if (status.textContent == "FINALIZADO") {
@@ -183,15 +182,15 @@ export function listaReservas() {
                 } else {
                     status.style.backgroundColor = "#fccd32"
                 }
-    
+
                 let mes = tdData.textContent
                 mes = mes.substring(5, 7)
-    
+
                 switch (mes) {
                     case "01":
                         jan.appendChild(linha)
                         break;
-    
+
                     case "02":
                         fev.appendChild(linha)
                         break;
@@ -225,7 +224,7 @@ export function listaReservas() {
                     case "12":
                         dez.appendChild(linha)
                         break;
-    
+
                     default:
                         break;
                 }
@@ -233,6 +232,12 @@ export function listaReservas() {
             listaCriada = true
         }
     }, 1);
+}
+
+export function decodaToken(){
+    let data = fazGet("http://localhost:8080/api/user/decodaToken")
+    console.log(data)
+    return data
 }
 
 export function listaUsuariosComuns() {
@@ -274,6 +279,8 @@ export function listaUsuariosComuns() {
         }
     }, 1);
 }
+
+
 
 export function pegaTypes() {
     setTimeout(() => {

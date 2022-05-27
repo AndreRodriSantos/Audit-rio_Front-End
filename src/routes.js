@@ -7,9 +7,16 @@ import { isAuthenticated } from './Js/auth';
 import {history} from './Js/history'
 import Verifica from './pages/Verifica';
 import { PostAuditorio } from './pages/PostAuditorio';
+import { decodaToken } from './Js/API';
 
-const PrivateRoute = (props) => {
-    return isAuthenticated() ? <Route {...props}/> : <Redirect to="/" push></Redirect>
+const PrivateRouteAdmin = (props) => {
+    isAuthenticated() ? <Route {...props}/> : <Redirect to="/Principal" push></Redirect> 
+    
+    /* if(isAuthenticated() == "ok"){
+        return <Route {...props}/>
+    }else{
+        return <Redirect to="/Principal" push></Redirect> 
+    } */
 }
 
 export default function Routes() {
@@ -18,11 +25,11 @@ export default function Routes() {
         <Switch>
             <Route path='/' exact component={Login}></Route>
             <Route path='/Login' component={Login}></Route>
-            <PrivateRoute path='/Cadastro' component={Cadastro}/>
+            <Route path='/Cadastro' component={Cadastro}/>
             <Route path='/Principal' component={Principal}/>
             <Route path='/PostAuditorio' component={PostAuditorio}/>
-            <PrivateRoute path='/Reserva' component={Reserva}/>
-            <PrivateRoute path='/Verifica' component={Verifica}/>
+            <Route path='/Reserva' component={Reserva}/>
+            <PrivateRouteAdmin path='/Verifica' component={Verifica}/>
         </Switch>
         </Router>
     )
