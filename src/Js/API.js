@@ -60,13 +60,17 @@ export default function cadastraUsuario(event) {
     let email = document.getElementById("email").value
     let senha = document.getElementById("senha").value
     let type = document.getElementById("type").value
+    let photo = document.getElementById('imgPhoto');
+    let foto =  photo.src
+    console.log(foto)
 
     var body = {
         "nif": nif,
         "nome": nome,
         "email": email,
         "senha": senha,
-        "type": type
+        "type": type,
+        "foto": foto
     }
     console.log(body)
     fazPost(url, body)
@@ -103,6 +107,8 @@ export function logout() {
         sessionStorage.removeItem("token")
         sucesso("Usuário Deslogado")
         history.push("/")
+    }else{
+        erro("Você não está logado")
     }
 }
 

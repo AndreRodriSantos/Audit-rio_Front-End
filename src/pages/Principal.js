@@ -4,6 +4,7 @@ import styles from '../css/Style_Principal.module.css';
 import { logout, listaReservas, img, pegaTodosUsuarios } from '../Js/API.js'
 import Calendar from 'react-calendar'
 import '../css/Calendar.css'
+import Reserva, { Confirmacao } from "./Reserva";
 
 function Principal() {
   return (
@@ -13,9 +14,7 @@ function Principal() {
         <a href="https://www.sp.senai.br/" target="blank" className={styles.logo_A}>
           <img className="img__logo" src={logo} />
         </a>
-
-
-
+        
         <div className={styles.menu}>
 
           <a href="/Login" className={styles.cadastro} title="Login">
@@ -82,7 +81,7 @@ function Principal() {
             </button>
 
             <button className={styles.btn_NovaReserva}>
-              <a href="/Reserva">Nova Reserva</a> <i className="fa-solid fa-plus"></i>
+              <a onClick={Confirmacao}>Nova Reserva</a> <i className="fa-solid fa-plus"></i>
             </button>
           </div>
 
@@ -170,6 +169,7 @@ function Principal() {
           </div>
         </div>
       </div>
+      <Reserva></Reserva>
     </div>
   );
 }

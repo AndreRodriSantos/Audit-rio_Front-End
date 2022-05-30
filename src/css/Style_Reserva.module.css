@@ -1,251 +1,252 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
-body{
-    background-color: #F2F2F2;
-    font-family: sans-serif;
-}
-/* NOVA RESERVA */
-.Reserva{
-    width: 100%;
-    height: 90vh;
-    background-color: #EBEBEB;
-}
-/* TITLE */
-.title_form{
-    width: 350px;
-    height: 80px;
+
+.payment {
+    width: 800px;
+    height: 900px;
+    background-color: #fff;
+    position: relative;
+    top: 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: none;  
+    flex-direction: column;
     text-align: center;
+    box-shadow: 0 0 13px 2px rgba(0, 0, 0, 0.5);
+    z-index: 10; 
+
+}
+
+.close {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    color: #fff;
+    top: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 2px;
+
+}
+
+.form {
+    width: 100%;
+    height: 100%;
+    
+    background-color: #F5F3F3;
+}
+
+.title_form {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #000;
+    font-size: 40px;
+    font-weight: 500px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.datas {
+    width: 70%;
+    height: 150px;
+    margin: 40px auto;
+    border: 3px solid #FF0000;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.inicio {
+    position: absolute;
+    top: 190px;
+    left: 70px;
+    width: 300px;
+    height: 50px;
+    background-color: #F5F3F3;
+    border: 3px solid #FF0000;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.novaRS{
+
+.final {
+    position: absolute;
+    top: 190px;
+    right: 70px;
+    width: 300px;
+    height: 50px;
+    background-color: #F5F3F3;
+    border: 3px solid #FF0000;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.title_I {
+    position: relative;
+    width: 100px;
+    top: 20px;
+    left: -30%;
+    color: #000;
+    font-size: 20px;
+
+}
+
+.title_F {
+    position: relative;
+    width: 100px;
+    top: 20px;
+    right: -30%;
+    color: #000;
+    font-size: 20px;
+
+}
+
+
+.Data_Inicio {
+    position: relative;
+    width: 90%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: #000;
+    outline: none;
+
+}
+
+.Data_Final {
+    position: relative;
+    width: 90%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: #000;
+    outline: none;
+}
+
+.Data_Final::-webkit-calendar-picker-indicator {
+    padding: 7px;
+    background: url(../IMG/data.png) no-repeat;
+
+}
+
+.Data_Inicio::-webkit-calendar-picker-indicator {
+    padding: 7px;
+    background: url(../IMG/data.png) no-repeat;
+
+}
+
+.input {
+    position: relative;
+    margin: 10px auto;
+    width: 70%;
+    background-color: #F5F3F3;
+    border: 3px solid #FF0000;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    width: 500px;
+    height: 50px;
+    position: relative;
+    left: 15%;
+    color: #000;
+    font-size: 20px;
+    display: flex;
+    text-align: left;
+    align-items: center;
+}
+
+.Nome_Reserva {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 90%;
+    height: 50px;
+}
+
+.Descricao {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+    height: 100px;
+    margin: 20px;
+}
+
+.value {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 66%;
+    top: -30px;
+    width: 150px;
+    height: 50px;
+    border: 3px solid #FF0000;
+    border-radius: 50px;
+    color: #000;
+    font-size: 22px;
+
+}
+
+
+.slider {
+    position: absolute;
+    left: 120px;
+    -webkit-appearance: none;
+    width: 300px;
+    height: 10px;
+    border-radius: 5px;
+    background: #FF0000;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+  
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 35px;
+    border: 0;
+    background: url('../IMG/ponteiro.png');
+    cursor: pointer;
+}
+
+
+.btn {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    bottom: 0;
+    left: 0;
+    border: none;
+    background-color: #000;
     font-size: 30px;
-    font-weight: 500;
-    color: #000;
-}
-
-/* INPUT */
-input{
-    width: 150px;
-    height: 30px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* INICIO */
-.Data_Inicio{
-    width: 100px;
-    background-color: #F2F2F2;
-    color: gray;
-    border-color:gray;
-    position: absolute;
-    left: 90px;
-    top: 150px;
-}
-.Tempo_Inicio{
-    width: 80px;
-    height: 30px;
-    background-color: #F2F2F2;
-    color: gray;
-    border-color:gray;
-    position: absolute;
-    left: 200px;
-    top: 150px;
-}
-.title_I{
-    color: black;
-    font-size: 15px;
-    font-family: sans-serif;
-    position: absolute;
-    left: 30px;
-    top: 155px;
-}
-
-/* FINAL */
-.Data_final{
-    width: 100px;
-    background-color: #F2F2F2;
-    color: gray;
-    border-color:gray;
-    position: absolute;
-    left: 390px;
-    top: 150px;
-}
-.Tempo_final{
-    width: 80px;
-    height: 30px;
-    background-color: #F2F2F2;
-    color: gray;
-    border-color:gray;
-    position: absolute;
-    left: 500px;
-    top: 150px;
-}
-.title_F{
-    color: black;
-    font-size: 15px;
-    font-family: sans-serif;
-    position: absolute;
-    left: 330px;
-    top: 155px;
-}
-
-/* DURACAO */
-.Tempo{
-    color: #000;
-    font-weight: bold;
-    position: absolute;
-    left: 180px;
-    top: 250px;
-}
-.title_DA{
-    color: black;
-    font-size: 15px;
-    font-family: sans-serif;
-    position: absolute;
-    left: 30px;
-    top: 250px;
-}
-
-/* REPETIR */
-.Repetir{
-    width: 150px;
-    height: 30px;
-    background-color: #F2F2F2;
-    color: gray;
-    border-color:gray;
-    position: absolute;
-    left: 90px;
-    top: 300px;
-}
-.title_RR{
-    color: black;
-    font-size: 15px;
-    font-family: sans-serif;
-    position: absolute;
-    left: 30px;
-    top: 305px;
-}
-
-/* TITULO RESERVA */
-.Nome_Reserva{
-    width: 550px;
-    background-color: #F2F2F2;
-    color: gray;
-    border-color:gray;
-    position: absolute;
-    left: 30px;
-    bottom: 230px;
-}
-.title_TR{
-    color: black;
-    font-size: 15px;
-    font-family: sans-serif;
-    position: absolute;
-    left: 30px;
-    bottom: 270px;
-}
-
-/* DESCRICAO */
-.Descricao{
-    width: 550px;
-    height: 80px;
-    background-color: #F2F2F2;
-    color: gray;
-    border-color:gray;
-    position: absolute;
-    left: 30px;
-    bottom: 100px;
-}
-.title_DR{
-    color: black;
-    font-size: 15px;
-    font-family: sans-serif;
-    position: absolute;
-    left: 30px;
-    bottom: 190px;
-}
-
-/* PARTICIPANTES */
-.Participantes{
-    background-color: #F2F2F2;
-    color: gray;
-    border-color:gray;
-    position: absolute;
-    top: 80px;
-    right: 330px; 
-}
-.Adicionar{
-    color: gray;
-    font-size: 15px;
-    font-family: sans-serif;
-    position: absolute;
-    top: 85px;
-    right: 490px; 
-}
-.title_PT{
-    color: black;
-    font-size: 16px;
-    font-family: sans-serif;
-    position: absolute;
-    top: 50px;
-    right: 460px; 
-}
-
-/* BOTOÊS */
-.btn{
-    width: 80px;
-    height: 30px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.criar{
-    background-color: green;
-    color: #ffff;
-    border: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 10px;
-}
-.cancelar{
-    background-color: red;
-    color: #ffff;
-    border: none;
-    position: absolute;
-    top: 10px;
-    right: 100px;
-    
-}
-.Pessoa{
-    background-color: #DDDDDD;
-    color: #000;
-    border: none;
-    position: absolute;
-    top: 80px;
-    right: 240px;
-}
-.Grupos{
-    background-color: #DDDDDD;
-    color: #000;
-    border: none;
-    position: absolute;
-    top: 80px;
-    right: 150px;
-    
-}
-
-/* FRUFRU */
-.linha{
-    position: absolute;
-    background-color: gray;
-    width: 2px;
-    height: 500px;
-    top: 50px;
-    right: 50%;
-    border-radius: 50%;
+    color: #fff;
+    cursor: pointer
 }
