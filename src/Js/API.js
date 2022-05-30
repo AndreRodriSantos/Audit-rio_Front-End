@@ -1,8 +1,7 @@
 import { createElement } from 'react'
 import { history } from './history'
 import $ from "jquery"
-
-let listaCriada = false
+import { erro, sucesso } from '../components/mensagem'
 
 function fazPost(url, body) {
     console.log("Body=", body)
@@ -15,9 +14,9 @@ function fazPost(url, body) {
     if (url == "http://localhost:8080/api/reservation/save") {
         request.onload = function () {
             if (request.status == 200) {
-                window.alert("Reserva Cadastrada com sucesso")
+                sucesso("Reserva Cadastrada com sucesso")
             } else {
-                window.alert("Erro: Cadastro inválido")
+                erro("Erro: Cadastro inválido.\nVerifique os campos")
             }
         }
     }
@@ -25,10 +24,10 @@ function fazPost(url, body) {
     if (url == "http://localhost:8080/api/user/cadastrar") {
         request.onload = function () {
             if (request.status == 200) {
-                window.alert("Usuário Cadastrado com sucesso")
+                sucesso("Usuário Cadastrado com sucesso")
                 history.push("/Login")
             } else {
-                window.alert("Erro: Cadastro inválido. \n Verifique os campos")
+                erro("Erro: Cadastro inválido.\nVerifique os campos")
             }
         }
     }
@@ -40,12 +39,12 @@ function fazPost(url, body) {
                 token = token.replace('{"token":"', "")
                 token = token.replace('"}', "")
                 sessionStorage.setItem("token", token)
-                window.alert("Usuário Logado!!")
+                sucesso("Usuário Logado!!")
                 history.push("/Principal")
             } else if (request.status == 401) {
-                window.alert("Erro: Senha ou NIF incorretos")
+                erro("Erro: Senha ou NIF incorretos")
             } else if (request.status == 404) {
-                window.alert("Erro: Usuário não existe")
+                erro("Erro: Esse usuário não existe")
             }
         }
     }
@@ -94,14 +93,17 @@ export function login(event) {
         }
         fazPost(url, body)
     } else {
-        window.alert("Erro:Você já está Logado")
+        erro("Erro:Você já está Logado")
     }
 }
 
 export function logout() {
-    sessionStorage.removeItem("token")
-    window.alert("Usuário Deslogado")
-    history.push("/")
+    let token = sessionStorage.getItem("token")
+    if (token) {
+        sessionStorage.removeItem("token")
+        sucesso("Usuário Deslogado")
+        history.push("/")
+    }
 }
 
 export function reserva(event) {
@@ -114,8 +116,6 @@ export function reserva(event) {
     let participantes = document.getElementById("participantes").value
     let repetir = document.getElementById("repetir").checked
 
-    const token = sessionStorage.getItem("token")
-
     var body = {
         "titulo": titulo,
         "descricao": descricao,
@@ -127,8 +127,10 @@ export function reserva(event) {
     fazPost(url, body)
 }
 
+let listaCriada = false
+
 export function listaReservas() {
-    
+
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/reservation")
         let reservas = JSON.parse(data)
@@ -144,9 +146,12 @@ export function listaReservas() {
         let out = document.getElementById("Outubro")
         let nov = document.getElementById("Novembro")
         let dez = document.getElementById("Dezembro")
-
+        
         if (listaCriada == false) {
+            listaCriada = true
+            
             for (let i = 0; i < reservas.length; i++) {
+
                 let reserva = reservas[i]
                 const linha = document.createElement("tr")
 
@@ -229,14 +234,13 @@ export function listaReservas() {
                         break;
                 }
             }
-            listaCriada = true
         }
     }, 1);
 }
 
-export function decodaToken(){
+export function decodaToken() {
     let data = fazGet("http://localhost:8080/api/user/decodaToken")
-    console.log(data)
+    console.log("tipo do Metodo DecodaToken = " + data)
     return data
 }
 
@@ -279,8 +283,6 @@ export function listaUsuariosComuns() {
         }
     }, 1);
 }
-
-
 
 export function pegaTypes() {
     setTimeout(() => {

@@ -38,8 +38,16 @@ export default function Cadastro() {
                         <input type="hidden" name="id"></input>
 
                         <div className={styles.user_div}>
-                            <div className={styles.user_img}>
-                                <img src={user} />
+                            <div className={styles.personal_image}>
+                                <label className={styles.label}>
+                                    <input type="file" id="fileImage" onChange={fileChange} accept="image/*"/>
+                                    <figure className={styles.personal_figure}>
+                                        <img src={user} className={styles.personal_avatar}  id="imgPhoto" alt="avatar"/>
+                                            <figcaption className={styles.personal_figcaption}>
+                                                <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png"/>
+                                            </figcaption>
+                                    </figure>
+                                </label>
                             </div>
                         </div>
 
@@ -78,3 +86,21 @@ export default function Cadastro() {
         </div>
     )
 }
+
+function fileChange(){
+    let photo = document.getElementById('imgPhoto');
+    let file = document.getElementById('fileImage');
+
+    if (file.files.length <= 0) {
+        return;
+    }
+
+    let reader = new FileReader();
+
+    reader.onload = () => {
+        photo.src = reader.result;
+    }
+
+    reader.readAsDataURL(file.files[0]);
+}
+

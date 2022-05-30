@@ -3,20 +3,29 @@ import Login from './pages/Login'
 import Principal from './pages/Principal'
 import Reserva from './pages/Reserva'
 import Cadastro from './pages/Cadastro';
-import { isAuthenticated } from './Js/auth';
+import { isAuthenticated, isAuthenticatedAdmin } from './Js/auth';
 import {history} from './Js/history'
 import Verifica from './pages/Verifica';
 import { PostAuditorio } from './pages/PostAuditorio';
 import { decodaToken } from './Js/API';
+import { erro } from './components/mensagem';
 
 const PrivateRouteAdmin = (props) => {
-    isAuthenticated() ? <Route {...props}/> : <Redirect to="/Principal" push></Redirect> 
-    
-    /* if(isAuthenticated() == "ok"){
+     if(isAuthenticatedAdmin() === true){
         return <Route {...props}/>
     }else{
+        erro("Precisa estar logado como um\nAdministrador para acessar essa página")
         return <Redirect to="/Principal" push></Redirect> 
-    } */
+    }
+}
+
+const PrivateRoute = (props) =>{
+    if(isAuthenticated() === true){
+        return <Route {...props}/>
+    }else{
+        erro("Precisa estar logado para acessar aquela página")
+        return <Redirect to="/" push></Redirect> 
+    }
 }
 
 export default function Routes() {
@@ -25,10 +34,10 @@ export default function Routes() {
         <Switch>
             <Route path='/' exact component={Login}></Route>
             <Route path='/Login' component={Login}></Route>
-            <Route path='/Cadastro' component={Cadastro}/>
+            <PrivateRouteAdmin path='/Cadastro' component={Cadastro}/>
             <Route path='/Principal' component={Principal}/>
             <Route path='/PostAuditorio' component={PostAuditorio}/>
-            <Route path='/Reserva' component={Reserva}/>
+            <PrivateRoute path='/Reserva' component={Reserva}/>
             <PrivateRouteAdmin path='/Verifica' component={Verifica}/>
         </Switch>
         </Router>

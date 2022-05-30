@@ -36,7 +36,7 @@
     min-height: 400px;
     transform: matrix(-1, 0, 0, 1, 0 , 0);
 }
-.div_direita a:hover{
+.home:hover{
     font-size: 28px;
 }
 
@@ -128,27 +128,60 @@ html{
     margin-top: 70px;
 }
 
-.user_div{
-    width: 200px;
-    height: 200px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    position: absolute;
-    top: 70px;
-    right: 210px;
-    margin: -60px  auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.user_img{
-    width: 150px;
-    height: 150px;
-    position: absolute;
-    background-color: rgb(255, 255, 255);
-    border-radius: 50%;
+/* Input Foto de Usuário */
 
+.user_div{
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    top:50px;
+    left: 250px;
 }
+
+.personal_image {
+    text-align: center;
+  }
+  .personal_image input[type="file"] {
+    display: none;
+  }
+  .personal_figure {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  .personal_avatar {
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    box-sizing: border-box;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    transition: all ease-in-out .3s;
+  }
+  .personal_avatar:hover {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+  }
+  .personal_figcaption {
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    width: inherit;
+    height: inherit;
+    border-radius: 100%;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all ease-in-out .3s;
+  }
+  .personal_figcaption:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, .5);
+  }
+  .personal_figcaption > img {
+    margin-top: 32.5px;
+    width: 50px;
+    height: 50px;
+  }
 
 .select{
     margin-left: 20%;
@@ -201,8 +234,6 @@ option{
     bottom: 6px;
     left: 5px;
 }
-
-
 
 #sign_ico{
     margin-right: 20px;
