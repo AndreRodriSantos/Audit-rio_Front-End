@@ -30,7 +30,6 @@ export default function Cadastro() {
 
             <div className={styles.div_form}>
 
-
                 <div className={styles.form_base}>
 
                     <form className={styles.form} onSubmit={cadastraUsuario}>

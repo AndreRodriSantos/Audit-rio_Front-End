@@ -1,12 +1,13 @@
 import React from "react";
 import { reserva } from "../Js/API";
 import styles from "../css/Style_Reserva.module.css"
+import { erro } from "../components/mensagem";
 
 function Reserva() {
     return (
-        <div className={styles.principal}>
+        <div className={styles.principal} id="principal">
 
-            <form className={styles.payment} id="payment" action="cadastro">
+            <div className={styles.payment} id="payment" action="cadastro">
              
                 <div className={styles.form}>
                     <div className={styles.title_form}>
@@ -45,7 +46,7 @@ function Reserva() {
 
                             <h5 className={styles.title}>Descricao</h5>
                             <div className={styles.input}>
-                                <textarea name="descricao" rows="4" cols="50" id="descricao" className={styles.Descricao} >
+                                <textarea name="descricao" rows="4" cols="50" style={{resize:"none"}} id="descricao" className={styles.Descricao} >
                                 </textarea>
                             </div>
 
@@ -54,7 +55,7 @@ function Reserva() {
 
                             <div className={styles.slidecontainer}>
                                 <input type="range" min="1" max="118" id="myRange" onChange={numero} className={styles.slider} />
-                                <p className={styles.value}><span id="demo"></span></p>
+                                <p className={styles.value}><span id="participantes"></span></p>
                             </div>
 
                             <button type="submit" className={styles.btn} onClick={Confirmacao}>Criar</button>
@@ -65,7 +66,7 @@ function Reserva() {
 
                 </div>
 
-            </form>
+            </div>
 
         </div>
 
@@ -73,21 +74,33 @@ function Reserva() {
 }
 
 export function Confirmacao() {
-    const buy = document.querySelector(".buy");
-    const payment = document.getElementById("payment");
-    const close = document.querySelector(".close");
-    payment.style.display = "flex"
+    const token = sessionStorage.getItem("token")
+    if(token){
+        const payment = document.getElementById("payment");
+        const principal = document.getElementById("principal");
+        payment.style.display = "flex"
+        principal.style.display = "flex"
+    }else{
+        erro("Precisa estar logado para criar uma Reserva")
+    }
 }
 
 function Fechar() {
     const payment = document.getElementById("payment");
+    const principal = document.getElementById("principal");
+    document.getElementById("dataInicio").value = ""
+    document.getElementById("dataTermino").value = ""
+    document.getElementById("titulo").value = ""
+    document.getElementById("descricao").value = ""
+    document.getElementById("participantes").innerHTML = ""
     payment.style.display = "none"
+    principal.style.display = "none"
 } 
 
 function numero() {
 
     var slider = document.getElementById("myRange");
-    var output = document.getElementById("demo");
+    var output = document.getElementById("participantes");
     output.innerHTML = slider.value;
 
     slider.oninput = function () {

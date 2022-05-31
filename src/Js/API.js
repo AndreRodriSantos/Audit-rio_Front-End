@@ -119,16 +119,14 @@ export function reserva(event) {
     let descricao = document.getElementById("descricao").value
     let dataInicio = document.getElementById("dataInicio").value
     let dataTermino = document.getElementById("dataTermino").value
-    let participantes = document.getElementById("participantes").value
-    let repetir = document.getElementById("repetir").checked
+    let participantes = document.getElementById("participantes").textContent
 
     var body = {
         "titulo": titulo,
         "descricao": descricao,
         "dataInicio": dataInicio,
         "dataTermino": dataTermino,
-        "participantes": participantes,
-        "repetir": repetir
+        "participantes": participantes
     }
     fazPost(url, body)
 }

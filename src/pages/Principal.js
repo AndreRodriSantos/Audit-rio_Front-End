@@ -9,12 +9,13 @@ import Reserva, { Confirmacao } from "./Reserva";
 function Principal() {
   return (
     <div className={styles.container}>
+      <Reserva></Reserva>
       <div className={styles.header}>
 
         <a href="https://www.sp.senai.br/" target="blank" className={styles.logo_A}>
           <img className="img__logo" src={logo} />
         </a>
-        
+
         <div className={styles.menu}>
 
           <a href="/Login" className={styles.cadastro} title="Login">
@@ -132,7 +133,6 @@ function Principal() {
               <table id="Julho" className={styles.tabela_mes}>
                 <thead><tr><th colSpan="1" className={styles.mes}>Julho</th><th colSpan="4" className={styles.num}>07</th></tr></thead>
                 <tbody className={styles.body}>
-
                 </tbody>
               </table>
 
@@ -169,7 +169,7 @@ function Principal() {
           </div>
         </div>
       </div>
-      <Reserva></Reserva>
+      
     </div>
   );
 }

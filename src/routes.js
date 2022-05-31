@@ -23,7 +23,6 @@ const PrivateRoute = (props) => {
     if (isAuthenticated() === true) {
         return <Route {...props} />
     } else {
-        erro("Precisa estar logado para acessar aquela página")
         return <Redirect to="/" push></Redirect>
     }
 }
@@ -37,8 +36,8 @@ export default function Routes() {
                 <PrivateRouteAdmin path='/Cadastro' component={Cadastro} />
                 <Route path='/Principal' component={Principal} />
                 <Route path='/PostAuditorio' component={PostAuditorio} />
-                <PrivateRoute path='/Reserva' component={Reserva} />
                 <PrivateRouteAdmin path='/Verifica' component={Verifica} />
+                <Route path='*' exact component={Login}></Route>
             </Switch>
         </Router>
     )

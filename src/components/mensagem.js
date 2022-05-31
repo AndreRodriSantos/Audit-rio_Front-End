@@ -6,7 +6,7 @@ import imagemErro from "../IMG/erro.png"
 export default class Mensagem extends Component {
     render() {
         return (
-            <div className="mensagem_div" id="mensagem">
+            <div className="mensagem_div" id="mensagem" style={{zIndex: 20}}>
                 <span style={{ fontWeight: "bold" }} id="texto"></span><img style={{ height: "50px" }} id="imagem"></img>
             </div>
         )
