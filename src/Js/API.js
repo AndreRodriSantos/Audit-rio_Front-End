@@ -3,6 +3,7 @@ import { history } from './history'
 import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
 
+
 function fazPost(url, body) {
     console.log("Body=", body)
     let request = new XMLHttpRequest()
@@ -171,6 +172,7 @@ export function listaReservas() {
                 let dataInicio = (JSON.stringify(reserva.dataInicio))
                 let horaInicio = dataInicio.substring(12, 17)
                 dataInicio = dataInicio.substring(1, 11).replaceAll("-", "/")
+                
                 let dataTermino = (JSON.stringify(reserva.dataTermino))
                 let horaTermino = dataTermino.substring(12, 17)
                 dataTermino = dataTermino.substring(1, 11).replaceAll("-", "/")
@@ -183,6 +185,12 @@ export function listaReservas() {
                 status.style.fontWeight = "bold"
                 status.style.textAlign = "center"
                 linha.appendChild(status)
+
+                const tdBtn = document.createElement("td")
+                const btn = document.createElement("button")
+                btn.innerHTML = "..."
+                tdBtn.appendChild(btn)
+                linha.appendChild(tdBtn)
 
                 if (status.textContent == "CONFIRMADO") {
                     status.style.color = "green"
@@ -233,7 +241,6 @@ export function listaReservas() {
                     case "12":
                         dez.appendChild(linha)
                         break;
-
                     default:
                         break;
                 }
@@ -241,6 +248,8 @@ export function listaReservas() {
         }
     }, 1);
 }
+
+
 
 export function decodaToken() {
     let data = fazGet("http://localhost:8080/api/user/decodaToken")

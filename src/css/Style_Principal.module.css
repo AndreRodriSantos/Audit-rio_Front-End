@@ -329,7 +329,7 @@ input[type="search"]::-webkit-search-results-decoration {
     box-sizing: border-box;
     max-width: 5px;
     overflow-x: hidden;
-    width: 25%;
+    width: 23%;
 }
 
 .num{
@@ -372,3 +372,14 @@ li{
     font-size: 14px;
     color: #000;
 }
+
+#divMenu {
+    font:normal 20pt Calibri;
+    border:1px dotted blue;
+    width:200px;
+    padding:0;
+    position:absolute;
+    background:rgba(133, 192, 242, 0.54);
+    visibility:hidden;
+}
+

@@ -98,7 +98,6 @@ function Fechar() {
 } 
 
 function numero() {
-
     var slider = document.getElementById("myRange");
     var output = document.getElementById("participantes");
     output.innerHTML = slider.value;

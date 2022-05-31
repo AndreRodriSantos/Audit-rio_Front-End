@@ -55,8 +55,8 @@ function Principal() {
           </div>
 
         </div>
-
         <div className={styles.div_reservas}>
+
           <div className={styles.div_title}>
             <a className="navigation-link navigation-link-1" href="#">
               <span data-text="Reservas" className={styles.span}>Reservas</span>
@@ -169,7 +169,6 @@ function Principal() {
           </div>
         </div>
       </div>
-      
     </div>
   );
 }
