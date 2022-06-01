@@ -201,7 +201,7 @@ export function listaReservas() {
                 }
 
                 let mes = tdData.textContent
-                mes = mes.substring(5, 7)
+                mes = mes.substring(3, 5)
 
                 switch (mes) {
                     case "01":
