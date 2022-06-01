@@ -62,7 +62,7 @@ export default function cadastraUsuario(event) {
     let senha = document.getElementById("senha").value
     let type = document.getElementById("type").value
     let photo = document.getElementById('imgPhoto');
-    let foto =  photo.src
+    let foto = photo.src
     console.log(foto)
 
     var body = {
@@ -102,13 +102,25 @@ export function login(event) {
     }
 }
 
+function formatarDataInicio(data) {
+    const dataInicio = fazGet("http://localhost:8080/api/reservation/formatarDataInicio")
+    console.log("data Inicio = " + dataInicio.substring(0, 10));
+    return dataInicio.substring(1, 10)
+}
+
+function formatarDataTermino(data) {
+    const dataTermino = fazGet("http://localhost:8080/api/reservation/formatarDataTermino")
+    console.log("data Termino = " + dataTermino.substring(0, 10));
+    return dataTermino.substring(1, 10)
+}
+
 export function logout() {
     let token = sessionStorage.getItem("token")
     if (token) {
         sessionStorage.removeItem("token")
         sucesso("Usuário Deslogado")
         history.push("/")
-    }else{
+    } else {
         erro("Você não está logado")
     }
 }
@@ -135,7 +147,6 @@ export function reserva(event) {
 let listaCriada = false
 
 export function listaReservas() {
-
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/reservation")
         let reservas = JSON.parse(data)
@@ -151,12 +162,11 @@ export function listaReservas() {
         let out = document.getElementById("Outubro")
         let nov = document.getElementById("Novembro")
         let dez = document.getElementById("Dezembro")
-        
+
         if (listaCriada == false) {
             listaCriada = true
-            
-            for (let i = 0; i < reservas.length; i++) {
 
+            for (let i = 0; i < reservas.length; i++) {
                 let reserva = reservas[i]
                 const linha = document.createElement("tr")
 
@@ -170,10 +180,12 @@ export function listaReservas() {
 
                 const tdData = document.createElement("td")
                 let dataInicio = (JSON.stringify(reserva.dataInicio))
+                dataInicio = formatarDataInicio(dataInicio)
                 let horaInicio = dataInicio.substring(12, 17)
                 dataInicio = dataInicio.substring(1, 11).replaceAll("-", "/")
-                
+
                 let dataTermino = (JSON.stringify(reserva.dataTermino))
+                dataTermino = formatarDataTermino(dataTermino)
                 let horaTermino = dataTermino.substring(12, 17)
                 dataTermino = dataTermino.substring(1, 11).replaceAll("-", "/")
                 tdData.innerHTML = dataInicio + "  -  " + dataTermino + "<br/>" + horaInicio + "  -  " + horaTermino
@@ -263,6 +275,7 @@ export function listaUsuariosComuns() {
         let users = JSON.parse(data)
         let lista = document.getElementById("lista")
 
+
         if (lista.childElementCount == 0) {
             for (let i = 0; i < users.length; i++) {
                 let usuario = users[i]
@@ -329,7 +342,7 @@ export function pegaTodosUsuarios() {
 }
 
 export function img() {
-    const token = 'EAAcMsX26zZA0BALBu6r4R2ZAZAAr0Nrwz6lVmWGnFZBLPI3OV7ca4H13eiE0TQfuB0ES0u8XGE7KKU3K0qv1ziGeLXsPPA8ZBcqLrTQvDvXBoqkZAM5uWrgHifD9grODwBOOUDft709LgKm2lnGUJvrvcZCSb4aTKLooCXs9Pr1xCYaCzhZBqhrpcccdlNOacTSWgX6AuMsctnqg4rBes4QPusSIGMb5LpoZD'
+    const token = 'EAAcMsX26zZA0BAKQYMKQDIJIe9PeNPZBmjLXi9lSl8ycZAjdeDDGDAjw10AZALXTEumsS3NzGk3F59OKMm8xfMLv9kqjSeiEmY53zqv92eUpovxevoKZBQTRtTHgjIMTq8ZAFZCX8ZBfU2Tr6YvrcPZCOVLxxEE8jMHIU2mrRytKBLtB2ZAujL0mVv'
     const url = 'https://graph.facebook.com/17903255252601782/recent_media?user_id=17841453104072947&fields=id,media_type,comments_count,like_count,permalink,media_url&access_token=' + token
 
     $.get(url).then(function (response) {
@@ -346,5 +359,39 @@ export function img() {
     })
 }
 
+export function contador() {
+    setTimeout(() => {
+        let usuarios = fazGet("http://localhost:8080/api/user/verifica")
+        usuarios = JSON.parse(usuarios)
+        let reservas = fazGet("http://localhost:8080/api/reservation")
+        reservas = JSON.parse(reservas)
+        let admins = fazGet("http://localhost:8080/api/user/verificaAdmin")
+        admins = JSON.parse(admins)
+
+        let usuarioSpan = document.getElementById("contUsers")
+        let adminSpan = document.getElementById("contAdmin")
+        let reservaSpan = document.getElementById("contReservas")
+
+        let contadorUser = 0
+        let contadorAdmin = 0
+        let contadorReserva = 0
+
+        if (usuarioSpan.textContent == 0) {
+            for (let i = 0; i < usuarios.length; i++) {
+                contadorUser++
+            }
+            for (let i = 0; i < admins.length; i++) {
+                contadorAdmin++
+            }
+
+            for (let i = 0; i < reservas.length; i++) {
+                contadorReserva++
+            }
+            usuarioSpan.innerHTML = contadorUser
+            adminSpan.innerHTML = contadorAdmin
+            reservaSpan.innerHTML = contadorReserva
+        }
+    }, 5);
+}
 
 

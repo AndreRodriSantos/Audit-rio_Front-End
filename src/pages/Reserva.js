@@ -3,7 +3,7 @@ import { reserva } from "../Js/API";
 import styles from "../css/Style_Reserva.module.css"
 import { erro } from "../components/mensagem";
 
-function Reserva() {
+export function Reserva() {
     return (
         <div className={styles.principal} id="principal">
 

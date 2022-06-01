@@ -1,46 +1,56 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 }
 
-.header{
+:root {
+    --white: #ffffff;
+    --black: #212123;
+    --blue: #2884B2;
+    --pink:#E12E6C;
+    --red: #FF0000;
+    --green: #56AF5A;
+    
+}
+
+.header {
     width: 100%;
-    height:70px;
+    height: 70px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.header a:hover{
+.header a:hover {
     font-size: 25px;
 }
 
-.principal{
-    width: 100%;
-    height: 100%;
+.principal {
+    width: 90%;
+    height: 800px;
+    border-radius: 20px;
+    background-color: #EEF2F5;
     display: flex;
     flex-direction: row;
-    background-color: #f2f2f2;
-    border: 3px solid rgb(230, 230, 230);
+    margin: 50px auto;
 }
 
-.sidebar{
+.sidebar {
     width: 20%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-right: 3px solid rgb(230, 230, 230);
 
 }
 
-.div_reservas{
+.div_reservas {
     width: 80%;
     height: 100%;
 }
 
-.logo_A{
+.logo_A {
     position: relative;
     width: 170px;
     height: 45px;
@@ -50,7 +60,8 @@
     padding: 10px;
 
 }
-.menu{
+
+.menu {
     width: 300px;
     height: 50px;
     display: flex;
@@ -59,11 +70,11 @@
     padding: 10px;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-.help{
+.help {
     color: white;
     font-size: 22px;
     border: 3px solid red;
@@ -76,19 +87,8 @@ a{
     width: 40px;
     height: 80%;
 }
-.cadastro{   
-    font-size: 22px;
-    color: white;
-    background-color: red;  
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    width: 40px;
-    height: 80%;
-}
-.log_off{
+
+.cadastro {
     font-size: 22px;
     color: white;
     background-color: red;
@@ -101,97 +101,542 @@ a{
     height: 80%;
 }
 
-.calendario{
-    margin: 10px auto;
-    width: 80%;
-    max-width: 265px;
+.log_off {
+    font-size: 22px;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 40px;
+    height: 80%;
+}
+
+.calendario {
+    position: relative;
+    top: 20px;
+    left: 25px;
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    margin: 0 auto;
+    background-color: var(--white);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-bottom: 3px solid rgb(230, 230, 230);
+   
 }
 
+.title_calen_base{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}
+
+.title_calendario{
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--black);
+}
+
+/* LISTA USER */
+
 .users_lista{
-    max-height: 800px;
-    overflow-y: scroll;
+    position: relative;
+    left: 25px;
+    bottom: -60px;
     width: 100%;
+    height: 50%;
+    border-radius: 20px;
+    margin: 0 auto;
+    background-color: var(--white);
+}
+
+.btn_NC{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2A92CF;
+}
+
+.title_User{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--black);
+    font-size: 18px;
+}
+
+.title_NC{
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.base_user{
+    position: relative;
+    top: 60px;
+    height: 100%;
+}
+
+.listaUsers{
+    position: relative;
+    top: 8%;
+    width: 90%;
+    height: 75%;
+    left: 5%;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.header_user{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title_menu{
+    margin: 0 4.5%;
+    font-weight: bold;   
+}
+
+.linha_menu{
+    position: absolute;
+    width: 90%;
+    height: 2px;
+    bottom: 0;
+    border-radius: 20px;
+    background-color: #F5F6F8;
+}
+
+li {
+    margin: 20px;
+    list-style: none;
+    text-transform: capitalize;
+}
+
+.users_lista h1 {
+    margin-left: 20px;
+}
+
+.body tr {
+    width: 100%;
+    height: 100px;
+    display: block;
+}
+
+.title_RS {
+    font-size: 14px;
+    color: #000;
 }
 
 /* HEADER LIST */
 
-.header_lista{
+.header_lista {
     position: relative;
     width: 100%;
-    height: 100px;
+    height: 155px;
     display: flex;
-    justify-content: space-around;
+    /*  justify-content: center; */
     align-items: center;
-   /*  background-color: #b3b3b3; */
+    background-color: transparent;
 }
 
-.btn_NovaReserva{
+/* iformações de qnd */
+.qnd_header {
     position: relative;
+    margin-left: 50px;
+    width: 270px;
+    height: 120px;
+    border-radius: 9px;
+    background: #fff;
+}
+
+.base_icons {
+    position: relative;
+    top: -10px;
+    left: 20px;
+    width: 55px;
+    height: 57px;
+    border-radius: 8px;
+    font-size: 20px;
+    background-color: #000;
     display: flex;
-    width: 150px;
-    height: 35px;
-    border-radius: 50px;
-    background-color: red;
-    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    position: absolute;
+    right: 10px;
+    top: 0;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+
+}
+.name{
+    font-size: 18px;
+    color: var(--black);
+}
+
+.qnd_title {
+    position: absolute;
+    right: 10px;
+    top: 30px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+
+}
+
+.qnd_number {
+    font-size: 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--black);
+}
+
+.base_linha {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.linha {
+    background-color: var(--black);
+    width: 90%;
+    height: 2px;
+}
+
+.sub_title {
+    position: absolute;
+    left: 20px;
+    bottom: 0;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+}
+
+.sub_name{
+    font-size: 16px;
+    color: var(--black);
+}
+
+.base_color_qnd1{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    color: #fff;
+    background-color: var(--black);
+    transition: 0.5s;
+}
+
+.base_color_qnd1:hover {
+    font-size: 25px;
+    transform: rotate(45deg);
+    color: #fff;
+}
+
+.base_color_qnd2{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    color: #fff;
+    background-color: var(--blue);
+    transition: 0.5s;
+}
+
+.base_color_qnd2:hover {
+    font-size: 25px;
+    transform: rotate(45deg);
+    color: #fff;
+}
+
+.base_color_qnd3{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    color: #fff;
+    background-color: var(--green);
+    transition: 0.5s;
+}
+
+.base_color_qnd3:hover {
+    font-size: 25px;
+    transform: rotate(45deg);
+    color: #fff;
+}
+
+/* BTNS */
+.btn_header {
+    position: absolute;
+    right: 50px;
+    width: 200px;
+    height: 80px;
+    border-radius: 9px;
+    background: #fff;
+    display: -webkit-inline-box;
+    -webkit-box-align: center;
+
+}
+
+.btns_header {
+    position: relative;
+    left: -15%;
+    width: 55px;
+    height: 57px;
+    border-radius: 8px;
+    margin: 0 15px 0 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+}
+
+.base_icons_btn {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    /* background-color: red; */
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.base_color_btn1 {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    color: #fff;
+    background-color: var(--pink);
+    transition: 0.5s;
+}
+
+.base_color_btn1:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 25px;
+    color: #fff;
+}
+
+.base_color_btn2 {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    color: #fff;
+    background-color: var(--blue);
+    transition: 0.5s;
+}
+
+.base_color_btn2:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 25px;
+    color: #fff;
+}
+
+.base_color_btn3 {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    color: #fff;
+    background-color: var(--red);
+    transition: 0.5s;
+}
+
+.base_color_btn3:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 25px;
+    color: #fff;
+}
+
+
+/* LISTA */
+
+.div_title {
+    position: relative;
+    margin-left: 1%;
+    top: 10px;
+    height: 30px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+}
+
+
+.div_title a {
+    font-family: "Cosi Azure";
+    font-size: 40px;
+    font-weight: 800;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fefefe00;
+    -webkit-text-stroke: 1px #000;
+    margin-right: 100%;
+}
+
+.div_title span::before {
+    width: 0;
+    color: #000;
+    overflow: hidden;
+    position: absolute;
+    content: attr(data-text);
+    transition: all 1s cubic-bezier(0.84, 0, 0.08, 0.99);
+}
+
+.div_title span:hover::before {
+    width: 100%;
+}
+
+.span {
+    width: 250px;
+    position: relative;
+    display: block;
+    margin: 70px;
+
+}
+
+.title_pes {
+    position: relative;
+    font-size: 40px;
+}
+
+.reservas{
+    position: relative;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+.tabela_mes {
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: white;
+    border: none;
+}
+
+.base_lista{
+    position: relative;
+    width: 100%;
+    height: 90%;
+    border-radius: 20px;
+    margin: 2% 50px; 
+    display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
-    right: 15px;
+    background-color: var(--white);
 }
 
-
-.btn_NovaReserva a{
-    position: relative;
-    font-family: sans-serif;
-    font-size: 16px;
-    margin-left: 5px;
-    color: #fff;
-    cursor: pointer;
+.postion_text_reserva{
+    position: absolute;
+    top: 2%;
+    left: 5%;
+    width: 250px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 
-.btn_NovaReserva i{
-    font-size: 16px;
-    margin-left: 5px;
-    color: #fff;
+.title_reserva{
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--black);
 }
 
 .div_pesquisa{
-    height: 100%;
-    width: 50%;
+    position: absolute; 
+    height: 60px;
+    width: 30%;
+    top: 1%;
+    right: 5%;
     display: flex;
-    flex-direction: column;
-   position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: right;
 }
 
 .base_pes{
-    top: 30px;
-    margin-left: 10px;
-    position:relative;
+    position: relative;
     width: 80%; 
-    height: 40px;
+    height: 50px;
     border-radius: 50px;   
-    background-color: #FFFFFF;
-    box-shadow: 0px 0px 15px 5px  rgba(0, 0, 0, 0.2);
+    background-color: var(--black);
     display: flex;
+    align-items: center;
 }
 
 .pesquisa_reservas{
     position: relative;
     left: 10%;
-    width: 60%;
+    width: 70%;
+    height: 100%;
     border: none;
     outline: none;
     font-size: 18px;
-    color: #000;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.63);
 }
 
 .pesquisa_reservas::placeholder{
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.459);
+    font-size: 20px;
+    color: var(--white);
 }
 
 input[type="search"]::-webkit-search-decoration,
@@ -203,183 +648,77 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .lupa{
     position: relative;
+    left: 5%;
     width: 40px;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    left: 20px;
-}
-
-.imprimir{
-    width: 35px;
-    height: 35px;
-    right: 30px;
-    cursor: pointer;
-    border: 2px solid red;
-    border-radius: 50px;
-    background-color: transparent;
-    color: red;
-}
-
-.imprimir:hover{
-    font-size: 16px;
-}
-
-.download{
-    width: 35px;
-    height: 35px;
-    right: 30px;
-    cursor: pointer;
-    border: 2px solid red;
-    border-radius: 50px;
-    background-color: transparent;
-    color: red;
-}
-.download:hover{
-    font-size: 16px;
-}
-
-/* LISTA */
-.div_title{
-    position: relative;
-    margin-left: 1%;
-    top: 10px;
-    height: 30px;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    justify-items: center;
- }
- 
- 
- .div_title a{
-     font-family: "Cosi Azure";
-     font-size: 40px;
-     font-weight: 800;
-     text-decoration: none;
-     text-transform: uppercase;
-     color: #fefefe00;
-     -webkit-text-stroke: 1px #000; 
-     margin-right: 100%;
- }
- 
- .div_title span::before{
-     width: 0;
-     color: #000;
-     overflow: hidden;
-     position: absolute;
-     content: attr(data-text);
-     transition: all 1s cubic-bezier(0.84, 0 , 0.08, 0.99);
- }
- 
- .div_title span:hover::before{
-     width: 100%;
- }
- 
- .span{
-    width: 250px; 
-    position: relative;
-    display: block;
-    margin: 70px;
-
- }
- 
-.title_pes{
-    position: relative;
-    font-size: 40px;
-}
-
-.reservas{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.tabela_mes{
-    border: 1px solid;
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 10px;
-    background-color: white;
-    border: 3px solid rgb(230, 230, 230); 
-}
-
-
-.lista{
-    overflow: scroll;
-    overflow-x: hidden;
-}
-
-.tabela_mes thead{
-    height: 50px;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 200;
+    color: var(--white);
 }
 
-.tabela_mes tr{
-    border: 3px solid rgb(230, 230, 230);
-    height: 50px;
-}
-
-.tabela_mes td{
-    box-sizing: border-box;
-    max-width: 5px;
-    overflow-x: hidden;
-    width: 23%;
-}
-
-.num{
-    text-align: end;
-    padding-right: 10px;
-    color: lightgray;
-    font-size: 30px;
-    column-span: 4;
-}
-.mes{
-    text-align: start;
-    padding-left: 10px;
-}
-
-.lista{
+.lista {
     position: relative;
-    top: 30px;
     width: 90%;
     height: 75%;
 }
 
-li{
-    margin: 20px;
-    list-style: none;
-    color:gray;
-    text-transform: capitalize;
+.lista {
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
-.users_lista h1{
-    margin-left: 20px;
+.tabela_mes thead {
+    height: 50px;
+    background-color: #F5F6F8;
+  
 }
 
-.body tr{
-    width: 100%;
-    height: 100px;
-    display: block;
+.tabela_mes tr {
+    height: 50px;
 }
 
-.title_RS{
-    font-size: 14px;
-    color: #000;
+.num {
+    text-align: end;
+    padding-right: 10px;
+    color: var(--black);
+    font-size: 30px;
+    font-weight: 400;
+    column-span: 4; 
 }
 
-#divMenu {
-    font:normal 20pt Calibri;
-    border:1px dotted blue;
-    width:200px;
-    padding:0;
-    position:absolute;
-    background:rgba(133, 192, 242, 0.54);
-    visibility:hidden;
+.mes {
+    text-align: start;
+    padding-left: 10px;
+    color: var(--black);
+    font-size: 25px;
+    font-weight: 400;
 }
 
+.tabela_mes td {
+    box-sizing: border-box;
+    max-width: 5px;
+    overflow-x: hidden;
+    width: 23%;
+    background-color: #fff;
+    border-bottom: 2px solid #F5F6F8;
+    color: var(--black);
+    font-size: 15px;
+}
+
+td button{
+    width: 50px;
+    background-color: transparent;
+    border: none;
+    color: var(--black);
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.1s;  
+}
+
+td button:hover{
+    font-size: 25px;
+}
