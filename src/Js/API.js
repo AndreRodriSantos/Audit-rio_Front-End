@@ -38,8 +38,10 @@ function fazPost(url, body) {
         request.onload = function () {
             if (request.status == 200) {
                 let token = this.responseText
+                console.log("Token Antes do replace = " + token)
                 token = token.replace('{"token":"', "")
                 token = token.replace('"}', "")
+                console.log("Token Depois do replace = " + token)
                 sessionStorage.setItem("token", token)
                 sucesso("Usuário Logado!!")
                 history.push("/Principal")
@@ -89,6 +91,8 @@ export function fazGet(url) {
 
 export function login(event) {
     event.preventDefault()
+    const token = decodaToken()
+    console.log("IRINEL!!"+token);
     if (sessionStorage.getItem("token") == null) {
         let url = ("http://localhost:8080/api/user/login");
         let nif = document.getElementById("loginNif").value
@@ -208,11 +212,17 @@ export function listaReservas() {
                 status.style.fontWeight = "bold"
                 status.style.textAlign = "center"
                 linha.appendChild(status)
+
+                //Foto
+                const fotoSpan = document.createElement("span")
+                const img = document.createElement("img")
+
+                //Usuario nome
                 
                 let usuario = reserva.usuario
-                const tdUsuario = document.createElement("td")
-                tdUsuario.innerHTML = "Usuario"
                 console.log(usuario)
+                const tdUsuario = document.createElement("td")
+                tdUsuario.innerHTML = usuario.nome
                 linha.appendChild(tdUsuario)
 
                 const tdBtn = document.createElement("td")
@@ -278,12 +288,22 @@ export function listaReservas() {
     }, 1);
 }
 
-
-
 export function decodaToken() {
     let data = fazGet("http://localhost:8080/api/user/decodaToken")
     console.log("tipo do Metodo DecodaToken = " + data)
     return data
+}
+
+export function sendId() {
+    let data = fazGet("http://localhost:8080/api/user/sendId")
+    console.log("Id do Metodo DecodaToken = " + data)
+    return data
+}
+
+export function pegaUsuario(){
+    const id = sendId()
+    let data = fazGet("http://localhost:8080/api/user/" + id)
+    console.log(data);
 }
 
 export function listaUsuariosComuns() {
@@ -359,6 +379,8 @@ export function pegaTodosUsuarios() {
 }
 
 export function img() {
+    setTimeout(() => {
+        
     const token = 'EAAcMsX26zZA0BAKQYMKQDIJIe9PeNPZBmjLXi9lSl8ycZAjdeDDGDAjw10AZALXTEumsS3NzGk3F59OKMm8xfMLv9kqjSeiEmY53zqv92eUpovxevoKZBQTRtTHgjIMTq8ZAFZCX8ZBfU2Tr6YvrcPZCOVLxxEE8jMHIU2mrRytKBLtB2ZAujL0mVv'
     const url = 'https://graph.facebook.com/17903255252601782/recent_media?user_id=17841453104072947&fields=id,media_type,comments_count,like_count,permalink,media_url&access_token=' + token
 
@@ -368,12 +390,14 @@ export function img() {
 
         for (let i = 0; i < dados.length; i++) {
             let feed = dados[i]
+            console.log(feed);
             let tipo = feed.media_type;
             conteudo += '<div><img src="' + feed.media_url + '" onclick="window.open(\'' + feed.permalink + '\');"></div>';
         }
         conteudo += '</div>'
         $('#insta').html(conteudo)
     })
+}, 1);
 }
 
 export function contador() {

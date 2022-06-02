@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import cadastraUsuario, { cadUser, fazGet, login, pegaTypes } from '../Js/API.js';
+import cadastraUsuario, { cadUser, fazGet, login, pegaTypes, pegaUsuario } from '../Js/API.js';
 import styles from '../css/Style_Login.module.css';
 import triangulo from '../IMG/trianguloEsquerda.png'
 import projetor from '../IMG/projetor.gif'
@@ -48,6 +48,10 @@ function Login() {
 
                 <a href="/Principal" className={styles.home} title="Principal/Home">
                     <i className="fa-solid fa-home"></i>
+                </a>
+
+                <a onClick={pegaUsuario} className={styles.alterar} title="Alterar Usuário">
+                    <i className="fa-solid fa-edit"></i>
                 </a>
                 <div className={styles.div_title}>
                     <a className="navigation-link navigation-link-1" href="#">

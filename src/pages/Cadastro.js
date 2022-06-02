@@ -39,7 +39,7 @@ export default function Cadastro() {
                         <div className={styles.user_div}>
                             <div className={styles.personal_image}>
                                 <label className={styles.label}>
-                                    <input type="file" id="fileImage" onChange={fileChange} accept="image/*"/>
+                                    
                                     <figure className={styles.personal_figure}>
                                         <img src={user} className={styles.personal_avatar}  id="imgPhoto" alt="avatar"/>
                                             <figcaption className={styles.personal_figcaption}>

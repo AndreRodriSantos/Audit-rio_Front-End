@@ -1,10 +1,10 @@
 import {img} from '../Js/API.js';
+import styles from "../css/PostAuditorio.module.css"
 
 export function PostAuditorio(){
     return(
-        <div className='container'>
-        <h1 onClick={img}>Fotos</h1>
-        <div id="insta"></div>
+        <div className={styles.container} onLoad={img()}>
+        <div id="insta" className={styles.insta}></div>
         </div>
     )
 }

@@ -1,14 +1,13 @@
 import { BrowserRoute, Route, Switch, BrowserRouter, Redirect, Router } from 'react-router-dom'
 import Login from './pages/Login'
 import Principal from './pages/Principal'
-import Reserva from './pages/Reserva'
 import Cadastro from './pages/Cadastro';
 import { isAuthenticated, isAuthenticatedAdmin } from './Js/auth';
 import { history } from './Js/history'
 import Verifica from './pages/Verifica';
 import { PostAuditorio } from './pages/PostAuditorio';
-import { decodaToken } from './Js/API';
 import { erro } from './components/mensagem';
+import { alterar } from './pages/Alterar';
 
 const PrivateRouteAdmin = (props) => {
     if (isAuthenticatedAdmin() === true) {
@@ -33,10 +32,11 @@ export default function Routes() {
             <Switch>
                 <Route path='/' exact component={Login}></Route>
                 <Route path='/Login' component={Login}></Route>
-                <PrivateRouteAdmin path='/Cadastro' component={Cadastro} />
+                <Route path='/Cadastro' component={Cadastro} />
                 <Route path='/Principal' component={Principal} />
                 <Route path='/PostAuditorio' component={PostAuditorio} />
                 <PrivateRouteAdmin path='/Verifica' component={Verifica} />
+                <Route path='/Alterar' exact component={alterar}></Route>
                 <Route path='*' exact component={Login}></Route>
             </Switch>
         </Router>
