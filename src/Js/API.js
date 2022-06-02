@@ -27,6 +27,7 @@ function fazPost(url, body) {
             if (request.status == 200) {
                 sucesso("Usuário Cadastrado com sucesso")
                 history.push("/Login")
+                
             } else {
                 erro("Erro: Cadastro inválido.\nVerifique os campos")
             }
@@ -102,18 +103,6 @@ export function login(event) {
     }
 }
 
-function formatarDataInicio(data) {
-    const dataInicio = fazGet("http://localhost:8080/api/reservation/formatarDataInicio")
-    console.log("data Inicio = " + dataInicio.substring(0, 10));
-    return dataInicio.substring(1, 10)
-}
-
-function formatarDataTermino(data) {
-    const dataTermino = fazGet("http://localhost:8080/api/reservation/formatarDataTermino")
-    console.log("data Termino = " + dataTermino.substring(0, 10));
-    return dataTermino.substring(1, 10)
-}
-
 export function logout() {
     let token = sessionStorage.getItem("token")
     if (token) {
@@ -144,6 +133,17 @@ export function reserva(event) {
     fazPost(url, body)
 }
 
+function dataFormatada(date){
+    var data = new Date(date),
+        dia  = data.getDate().toString(),
+        diaF = (dia.length == 1) ? '0'+dia : dia,
+        mes  = (data.getMonth()+1).toString(),
+        mesF = (mes.length == 1) ? '0'+mes : mes,
+        anoF = data.getFullYear();
+    return diaF+"/"+mesF+"/"+anoF;
+}
+
+
 let listaCriada = false
 
 export function listaReservas() {
@@ -163,6 +163,7 @@ export function listaReservas() {
         let nov = document.getElementById("Novembro")
         let dez = document.getElementById("Dezembro")
 
+
         if (listaCriada == false) {
             listaCriada = true
 
@@ -176,18 +177,28 @@ export function listaReservas() {
 
                 const tdTitulo = document.createElement("td")
                 tdTitulo.innerHTML = reserva.titulo
+                tdTitulo.style.textAlign = "center"
                 linha.appendChild(tdTitulo)
 
                 const tdData = document.createElement("td")
+                tdData.style.color = "gray"
+
                 let dataInicio = (JSON.stringify(reserva.dataInicio))
-                dataInicio = formatarDataInicio(dataInicio)
                 let horaInicio = dataInicio.substring(12, 17)
-                dataInicio = dataInicio.substring(1, 11).replaceAll("-", "/")
+                dataInicio = dataInicio.substring(1, 11)
+
+                /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
+                dataInicio = dataFormatada(dataInicio)
+                /* CHAMANDO O METODO DE FORMATAR */
 
                 let dataTermino = (JSON.stringify(reserva.dataTermino))
-                dataTermino = formatarDataTermino(dataTermino)
                 let horaTermino = dataTermino.substring(12, 17)
-                dataTermino = dataTermino.substring(1, 11).replaceAll("-", "/")
+                dataTermino = dataTermino.substring(1, 11)
+                
+                /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
+                dataTermino = dataFormatada(dataTermino)
+                /* CHAMANDO O METODO DE FORMATAR */
+
                 tdData.innerHTML = dataInicio + "  -  " + dataTermino + "<br/>" + horaInicio + "  -  " + horaTermino
                 tdData.style.textAlign = "center"
                 linha.appendChild(tdData)
@@ -197,6 +208,12 @@ export function listaReservas() {
                 status.style.fontWeight = "bold"
                 status.style.textAlign = "center"
                 linha.appendChild(status)
+                
+                let usuario = reserva.usuario
+                const tdUsuario = document.createElement("td")
+                tdUsuario.innerHTML = "Usuario"
+                console.log(usuario)
+                linha.appendChild(tdUsuario)
 
                 const tdBtn = document.createElement("td")
                 const btn = document.createElement("button")
@@ -209,7 +226,7 @@ export function listaReservas() {
                 } else if (status.textContent == "FINALIZADO") {
                     status.style.color = "red"
                 } else {
-                    status.style.backgroundColor = "#fccd32"
+                    status.style.color = "#fccd32"
                 }
 
                 let mes = tdData.textContent
