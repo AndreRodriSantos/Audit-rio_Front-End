@@ -28,6 +28,8 @@ export default function Alterar() {
                     <form className={styles.form} onSubmit={alteraUsuario}>
 
                         <input type="hidden" name="id" id="id"></input>
+                        <input type="hidden" name="nif" id="nif"></input>
+                        <input type="hidden" name="type" id="tipo"></input>
 
                         <div className={styles.User}>
                             <input type="text" placeholder="NOME" name="nome" required id="nome" className={styles.input} /><br />

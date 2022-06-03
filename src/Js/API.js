@@ -3,6 +3,8 @@ import { history } from './history'
 import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
 import { isAuthenticatedAdmin } from './auth'
+import imagemOK from "../IMG/OK.png"
+import imagemErro from "../IMG/erro.png"
 
 /* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
@@ -28,7 +30,7 @@ function fazPost(url, body) {
             if (request.status == 200) {
                 sucesso("Usuário Cadastrado com sucesso")
                 history.push("/Login")
-                
+
             } else {
                 erro("Erro: Cadastro inválido.\nVerifique os campos")
             }
@@ -62,16 +64,18 @@ export function fazGet(url) {
     let request = new XMLHttpRequest()
     request.open("GET", url, false)
     request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
-    
+
     request.send()
     return request.responseText
 }
 
-export function fazPut(url, body){
+export function fazPut(url, body) {
     let request = new XMLHttpRequest()
     request.open("PUT", url, true)
+    console.log(body);
     request.setRequestHeader("Content-type", "application/json")
     request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
+    request.setRequestHeader("Access-Control-Allow-Methods", "PUT")
     request.setRequestHeader('Access-Control-Allow-Origin', '*');
     request.send(JSON.stringify(body))
 }
@@ -198,48 +202,58 @@ export function decodaToken() {
     return data
 }
 
-export function sendId(){
+export function sendId() {
     let data = fazGet("http://localhost:8080/api/user/sendId")
     console.log("ID do Metodo sendId = " + data)
     return data
 }
 
-export function pegaUsuario(){
+export function pegaUsuario() {
     setTimeout(() => {
-    let id = sendId()
-    let data = fazGet("http://localhost:8080/api/user/" + id)
-    let usuario = JSON.parse(data)
+        let id = sendId()
+        let data = fazGet("http://localhost:8080/api/user/" + id)
+        let usuario = JSON.parse(data)
 
-    let inputId = document.getElementById("id")
-    let inputNome = document.getElementById("nome")
-    let inputEmail = document.getElementById("email")
+        let inputId = document.getElementById("id")
+        let inputType = document.getElementById("tipo")
+        let inputNome = document.getElementById("nome")
+        let inputEmail = document.getElementById("email")
+        let inputNif = document.getElementById("nif")
 
-    inputId.value = usuario.id
-    inputNome.value = usuario.nome
-    inputEmail.value = usuario.email
-    console.log(usuario)
-    return usuario
+        inputType.value = usuario.type
+        inputId.value = usuario.id
+        inputNome.value = usuario.nome
+        inputEmail.value = usuario.email
+        inputNif.value = usuario.nif
 
-}, 5);
+        console.log(usuario);
+        return usuario
+
+    }, 5);
 }
 
-export function alteraUsuario(event){
-    event.preventDefault()
+export function alteraUsuario(event) {
+
     let id = sendId()
     let url = ("http://localhost:8080/api/user/" + id)
+    let usuario = pegaUsuario()
 
     let nome = document.getElementById("nome").value
     let email = document.getElementById("email").value
     let senha = document.getElementById("senha").value
-
-    console.log(id + " " + nome + " " + email + " " + senha);
+    let nif = document.getElementById("nif").value
+    let tipo = document.getElementById("tipo").value
 
     var body = {
         "id": id,
+        "nif": nif,
         "nome": nome,
         "email": email,
-        "senha": senha
+        "senha": senha,
+        "type": tipo
     }
+
+    console.log(body);
 
     fazPut(url, body)
 
@@ -324,21 +338,20 @@ export function listaReservas() {
                 let dataTermino = (JSON.stringify(reserva.dataTermino))
                 let horaTermino = dataTermino.substring(12, 17)
                 dataTermino = dataTermino.substring(1, 11)
-                
+
                 /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
                 dataTermino = dataFormatada(dataTermino)
 
                 tdData.innerHTML = dataInicio + "  -  " + dataTermino + "<br/>" + horaInicio + "  -  " + horaTermino
                 tdData.style.textAlign = "center"
                 linha.appendChild(tdData)
-                
+
                 //status da reserva
                 const status = document.createElement("td")
                 status.innerHTML = reserva.status
                 status.style.fontWeight = "bold"
                 status.style.textAlign = "center"
                 linha.appendChild(status)
-
 
                 //Usuario nome
                 let usuario = reserva.usuario
@@ -347,11 +360,46 @@ export function listaReservas() {
                 tdUsuario.innerHTML = "Feito por: " + usuario.nome
                 linha.appendChild(tdUsuario)
 
-                const tdBtn = document.createElement("td")
-                const btn = document.createElement("button")
-                btn.innerHTML = "..."
-                tdBtn.appendChild(btn)
-                linha.appendChild(tdBtn)
+                if (isAuthenticatedAdmin() == true) {
+                    const tdBtn = document.createElement("td")
+                    const btnConfirmar = document.createElement("img")
+                    btnConfirmar.setAttribute("src", imagemOK)
+                    btnConfirmar.style.height = "30px"
+                    btnConfirmar.style.fontWeight = "300"
+                    btnConfirmar.style.fontSize = "15"
+                    btnConfirmar.style.cursor = "pointer"
+
+                    const btnRecusar = document.createElement("img")
+                    btnRecusar.setAttribute("src", imagemErro)
+                    btnRecusar.style.height = "30px"
+                    btnRecusar.style.fontWeight = "300"
+                    btnRecusar.style.fontSize = "15"
+                    btnRecusar.style.cursor = "pointer"
+
+                    btnConfirmar.addEventListener('click', function(){
+                        let id = reserva.id
+                        console.log(id);
+                        confirmarReserva(id)
+                    })
+
+                    btnRecusar.addEventListener('click', function(){
+                        let id = reserva.id
+                        console.log(id);
+                        recusarReserva(id)
+                    })
+                    
+                    tdBtn.appendChild(btnConfirmar)
+                    linha.appendChild(tdBtn)
+                    tdBtn.appendChild(btnRecusar)
+                    linha.appendChild(tdBtn)
+
+                }else{
+                    const tdBtn = document.createElement("td")
+                    const btnDetalhes = document.createElement("button")
+                    btnDetalhes.innerHTML = "..."
+                    tdBtn.appendChild(btnDetalhes)
+                    linha.appendChild(tdBtn)
+                }
 
                 if (status.textContent == "CONFIRMADO") {
                     status.style.color = "green"
@@ -413,8 +461,6 @@ export function listaReservas() {
     }, 1);
 }
 
-
-
 //pega todos os tipos de usuários disponíves
 export function pegaTypes() {
     setTimeout(() => {
@@ -431,73 +477,109 @@ export function pegaTypes() {
     }, 1);
 }
 
+function pegaReserva(id){
+    let reserva = fazGet("http://localhost:8080/api/reservation/pega/" + id)
+    console.log(reserva);
+    return reserva
+}
+
+function confirmarReserva(id) {
+    let url = ("http://localhost:8080/api/reservation/confirmada/" + id)
+    let reserva = pegaReserva(id)
+    console.log(reserva);
+    
+    let dataInicio = reserva.dataInicio
+    let dataTermino = reserva.dataTermino
+    let titulo = reserva.titulo
+    let descricao = reserva.descricao
+    let usuario = reserva.usuario
+    let status = reserva.status
+    let numParticipantes = reserva.participantes
+    
+    let body = {
+        "dataInicio": dataInicio,
+        "dataTermino": dataTermino,
+        "titulo": titulo,
+        "descricao": descricao,
+        "usuario": usuario,
+        "status": status,
+        "participantes": numParticipantes 
+    }
+    console.log("Aqui "+body);
+    fazPut(url, body)
+}
+
+function recusarReserva(id) {
+    let url = ("http://localhost:8080/api/reservation/recusada/" + id)
+}
+
 //metodo de formatar uma data para formado br
-function dataFormatada(date){
+function dataFormatada(date) {
     var data = new Date(date),
-        dia  = data.getDate().toString(),
-        diaF = (dia.length == 1) ? '0'+dia : dia,
-        mes  = (data.getMonth()+1).toString(),
-        mesF = (mes.length == 1) ? '0'+mes : mes,
+        dia = data.getDate().toString(),
+        diaF = (dia.length == 1) ? '0' + dia : dia,
+        mes = (data.getMonth() + 1).toString(),
+        mesF = (mes.length == 1) ? '0' + mes : mes,
         anoF = data.getFullYear();
-    return diaF+"/"+mesF+"/"+anoF;
+    return diaF + "/" + mesF + "/" + anoF;
 }
 
 //consome a api do instagram atribuindo as fotos retornadas a uma div
 export function img() {
     setTimeout(() => {
-        
-    const token = 'EAAcMsX26zZA0BAKQYMKQDIJIe9PeNPZBmjLXi9lSl8ycZAjdeDDGDAjw10AZALXTEumsS3NzGk3F59OKMm8xfMLv9kqjSeiEmY53zqv92eUpovxevoKZBQTRtTHgjIMTq8ZAFZCX8ZBfU2Tr6YvrcPZCOVLxxEE8jMHIU2mrRytKBLtB2ZAujL0mVv'
-    const url = 'https://graph.facebook.com/17903255252601782/recent_media?user_id=17841453104072947&fields=id,media_type,comments_count,like_count,permalink,media_url&access_token=' + token
 
-    $.get(url).then(function (response) {
-        const dados = response.data
-        let conteudo = '<div>'
+        const token = 'EAAcMsX26zZA0BAKQYMKQDIJIe9PeNPZBmjLXi9lSl8ycZAjdeDDGDAjw10AZALXTEumsS3NzGk3F59OKMm8xfMLv9kqjSeiEmY53zqv92eUpovxevoKZBQTRtTHgjIMTq8ZAFZCX8ZBfU2Tr6YvrcPZCOVLxxEE8jMHIU2mrRytKBLtB2ZAujL0mVv'
+        const url = 'https://graph.facebook.com/17903255252601782/recent_media?user_id=17841453104072947&fields=id,media_type,comments_count,like_count,permalink,media_url&access_token=' + token
 
-        for (let i = 0; i < dados.length; i++) {
-            let feed = dados[i]
-            console.log(feed);
-            let tipo = feed.media_type;
-            conteudo += '<div><img src="' + feed.media_url + '" onclick="window.open(\'' + feed.permalink + '\');"></div>';
-        }
-        conteudo += '</div>'
-        $('#insta').html(conteudo)
-    })
-}, 1);
+        $.get(url).then(function (response) {
+            const dados = response.data
+            let conteudo = '<div>'
+
+            for (let i = 0; i < dados.length; i++) {
+                let feed = dados[i]
+                console.log(feed);
+                let tipo = feed.media_type;
+                conteudo += '<img src="' + feed.media_url + '" onclick="window.open(\'' + feed.permalink + '\');">';
+            }
+            conteudo += '</div>'
+            $('#insta').html(conteudo)
+        })
+    }, 1);
 }
 
 export function contador() {
     setTimeout(() => {
-        if(isAuthenticatedAdmin() == true){
-        let usuarios = fazGet("http://localhost:8080/api/user/verifica")
-        usuarios = JSON.parse(usuarios)
-        let reservas = fazGet("http://localhost:8080/api/reservation")
-        reservas = JSON.parse(reservas)
-        let admins = fazGet("http://localhost:8080/api/user/verificaAdmin")
-        admins = JSON.parse(admins)
+        if (isAuthenticatedAdmin() == true) {
+            let usuarios = fazGet("http://localhost:8080/api/user/verifica")
+            usuarios = JSON.parse(usuarios)
+            let reservas = fazGet("http://localhost:8080/api/reservation")
+            reservas = JSON.parse(reservas)
+            let admins = fazGet("http://localhost:8080/api/user/verificaAdmin")
+            admins = JSON.parse(admins)
 
-        let usuarioSpan = document.getElementById("contUsers")
-        let adminSpan = document.getElementById("contAdmin")
-        let reservaSpan = document.getElementById("contReservas")
+            let usuarioSpan = document.getElementById("contUsers")
+            let adminSpan = document.getElementById("contAdmin")
+            let reservaSpan = document.getElementById("contReservas")
 
-        let contadorUser = 0
-        let contadorAdmin = 0
-        let contadorReserva = 0
+            let contadorUser = 0
+            let contadorAdmin = 0
+            let contadorReserva = 0
 
-        if (usuarioSpan.textContent == 0) {
-            for (let i = 0; i < usuarios.length; i++) {
-                contadorUser++
+            if (usuarioSpan.textContent == 0) {
+                for (let i = 0; i < usuarios.length; i++) {
+                    contadorUser++
+                }
+                for (let i = 0; i < admins.length; i++) {
+                    contadorAdmin++
+                }
+
+                for (let i = 0; i < reservas.length; i++) {
+                    contadorReserva++
+                }
+                usuarioSpan.innerHTML = contadorUser
+                adminSpan.innerHTML = contadorAdmin
+                reservaSpan.innerHTML = contadorReserva
             }
-            for (let i = 0; i < admins.length; i++) {
-                contadorAdmin++
-            }
-
-            for (let i = 0; i < reservas.length; i++) {
-                contadorReserva++
-            }
-            usuarioSpan.innerHTML = contadorUser
-            adminSpan.innerHTML = contadorAdmin
-            reservaSpan.innerHTML = contadorReserva
-        }
         }
     }, 5);
 }
