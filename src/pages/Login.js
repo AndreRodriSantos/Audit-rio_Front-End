@@ -50,9 +50,6 @@ function Login() {
                     <i className="fa-solid fa-home"></i>
                 </a>
 
-                <a onClick={pegaUsuario} className={styles.alterar} title="Alterar Usuário">
-                    <i className="fa-solid fa-edit"></i>
-                </a>
                 <div className={styles.div_title}>
                     <a className="navigation-link navigation-link-1" href="#">
                         <span data-text="Login" className={styles.span}>Login</span>

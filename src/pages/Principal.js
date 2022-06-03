@@ -3,7 +3,7 @@ import logo from '../IMG/logo.png'
 import styles from '../css/Style_Principal.module.css';
 import { logout, listaReservas, img, pegaTodosUsuarios, contador } from '../Js/API.js'
 import Reserva, { Confirmacao } from "./Reserva";
-import Calendario from "../components/calendario";
+import Calendario from "../components/calendario.js";
 
 function Principal() {
   return (
@@ -33,6 +33,10 @@ function Principal() {
             <i className="fa-solid fa-user-plus"></i>
           </a>
 
+          <a href="/Alterar" className={styles.alterar} title="Alterar">
+            <i className="fa-solid fa-user-edit"></i>
+          </a>
+
           <a className={styles.log_off} onClick={logout} title="Sair">
             <i className="fa-solid fa-person-walking-arrow-right"></i>
           </a>
@@ -52,7 +56,7 @@ function Principal() {
             <h3 className={styles.title_User}>Reservado por</h3>
 
             <a className={styles.btn_NC} href="/Cadastro">
-              <i class="fa-solid fa-circle-plus"></i>
+              <i className="fa-solid fa-circle-plus"></i>
               <span className={styles.title_NC}>nova conta</span>
             </a>
 
@@ -84,7 +88,7 @@ function Principal() {
 
               <div className={styles.base_icons}>
                 <div className={styles.base_color_qnd1}>
-                  <i class="fa-solid fa-users"></i>
+                  <i className="fa-solid fa-users"></i>
                 </div>
               </div>
 
@@ -110,7 +114,7 @@ function Principal() {
 
               <div className={styles.base_icons}>
                 <div className={styles.base_color_qnd2}>
-                  <i class="fa-solid fa-user-tie"></i>
+                  <i className="fa-solid fa-user-tie"></i>
                 </div>
               </div>
 
@@ -136,7 +140,7 @@ function Principal() {
 
               <div className={styles.base_icons}>
                 <div className={styles.base_color_qnd3}>
-                  <i class="fa-solid fa-calendar-check"></i>
+                  <i className="fa-solid fa-calendar-check"></i>
                 </div>
               </div>
 
@@ -171,7 +175,7 @@ function Principal() {
               <a className={styles.btns_header} href="/PostAuditorio" title="Auditório Fotos">
                 <div className={styles.base_icons_btn}>
                   <div className={styles.base_color_btn2}>
-                    <i class="fa-brands fa-instagram"></i>
+                    <i className="fa-brands fa-instagram"></i>
                   </div>
                 </div>
               </a>
@@ -179,7 +183,7 @@ function Principal() {
               <a className={styles.btns_header} onClick={Confirmacao} title="Nova Reserva">
                 <div className={styles.base_icons_btn}>
                   <div className={styles.base_color_btn3}>
-                    <i class="fa-solid fa-circle-plus"></i>
+                    <i className="fa-solid fa-circle-plus"></i>
                   </div>
                 </div>
               </a>
@@ -199,7 +203,7 @@ function Principal() {
               <div className={styles.div_pesquisa}>
                 <div className={styles.base_pes}>
                   <div className={styles.lupa}>
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i className="fa-solid fa-magnifying-glass"></i>
                   </div>
                   <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} />
                 </div>

@@ -101,6 +101,19 @@ a {
     height: 80%;
 }
 
+.alterar {
+    font-size: 22px;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 40px;
+    height: 80%;
+}
+
 .log_off {
     font-size: 22px;
     color: white;

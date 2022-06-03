@@ -1,4 +1,4 @@
-import { BrowserRoute, Route, Switch, BrowserRouter, Redirect, Router } from 'react-router-dom'
+import { Route, Switch, Redirect, Router } from 'react-router-dom'
 import Login from './pages/Login'
 import Principal from './pages/Principal'
 import Cadastro from './pages/Cadastro';
@@ -7,7 +7,7 @@ import { history } from './Js/history'
 import Verifica from './pages/Verifica';
 import { PostAuditorio } from './pages/PostAuditorio';
 import { erro } from './components/mensagem';
-import { alterar } from './pages/Alterar';
+import Alterar from './pages/Alterar';
 
 const PrivateRouteAdmin = (props) => {
     if (isAuthenticatedAdmin() === true) {
@@ -36,7 +36,7 @@ export default function Routes() {
                 <Route path='/Principal' component={Principal} />
                 <Route path='/PostAuditorio' component={PostAuditorio} />
                 <PrivateRouteAdmin path='/Verifica' component={Verifica} />
-                <Route path='/Alterar' exact component={alterar}></Route>
+                <PrivateRoute path='/Alterar' component={Alterar} />
                 <Route path='*' exact component={Login}></Route>
             </Switch>
         </Router>

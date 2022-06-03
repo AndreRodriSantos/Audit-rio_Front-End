@@ -2,8 +2,9 @@ import { createElement } from 'react'
 import { history } from './history'
 import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
+import { isAuthenticatedAdmin } from './auth'
 
-
+/* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
     console.log("Body=", body)
     let request = new XMLHttpRequest()
@@ -38,11 +39,12 @@ function fazPost(url, body) {
         request.onload = function () {
             if (request.status == 200) {
                 let token = this.responseText
-                console.log("Token Antes do replace = " + token)
+                console.log(token)
                 token = token.replace('{"token":"', "")
                 token = token.replace('"}', "")
-                console.log("Token Depois do replace = " + token)
+                console.log(token)
                 sessionStorage.setItem("token", token)
+
                 sucesso("Usuário Logado!!")
                 history.push("/Principal")
             } else if (request.status == 401) {
@@ -55,6 +57,28 @@ function fazPost(url, body) {
     return request.responseText
 }
 
+/* FAZ GET --- Pega um objeto do back-end por meio de uma url e o retorna */
+export function fazGet(url) {
+    let request = new XMLHttpRequest()
+    request.open("GET", url, false)
+    request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
+    
+    request.send()
+    return request.responseText
+}
+
+export function fazPut(url, body){
+    let request = new XMLHttpRequest()
+    request.open("PUT", url, true)
+    request.setRequestHeader("Content-type", "application/json")
+    request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
+    request.setRequestHeader('Access-Control-Allow-Origin', '*');
+    request.send(JSON.stringify(body))
+}
+
+/*  USUÁRIO */
+
+//Cadastro de Usuário
 export default function cadastraUsuario(event) {
     event.preventDefault()
     const url = "http://localhost:8080/api/user/cadastrar"
@@ -66,7 +90,6 @@ export default function cadastraUsuario(event) {
     let type = document.getElementById("type").value
     let photo = document.getElementById('imgPhoto');
     let foto = photo.src
-    console.log(foto)
 
     var body = {
         "nif": nif,
@@ -80,19 +103,9 @@ export default function cadastraUsuario(event) {
     fazPost(url, body)
 }
 
-// Consumindo api
-export function fazGet(url) {
-    let request = new XMLHttpRequest()
-    request.open("GET", url, false)
-    request.setRequestHeader("Authorization", sessionStorage.getItem("token"))
-    request.send()
-    return request.responseText
-}
-
+//Login de Usuário
 export function login(event) {
     event.preventDefault()
-    const token = decodaToken()
-    console.log("IRINEL!!"+token);
     if (sessionStorage.getItem("token") == null) {
         let url = ("http://localhost:8080/api/user/login");
         let nif = document.getElementById("loginNif").value
@@ -107,6 +120,7 @@ export function login(event) {
     }
 }
 
+//Logout de Usuário
 export function logout() {
     let token = sessionStorage.getItem("token")
     if (token) {
@@ -118,6 +132,123 @@ export function logout() {
     }
 }
 
+//Pega todos os Usuários do Banco de Dados sendo Admin ou Comum
+export function pegaTodosUsuarios() {
+    setTimeout(() => {
+        let data = fazGet("http://localhost:8080/api/user/lista");
+        let users = JSON.parse(data)
+        let lista = document.getElementById("listaUsuarios")
+        if (lista.childElementCount == 0) {
+            for (let i = 0; i < users.length; i++) {
+                let usuario = users[i];
+                let li = document.createElement("li")
+                li.innerHTML = usuario.nome
+                lista.appendChild(li)
+            }
+        }
+    }, 1);
+}
+
+//Pega todos os Usuários do tipo Comum
+export function listaUsuariosComuns() {
+    setTimeout(() => {
+        let data = fazGet("http://localhost:8080/api/user/verifica")
+        let users = JSON.parse(data)
+        let lista = document.getElementById("lista")
+
+
+        if (lista.childElementCount == 0) {
+            for (let i = 0; i < users.length; i++) {
+                let usuario = users[i]
+                const linha = document.createElement("tr")
+
+                const tdId = document.createElement("td")
+                tdId.innerHTML = usuario.id
+                linha.appendChild(tdId)
+
+                const tdNif = document.createElement("td")
+                tdNif.innerHTML = usuario.nif
+                linha.appendChild(tdNif)
+
+                const tdNome = document.createElement("td")
+                tdNome.innerHTML = usuario.nome
+                linha.appendChild(tdNome)
+
+                const tdEmail = document.createElement("td")
+                tdEmail.innerHTML = usuario.email
+                linha.appendChild(tdEmail)
+
+                const tdExcluir = document.createElement("td")
+                let btn_delete = document.createElement("button")
+                btn_delete.innerHTML = "X"
+
+                tdExcluir.appendChild(btn_delete)
+                linha.append(tdExcluir)
+
+                lista.appendChild(linha)
+            }
+        }
+    }, 1);
+}
+
+//pega o tipo do usuario logado
+export function decodaToken() {
+    let data = fazGet("http://localhost:8080/api/user/decodaToken")
+    console.log("tipo do Metodo DecodaToken = " + data)
+    return data
+}
+
+export function sendId(){
+    let data = fazGet("http://localhost:8080/api/user/sendId")
+    console.log("ID do Metodo sendId = " + data)
+    return data
+}
+
+export function pegaUsuario(){
+    setTimeout(() => {
+    let id = sendId()
+    let data = fazGet("http://localhost:8080/api/user/" + id)
+    let usuario = JSON.parse(data)
+
+    let inputId = document.getElementById("id")
+    let inputNome = document.getElementById("nome")
+    let inputEmail = document.getElementById("email")
+
+    inputId.value = usuario.id
+    inputNome.value = usuario.nome
+    inputEmail.value = usuario.email
+    console.log(usuario)
+    return usuario
+
+}, 5);
+}
+
+export function alteraUsuario(event){
+    event.preventDefault()
+    let id = sendId()
+    let url = ("http://localhost:8080/api/user/" + id)
+
+    let nome = document.getElementById("nome").value
+    let email = document.getElementById("email").value
+    let senha = document.getElementById("senha").value
+
+    console.log(id + " " + nome + " " + email + " " + senha);
+
+    var body = {
+        "id": id,
+        "nome": nome,
+        "email": email,
+        "senha": senha
+    }
+
+    fazPut(url, body)
+
+}
+
+
+/* RESERVAS */
+
+//Salva uma Reserva
 export function reserva(event) {
     event.preventDefault();
     let url = ("http://localhost:8080/api/reservation/save");
@@ -137,23 +268,16 @@ export function reserva(event) {
     fazPost(url, body)
 }
 
-function dataFormatada(date){
-    var data = new Date(date),
-        dia  = data.getDate().toString(),
-        diaF = (dia.length == 1) ? '0'+dia : dia,
-        mes  = (data.getMonth()+1).toString(),
-        mesF = (mes.length == 1) ? '0'+mes : mes,
-        anoF = data.getFullYear();
-    return diaF+"/"+mesF+"/"+anoF;
-}
-
-
 let listaCriada = false
 
+
+//Constrói a lista de Reservas
 export function listaReservas() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/reservation")
         let reservas = JSON.parse(data)
+
+        //Pegando todas as Tabelas de cada mês
         let jan = document.getElementById("Janeiro")
         let fev = document.getElementById("Fevereiro")
         let mar = document.getElementById("Marco")
@@ -167,23 +291,26 @@ export function listaReservas() {
         let nov = document.getElementById("Novembro")
         let dez = document.getElementById("Dezembro")
 
-
+        //Verifica se a lista já foi feita
         if (listaCriada == false) {
-            listaCriada = true
 
+            //faz um for para percorrer cada reserva e criar uma linha para cada delas
             for (let i = 0; i < reservas.length; i++) {
                 let reserva = reservas[i]
                 const linha = document.createElement("tr")
 
+                //Id da Reserva
                 const tdId = document.createElement("td")
                 tdId.innerHTML = reserva.id
                 linha.appendChild(tdId)
 
+                //Título da Reserva
                 const tdTitulo = document.createElement("td")
                 tdTitulo.innerHTML = reserva.titulo
                 tdTitulo.style.textAlign = "center"
                 linha.appendChild(tdTitulo)
 
+                //Data da Reserva formatada e separada do horário
                 const tdData = document.createElement("td")
                 tdData.style.color = "gray"
 
@@ -193,7 +320,6 @@ export function listaReservas() {
 
                 /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
                 dataInicio = dataFormatada(dataInicio)
-                /* CHAMANDO O METODO DE FORMATAR */
 
                 let dataTermino = (JSON.stringify(reserva.dataTermino))
                 let horaTermino = dataTermino.substring(12, 17)
@@ -201,28 +327,24 @@ export function listaReservas() {
                 
                 /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
                 dataTermino = dataFormatada(dataTermino)
-                /* CHAMANDO O METODO DE FORMATAR */
 
                 tdData.innerHTML = dataInicio + "  -  " + dataTermino + "<br/>" + horaInicio + "  -  " + horaTermino
                 tdData.style.textAlign = "center"
                 linha.appendChild(tdData)
-
+                
+                //status da reserva
                 const status = document.createElement("td")
                 status.innerHTML = reserva.status
                 status.style.fontWeight = "bold"
                 status.style.textAlign = "center"
                 linha.appendChild(status)
 
-                //Foto
-                const fotoSpan = document.createElement("span")
-                const img = document.createElement("img")
 
                 //Usuario nome
-                
                 let usuario = reserva.usuario
-                console.log(usuario)
                 const tdUsuario = document.createElement("td")
-                tdUsuario.innerHTML = usuario.nome
+                tdUsuario.style.textAlign = "center"
+                tdUsuario.innerHTML = "Feito por: " + usuario.nome
                 linha.appendChild(tdUsuario)
 
                 const tdBtn = document.createElement("td")
@@ -239,9 +361,11 @@ export function listaReservas() {
                     status.style.color = "#fccd32"
                 }
 
+                //extrai o mês da reserva
                 let mes = tdData.textContent
                 mes = mes.substring(3, 5)
 
+                //faz um switch para comparar em qual tabela de mês se encaixa a reserva
                 switch (mes) {
                     case "01":
                         jan.appendChild(linha)
@@ -284,69 +408,14 @@ export function listaReservas() {
                         break;
                 }
             }
+            listaCriada = true
         }
     }, 1);
 }
 
-export function decodaToken() {
-    let data = fazGet("http://localhost:8080/api/user/decodaToken")
-    console.log("tipo do Metodo DecodaToken = " + data)
-    return data
-}
-
-export function sendId() {
-    let data = fazGet("http://localhost:8080/api/user/sendId")
-    console.log("Id do Metodo DecodaToken = " + data)
-    return data
-}
-
-export function pegaUsuario(){
-    const id = sendId()
-    let data = fazGet("http://localhost:8080/api/user/" + id)
-    console.log(data);
-}
-
-export function listaUsuariosComuns() {
-    setTimeout(() => {
-        let data = fazGet("http://localhost:8080/api/user/verifica")
-        let users = JSON.parse(data)
-        let lista = document.getElementById("lista")
 
 
-        if (lista.childElementCount == 0) {
-            for (let i = 0; i < users.length; i++) {
-                let usuario = users[i]
-                const linha = document.createElement("tr")
-
-                const tdId = document.createElement("td")
-                tdId.innerHTML = usuario.id
-                linha.appendChild(tdId)
-
-                const tdNif = document.createElement("td")
-                tdNif.innerHTML = usuario.nif
-                linha.appendChild(tdNif)
-
-                const tdNome = document.createElement("td")
-                tdNome.innerHTML = usuario.nome
-                linha.appendChild(tdNome)
-
-                const tdEmail = document.createElement("td")
-                tdEmail.innerHTML = usuario.email
-                linha.appendChild(tdEmail)
-
-                const tdExcluir = document.createElement("td")
-                let btn_delete = document.createElement("button")
-                btn_delete.innerHTML = "X"
-
-                tdExcluir.appendChild(btn_delete)
-                linha.append(tdExcluir)
-
-                lista.appendChild(linha)
-            }
-        }
-    }, 1);
-}
-
+//pega todos os tipos de usuários disponíves
 export function pegaTypes() {
     setTimeout(() => {
         let data = fazGet("http://localhost:8080/api/types/findAll");
@@ -362,22 +431,18 @@ export function pegaTypes() {
     }, 1);
 }
 
-export function pegaTodosUsuarios() {
-    setTimeout(() => {
-        let data = fazGet("http://localhost:8080/api/user/lista");
-        let users = JSON.parse(data)
-        let lista = document.getElementById("listaUsuarios")
-        if (lista.childElementCount == 0) {
-            for (let i = 0; i < users.length; i++) {
-                let usuario = users[i];
-                let li = document.createElement("li")
-                li.innerHTML = usuario.nome
-                lista.appendChild(li)
-            }
-        }
-    }, 1);
+//metodo de formatar uma data para formado br
+function dataFormatada(date){
+    var data = new Date(date),
+        dia  = data.getDate().toString(),
+        diaF = (dia.length == 1) ? '0'+dia : dia,
+        mes  = (data.getMonth()+1).toString(),
+        mesF = (mes.length == 1) ? '0'+mes : mes,
+        anoF = data.getFullYear();
+    return diaF+"/"+mesF+"/"+anoF;
 }
 
+//consome a api do instagram atribuindo as fotos retornadas a uma div
 export function img() {
     setTimeout(() => {
         
@@ -402,6 +467,7 @@ export function img() {
 
 export function contador() {
     setTimeout(() => {
+        if(isAuthenticatedAdmin() == true){
         let usuarios = fazGet("http://localhost:8080/api/user/verifica")
         usuarios = JSON.parse(usuarios)
         let reservas = fazGet("http://localhost:8080/api/reservation")
@@ -431,6 +497,7 @@ export function contador() {
             usuarioSpan.innerHTML = contadorUser
             adminSpan.innerHTML = contadorAdmin
             reservaSpan.innerHTML = contadorReserva
+        }
         }
     }, 5);
 }

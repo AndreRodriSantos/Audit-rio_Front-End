@@ -5,7 +5,7 @@ export default class Calendario extends Component {
     render() {
         return (
             <div className="light">
-                <div className="calendar">
+                <div className="calendar" onLoad={chamaCalendar()}>
                     <div className="calendar_header">
                         <span className="month_picker" id="month_picker">February</span>
                         <div className="year_picker">
@@ -36,7 +36,7 @@ export default class Calendario extends Component {
         )
     }
 }
-
+function chamaCalendar() {
     setTimeout(() => {
         let calendar = document.querySelector('.calendar')
 
@@ -77,9 +77,9 @@ export default class Calendario extends Component {
                     day.classList.add('calendar_day_hover')
                     day.innerHTML = i - first_day.getDay() + 1
                     day.innerHTML += `<span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>`
+                                <span></span>
+                                <span></span>
+                                <span></span>`
                     if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
                         day.classList.add('curr_date')
                     }
@@ -125,4 +125,6 @@ export default class Calendario extends Component {
         }
 
     }, 5);
+}
+
 

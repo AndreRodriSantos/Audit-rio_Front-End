@@ -1,15 +1,14 @@
-import { decodaToken, sendId } from "./API"
+import { decodaToken } from "./API"
 
 export const isAuthenticatedAdmin = function () {
     const token = sessionStorage.getItem("token")
     let admin = "ADMINISTRADOR"
     if (token) {
         let data = decodaToken().replaceAll('"', "")
-        let id = sendId()
-        if (data != admin) {
-            return false
-        } else {
+        if (data == admin) {
             return true
+        } else {
+            return false
         }
     } else {
         return false
