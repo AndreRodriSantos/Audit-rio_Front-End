@@ -663,6 +663,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .lupa{
     position: relative;
+    background-color: transparent;
     left: 5%;
     width: 40px;
     height: 40px;

@@ -3,9 +3,7 @@ import { history } from './history'
 import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
 import { isAuthenticatedAdmin } from './auth'
-import imagemOK from "../IMG/check.png"
-import imagemErro from "../IMG/recusar.png"
-import imagemInfo from "../IMG/info.png"
+import { Fechar } from '../pages/Reserva'
 
 /* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
@@ -50,6 +48,7 @@ function fazPost(url, body) {
 
                 sucesso("Usuário Logado!!")
                 history.push("/Principal")
+                refresh()
             } else if (request.status == 401) {
                 erro("Erro: Senha ou NIF incorretos")
             } else if (request.status == 404) {
@@ -79,6 +78,15 @@ export function fazPut(url, body) {
     request.setRequestHeader("Access-Control-Allow-Methods", "PUT")
     request.setRequestHeader('Access-Control-Allow-Origin', '*');
     request.send(JSON.stringify(body))
+}
+
+export function fazDelete(url) {
+    let request = new XMLHttpRequest()
+    request.open("DELETE", url, true)
+    request.setRequestHeader("Content-type", "application/json")
+    request.setRequestHeader("Access-Control-Allow-Methods", "DELETE")
+    request.setRequestHeader('Access-Control-Allow-Origin', '*');
+    request.send()
 }
 
 /*  USUÁRIO */
@@ -209,6 +217,24 @@ export function sendId() {
     return data
 }
 
+export function sendingEmail(dataInicio, dataTermino) {
+    let idUser = sendId()
+    let data = fazGet("http://localhost:8080/api/user/" + idUser)
+    console.log(data);
+    let user = JSON.parse(data)
+    let nome = user.nome
+    let url = ("http://localhost:8080/api/email/sending-email");
+    var body = {
+        "ownerRef": nome,
+        "emailFrom": "auditoriocotia138@gmail.com",
+        "emailTo": "andrerodrisantos15@gmail.com",
+        "subject": "Reservar do Auditorio",
+        "text": "Eu " + nome + " estou enviando esse email para solicitar uma reserva no auditorio acesse esse link acesse http://localhost:3000/Principal, data inicio: " + dataInicio + " data termino: " + dataTermino
+    }
+    fazPost(url, body)
+    console.log("Nome " + nome);
+}
+
 export function pegaUsuario() {
     setTimeout(() => {
         let id = sendId()
@@ -233,6 +259,26 @@ export function pegaUsuario() {
     }, 5);
 }
 
+export function pesquisaReserva(event){
+    const p = document.getElementById("pesquisa").value
+    history.push("/Pesquisa")
+
+    setTimeout(() => {
+    let reservas = fazGet("http://localhost:8080/api/reservation/findbyall/" + p)
+    reservas = JSON.parse(reservas)
+
+    const lista = document.getElementById("listaPesquisa")
+
+    for(let i = 0; i < reservas.length; i++){
+        const reserva = reservas[i]
+
+        const linha = document.createElement("li")
+        linha.innerHTML = reserva.id + " " + reserva.titulo + " " + reserva.dataInicio
+        lista.appendChild(linha)
+    }
+}, 5);
+}
+
 export function alteraUsuario() {
     let id = sendId()
     let url = ("http://localhost:8080/api/user/" + id)
@@ -252,9 +298,7 @@ export function alteraUsuario() {
         "senha": senha,
         "type": tipo
     }
-
     console.log(body);
-
     fazPut(url, body)
 }
 
@@ -278,11 +322,25 @@ export function reserva(event) {
         "dataTermino": dataTermino,
         "participantes": participantes
     }
+
+    dataInicio = dataInicio.substring(0, 10)
+    dataTermino = dataTermino.substring(0, 10)
+
+    dataInicio = dataFormatada(dataInicio)
+    dataTermino = dataFormatada(dataTermino)
+
     fazPost(url, body)
+    sendingEmail(dataInicio, dataTermino)
+    Fechar()
 }
 
 let listaCriada = false
 
+export function refresh() {
+    setTimeout(function () {
+        window.location.reload()
+    }, 0.1);
+}
 
 //Constrói a lista de Reservas
 export function listaReservas() {
@@ -316,7 +374,7 @@ export function listaReservas() {
                 const tdId = document.createElement("td")
                 tdId.innerHTML = reserva.id
                 linha.appendChild(tdId)
-
+                
                 //Título da Reserva
                 const tdTitulo = document.createElement("td")
                 tdTitulo.innerHTML = reserva.titulo
@@ -366,7 +424,7 @@ export function listaReservas() {
                 const divDrop = document.createElement("div")
                 divDrop.classList.add("dropdown_content")
                 dropBtn.innerHTML = "..."
-                
+
                 //Se for Admin
                 if (isAuthenticatedAdmin() == true) {
                     if (status.textContent == "ANALISE") {
@@ -388,17 +446,19 @@ export function listaReservas() {
                             let id = reserva.id
                             console.log(id);
                             confirmarReserva(id)
+                            refresh()
                         })
-        
+
                         recusar.addEventListener('click', function () {
                             let id = reserva.id
-                            console.log(id);
-                            recusarReserva(id)
+                            let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                            fazDelete(url)
+                            refresh()
                         })
 
                     } else if (status.textContent == "CONFIRMADO") {
                         const recusar = document.createElement("a")
-                        recusar.innerHTML = "Recusar"
+                        recusar.innerHTML = "Cancelar"
 
                         const detalhes = document.createElement("a")
                         detalhes.innerHTML = "Detalhes"
@@ -408,20 +468,21 @@ export function listaReservas() {
 
                         recusar.addEventListener('click', function () {
                             let id = reserva.id
-                            console.log(id);
-                            recusarReserva(id)
+                            let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                            fazDelete(url)
+                            refresh()
                         })
                     } else {
                         const detalhes = document.createElement("a")
                         detalhes.innerHTML = "Detalhes"
                         divDrop.appendChild(detalhes)
                     }
-
                 }//Se não, é comum ou usuario não logado
                 else {
-                    if (usuario.id === sendId()) {
+                    let id = sendId()
+                    if (usuario.id == id) {
                         const recusar = document.createElement("a")
-                        recusar.innerHTML = "Recusar"
+                        recusar.innerHTML = "Cancelar"
 
                         const detalhes = document.createElement("a")
                         detalhes.innerHTML = "Detalhes"
@@ -431,9 +492,17 @@ export function listaReservas() {
 
                         recusar.addEventListener('click', function () {
                             let id = reserva.id
-                            console.log(id);
-                            recusarReserva(id)
+                            let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                            let idIgual = reserva.usuario.id
+                            let userId = sendId()
+                            if (userId == idIgual) {
+                                fazDelete(url)
+                                refresh()
+                            } else {
+                                erro("Voce não pode excluir essa reserva");
+                            }
                         })
+
                     } else {
                         const detalhes = document.createElement("a")
                         detalhes.innerHTML = "Detalhes"
@@ -464,7 +533,6 @@ export function listaReservas() {
                     case "01":
                         jan.appendChild(linha)
                         break;
-
                     case "02":
                         fev.appendChild(linha)
                         break;
@@ -525,7 +593,7 @@ export function pegaTypes() {
 
 function pegaReserva(id) {
     let reserva = fazGet("http://localhost:8080/api/reservation/pega/" + id)
-    return JSON.parse(reserva) 
+    return JSON.parse(reserva)
 }
 
 function confirmarReserva(id) {
@@ -533,6 +601,7 @@ function confirmarReserva(id) {
     let reserva = pegaReserva(id)
 
     let dataInicio = reserva.dataInicio
+    let idUser = reserva.id
     let dataTermino = reserva.dataTermino
     let titulo = reserva.titulo
     let descricao = reserva.descricao
@@ -541,6 +610,7 @@ function confirmarReserva(id) {
     let numParticipantes = reserva.participantes
 
     let body = {
+        "id": idUser,
         "dataInicio": dataInicio,
         "dataTermino": dataTermino,
         "titulo": titulo,
@@ -555,9 +625,6 @@ function confirmarReserva(id) {
     fazPut(url, body)
 }
 
-function recusarReserva(id) {
-    let url = ("http://localhost:8080/api/reservation/recusada/" + id)
-}
 
 //metodo de formatar uma data para formado br
 function dataFormatada(date) {

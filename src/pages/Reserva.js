@@ -85,7 +85,7 @@ export function Confirmacao() {
     }
 }
 
-function Fechar() {
+export function Fechar() {
     const payment = document.getElementById("payment");
     const principal = document.getElementById("principal");
     document.getElementById("dataInicio").value = ""

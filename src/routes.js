@@ -8,6 +8,7 @@ import Verifica from './pages/Verifica';
 import { PostAuditorio } from './pages/PostAuditorio';
 import { erro } from './components/mensagem';
 import Alterar from './pages/Alterar';
+import Pesquisa from './pages/Pesquisa';
 
 const PrivateRouteAdmin = (props) => {
     if (isAuthenticatedAdmin() === true) {
@@ -35,6 +36,7 @@ export default function Routes() {
                 <Route path='/Cadastro' component={Cadastro} />
                 <Route path='/Principal' component={Principal} />
                 <Route path='/PostAuditorio' component={PostAuditorio} />
+                <Route path='/Pesquisa' component={Pesquisa} />
                 <PrivateRouteAdmin path='/Verifica' component={Verifica} />
                 <PrivateRoute path='/Alterar' component={Alterar} />
                 <Route path='*' exact component={Login}></Route>

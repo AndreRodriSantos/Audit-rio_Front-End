@@ -2,7 +2,7 @@ import React from "react";
 import logo from '../IMG/logo.png'
 import styles from '../css/Style_Principal.module.css';
 import '../css/DropDown.css';
-import { logout, listaReservas, img, pegaTodosUsuarios, contador } from '../Js/API.js'
+import { logout, listaReservas, img, pegaTodosUsuarios, contador, pesquisaReserva } from '../Js/API.js'
 import Reserva, { Confirmacao } from "./Reserva";
 import Calendario from "../components/calendario.js";
 
@@ -50,9 +50,9 @@ function Principal() {
           <div className={styles.calendario}>
             <div className={styles.title_calen_base}>
             </div>
-            <Calendario/>
+            <Calendario />
           </div>
-          
+
           <div className={styles.users_lista}>
             <h3 className={styles.title_User}>Reservado por</h3>
 
@@ -202,12 +202,14 @@ function Principal() {
               </div>
 
               <div className={styles.div_pesquisa}>
-                <div className={styles.base_pes}>
-                  <div className={styles.lupa}>
-                    <i className="fa-solid fa-magnifying-glass"></i>
+                <form onSubmit={pesquisaReserva}>
+                  <div className={styles.base_pes}>
+                    <button type="submit" className={styles.lupa}>
+                      <i className="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} id="pesquisa"/>
                   </div>
-                  <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} />
-                </div>
+                </form>
               </div>
 
               <ul className={styles.lista} id="lista" onLoad={listaReservas()}>
