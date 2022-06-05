@@ -1,6 +1,7 @@
 import React from "react";
 import logo from '../IMG/logo.png'
 import styles from '../css/Style_Principal.module.css';
+import '../css/DropDown.css';
 import { logout, listaReservas, img, pegaTodosUsuarios, contador } from '../Js/API.js'
 import Reserva, { Confirmacao } from "./Reserva";
 import Calendario from "../components/calendario.js";

@@ -200,6 +200,7 @@ html{
     border-radius: 50%;
     display: flex;
     justify-content: center;
+    
     align-items: center;
     cursor: pointer;
     width: 50px;

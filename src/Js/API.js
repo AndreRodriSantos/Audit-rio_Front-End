@@ -3,8 +3,9 @@ import { history } from './history'
 import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
 import { isAuthenticatedAdmin } from './auth'
-import imagemOK from "../IMG/OK.png"
-import imagemErro from "../IMG/erro.png"
+import imagemOK from "../IMG/check.png"
+import imagemErro from "../IMG/recusar.png"
+import imagemInfo from "../IMG/info.png"
 
 /* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
@@ -232,8 +233,7 @@ export function pegaUsuario() {
     }, 5);
 }
 
-export function alteraUsuario(event) {
-
+export function alteraUsuario() {
     let id = sendId()
     let url = ("http://localhost:8080/api/user/" + id)
     let usuario = pegaUsuario()
@@ -256,7 +256,6 @@ export function alteraUsuario(event) {
     console.log(body);
 
     fazPut(url, body)
-
 }
 
 
@@ -360,46 +359,93 @@ export function listaReservas() {
                 tdUsuario.innerHTML = "Feito por: " + usuario.nome
                 linha.appendChild(tdUsuario)
 
+                const tdBtn = document.createElement("td")
+                tdBtn.classList.add("dropdown")
+                const dropBtn = document.createElement("button")
+                dropBtn.classList.add("dropbtn")
+                const divDrop = document.createElement("div")
+                divDrop.classList.add("dropdown_content")
+                dropBtn.innerHTML = "..."
+                
+                //Se for Admin
                 if (isAuthenticatedAdmin() == true) {
-                    const tdBtn = document.createElement("td")
-                    const btnConfirmar = document.createElement("img")
-                    btnConfirmar.setAttribute("src", imagemOK)
-                    btnConfirmar.style.height = "30px"
-                    btnConfirmar.style.fontWeight = "300"
-                    btnConfirmar.style.fontSize = "15"
-                    btnConfirmar.style.cursor = "pointer"
+                    if (status.textContent == "ANALISE") {
 
-                    const btnRecusar = document.createElement("img")
-                    btnRecusar.setAttribute("src", imagemErro)
-                    btnRecusar.style.height = "30px"
-                    btnRecusar.style.fontWeight = "300"
-                    btnRecusar.style.fontSize = "15"
-                    btnRecusar.style.cursor = "pointer"
+                        const confirmar = document.createElement("a")
+                        confirmar.innerHTML = "Confirmar"
 
-                    btnConfirmar.addEventListener('click', function(){
-                        let id = reserva.id
-                        console.log(id);
-                        confirmarReserva(id)
-                    })
+                        const recusar = document.createElement("a")
+                        recusar.innerHTML = "Recusar"
 
-                    btnRecusar.addEventListener('click', function(){
-                        let id = reserva.id
-                        console.log(id);
-                        recusarReserva(id)
-                    })
-                    
-                    tdBtn.appendChild(btnConfirmar)
-                    linha.appendChild(tdBtn)
-                    tdBtn.appendChild(btnRecusar)
-                    linha.appendChild(tdBtn)
+                        const detalhes = document.createElement("a")
+                        detalhes.innerHTML = "Detalhes"
 
-                }else{
-                    const tdBtn = document.createElement("td")
-                    const btnDetalhes = document.createElement("button")
-                    btnDetalhes.innerHTML = "..."
-                    tdBtn.appendChild(btnDetalhes)
-                    linha.appendChild(tdBtn)
+                        divDrop.appendChild(confirmar)
+                        divDrop.appendChild(recusar)
+                        divDrop.appendChild(detalhes)
+
+                        confirmar.addEventListener('click', function () {
+                            let id = reserva.id
+                            console.log(id);
+                            confirmarReserva(id)
+                        })
+        
+                        recusar.addEventListener('click', function () {
+                            let id = reserva.id
+                            console.log(id);
+                            recusarReserva(id)
+                        })
+
+                    } else if (status.textContent == "CONFIRMADO") {
+                        const recusar = document.createElement("a")
+                        recusar.innerHTML = "Recusar"
+
+                        const detalhes = document.createElement("a")
+                        detalhes.innerHTML = "Detalhes"
+
+                        divDrop.appendChild(recusar)
+                        divDrop.appendChild(detalhes)
+
+                        recusar.addEventListener('click', function () {
+                            let id = reserva.id
+                            console.log(id);
+                            recusarReserva(id)
+                        })
+                    } else {
+                        const detalhes = document.createElement("a")
+                        detalhes.innerHTML = "Detalhes"
+                        divDrop.appendChild(detalhes)
+                    }
+
+                }//Se não, é comum ou usuario não logado
+                else {
+                    if (usuario.id === sendId()) {
+                        const recusar = document.createElement("a")
+                        recusar.innerHTML = "Recusar"
+
+                        const detalhes = document.createElement("a")
+                        detalhes.innerHTML = "Detalhes"
+
+                        divDrop.appendChild(recusar)
+                        divDrop.appendChild(detalhes)
+
+                        recusar.addEventListener('click', function () {
+                            let id = reserva.id
+                            console.log(id);
+                            recusarReserva(id)
+                        })
+                    } else {
+                        const detalhes = document.createElement("a")
+                        detalhes.innerHTML = "Detalhes"
+
+                        divDrop.appendChild(detalhes)
+                    }
                 }
+
+                tdBtn.appendChild(dropBtn)
+                tdBtn.appendChild(divDrop)
+                tdBtn.appendChild(dropBtn)
+                linha.appendChild(tdBtn)
 
                 if (status.textContent == "CONFIRMADO") {
                     status.style.color = "green"
@@ -477,17 +523,15 @@ export function pegaTypes() {
     }, 1);
 }
 
-function pegaReserva(id){
+function pegaReserva(id) {
     let reserva = fazGet("http://localhost:8080/api/reservation/pega/" + id)
-    console.log(reserva);
-    return reserva
+    return JSON.parse(reserva) 
 }
 
 function confirmarReserva(id) {
     let url = ("http://localhost:8080/api/reservation/confirmada/" + id)
     let reserva = pegaReserva(id)
-    console.log(reserva);
-    
+
     let dataInicio = reserva.dataInicio
     let dataTermino = reserva.dataTermino
     let titulo = reserva.titulo
@@ -495,7 +539,7 @@ function confirmarReserva(id) {
     let usuario = reserva.usuario
     let status = reserva.status
     let numParticipantes = reserva.participantes
-    
+
     let body = {
         "dataInicio": dataInicio,
         "dataTermino": dataTermino,
@@ -503,9 +547,11 @@ function confirmarReserva(id) {
         "descricao": descricao,
         "usuario": usuario,
         "status": status,
-        "participantes": numParticipantes 
+        "participantes": numParticipantes
     }
-    console.log("Aqui "+body);
+
+    console.log(body);
+
     fazPut(url, body)
 }
 
@@ -516,7 +562,8 @@ function recusarReserva(id) {
 //metodo de formatar uma data para formado br
 function dataFormatada(date) {
     var data = new Date(date),
-        dia = data.getDate().toString(),
+        dia = data.getDate(),
+        dia = (dia + 1).toString(),
         diaF = (dia.length == 1) ? '0' + dia : dia,
         mes = (data.getMonth() + 1).toString(),
         mesF = (mes.length == 1) ? '0' + mes : mes,
