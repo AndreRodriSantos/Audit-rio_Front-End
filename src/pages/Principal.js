@@ -12,6 +12,10 @@ function Principal() {
     <div className={styles.container}>
       <Reserva></Reserva>
       <Detalhes></Detalhes>
+      <div className={styles.justificativa} id="justificativa">
+        <input type="text"></input>
+        <button className={styles.botao_just}/>
+      </div>
       <div className={styles.header}>
 
         <a href="https://www.sp.senai.br/" target="blank" className={styles.logo_A}>
@@ -73,7 +77,7 @@ function Principal() {
 
               </div>
               <ul id="listaUsuarios" className={styles.listaUsers} onLoad={pegaTodosUsuarios()}>
-
+                
               </ul>
             </div>
 
@@ -203,14 +207,14 @@ function Principal() {
                 <h5 className={styles.title_reserva}>Reservas</h5>
               </div>
 
-                <form onSubmit={pesquisaReserva} className={styles.div_pesquisa}>
-                  <div className={styles.base_pes}>
-                    <button type="submit" className={styles.lupa}>
-                      <i className="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                    <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} id="pesquisa"/>
-                  </div>
-                </form>
+              <form onSubmit={pesquisaReserva} className={styles.div_pesquisa}>
+                <div className={styles.base_pes}>
+                  <button type="submit" className={styles.lupa}>
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                  <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} id="pesquisa" />
+                </div>
+              </form>
 
               <ul className={styles.lista} id="lista" onLoad={listaReservas()}>
                 <table id="Janeiro" className={styles.tabela_mes}>
@@ -311,3 +315,13 @@ function Principal() {
   );
 }
 export default Principal;
+
+export function ConfirmacaoJust() {
+  const div = document.getElementById("justificativa");
+  div.style.display = "flex"
+}
+
+function Fechar() {
+  const div = document.getElementById("justificativa");
+  div.style.display = "none"
+} 

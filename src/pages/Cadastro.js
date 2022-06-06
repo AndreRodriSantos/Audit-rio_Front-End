@@ -2,7 +2,7 @@ import cadastraUsuario, { pegaTypes } from "../Js/API";
 import styles from '../css/Style_Cadastro.module.css';
 import triangulo from '../IMG/trianguloDireita.png'
 import projetor from '../IMG/projetor.gif'
-import auditorio from '../IMG/Gato de Botas 2.mp4'
+import auditorio from '../IMG/video-auditorio.mp4'
 import user from '../IMG/UserImg.png'
 
 export default function Cadastro() {

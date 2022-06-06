@@ -3,7 +3,7 @@ import { history } from './history'
 import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
 import { isAuthenticatedAdmin } from './auth'
-import { ChamaGrafico, ConfirmacaoDetalhes } from '../pages/Detalhes'
+import { ConfirmacaoDetalhes } from '../pages/Detalhes'
 
 /* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
@@ -83,6 +83,9 @@ window.onload = function () {
         sessionStorage.removeItem("reloading")
     } else if (reloading == "reserva") {
         sucesso("Reserva Cadastrada com sucesso")
+        sessionStorage.removeItem("reloading")
+    }else if(reloading == "delete"){
+        sucesso("Usuário deletado com sucesso")
         sessionStorage.removeItem("reloading")
     }
 }
@@ -225,6 +228,14 @@ export function listaUsuariosComuns() {
                 let btn_delete = document.createElement("button")
                 btn_delete.innerHTML = "X"
 
+                btn_delete.addEventListener('click',function(){
+                    let id = usuario.id
+                    console.log(id);
+                    let url = ("http://localhost:8080/api/user/" + id);
+                    fazDelete(url)
+                    refresh("delete")
+                })
+
                 tdExcluir.appendChild(btn_delete)
                 linha.append(tdExcluir)
 
@@ -259,7 +270,26 @@ export function sendingEmail(dataInicio, dataTermino) {
         "emailFrom": "auditoriocotia138@gmail.com",
         "emailTo": "andrerodrisantos15@gmail.com",
         "subject": "Reservar do Auditorio",
-        "text": "Eu " + nome + " estou enviando esse email para solicitar uma reserva no auditorio acesse esse link acesse http://localhost:3000/Principal, data inicio: " + dataInicio + " data termino: " + dataTermino
+        "text": "Eu " + nome + " estou enviando esse email para solicitar uma reserva no auditorio, acesse esse link para o site http://localhost:3000/Principal, data inicio: " + dataInicio + " data termino: " + dataTermino
+    }
+    fazPost(url, body)
+    console.log("Nome " + nome);
+}
+
+export function sendingEmailUser() {
+    let idUser = sendId()
+    let data = fazGet("http://localhost:8080/api/user/" + idUser)
+    console.log(data);
+    let user = JSON.parse(data)
+    let nome = user.nome
+    let url = ("http://localhost:8080/api/email/sending-email");
+
+    var body = {
+        "ownerRef": nome,
+        "emailFrom": "auditoriocotia138@gmail.com",
+        "emailTo": "andrerodrisantos15@gmail.com",
+        "subject": "Reservar do Auditorio",
+        "text": "Eu " + nome + " estou enviando esse email para solicitar uma reserva no auditorio, acesse esse link para o site http://localhost:3000/Principal"
     }
     fazPost(url, body)
     console.log("Nome " + nome);
@@ -292,7 +322,6 @@ export function pegaUsuario() {
 export function pesquisaReserva(event) {
     const p = document.getElementById("pesquisa").value
     history.push("/Pesquisa")
-
     setTimeout(() => {
         let reservas = fazGet("http://localhost:8080/api/reservation/findbyall/" + p)
         reservas = JSON.parse(reservas)
@@ -313,7 +342,6 @@ export function alteraUsuario(event) {
     event.preventDefault()
     let id = sendId()
     let url = ("http://localhost:8080/api/user/" + id)
-    let usuario = pegaUsuario()
 
     let nome = document.getElementById("nome").value
     let email = document.getElementById("email").value
@@ -489,6 +517,32 @@ export function listaReservas() {
                             ConfirmacaoDetalhes()
                         })
 
+                        detalhes.addEventListener('click', function () {
+                            ConfirmacaoDetalhes()
+                            console.log(reserva);
+                            document.getElementById("id").innerHTML = reserva.id
+                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                            document.getElementById("nome").innerHTML = usuario.nome
+                            document.getElementById("email").innerHTML = usuario.email
+                            let status = document.getElementById("status")
+                            status.style.cursor = "pointer"
+
+                            if (reserva.status === "CONFIRMADO") {
+                                status.style.backgroundColor = "#56AF5A"
+                                status.title = "Confirmado"
+                            } else if (reserva.status === "FINALIZADO") {
+                                status.style.backgroundColor = "tomato"
+                                status.title = "Finalizado"
+                            } else {
+                                status.style.backgroundColor = "#fccd32"
+                                status.title = "Em análise"
+                            }
+                            let disponivel = 118 - parseInt(reserva.participantes)
+                        })
+
                     } else if (status.textContent == "CONFIRMADO") {
                         const recusar = document.createElement("a")
                         recusar.innerHTML = "Cancelar"
@@ -519,18 +573,17 @@ export function listaReservas() {
                             let status = document.getElementById("status")
                             status.style.cursor = "pointer"
 
-                            if(reserva.status === "CONFIRMADO"){
+                            if (reserva.status === "CONFIRMADO") {
                                 status.style.backgroundColor = "#56AF5A"
                                 status.title = "Confirmado"
-                            }else if(reserva.status === "FINALIZADO"){
+                            } else if (reserva.status === "FINALIZADO") {
                                 status.style.backgroundColor = "tomato"
                                 status.title = "Finalizado"
-                            }else{
+                            } else {
                                 status.style.backgroundColor = "#fccd32"
                                 status.title = "Em análise"
                             }
-                            let disponivel =  118 - parseInt(reserva.participantes) 
-                            ChamaGrafico(disponivel, parseInt(reserva.participantes) )
+                            let disponivel = 118 - parseInt(reserva.participantes)
                         })
 
                     } else {
@@ -564,11 +617,63 @@ export function listaReservas() {
                             }
                         })
 
+                        detalhes.addEventListener('click', function () {
+                            ConfirmacaoDetalhes()
+                            console.log(reserva);
+                            document.getElementById("id").innerHTML = reserva.id
+                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                            document.getElementById("nome").innerHTML = usuario.nome
+                            document.getElementById("email").innerHTML = usuario.email
+                            let status = document.getElementById("status")
+                            status.style.cursor = "pointer"
+
+                            if (reserva.status === "CONFIRMADO") {
+                                status.style.backgroundColor = "#56AF5A"
+                                status.title = "Confirmado"
+                            } else if (reserva.status === "FINALIZADO") {
+                                status.style.backgroundColor = "tomato"
+                                status.title = "Finalizado"
+                            } else {
+                                status.style.backgroundColor = "#fccd32"
+                                status.title = "Em análise"
+                            }
+                            let disponivel = 118 - parseInt(reserva.participantes)
+                        })
+
                     } else {
                         const detalhes = document.createElement("a")
                         detalhes.innerHTML = "Detalhes"
 
                         divDrop.appendChild(detalhes)
+
+                        detalhes.addEventListener('click', function () {
+                            ConfirmacaoDetalhes()
+                            console.log(reserva);
+                            document.getElementById("id").innerHTML = reserva.id
+                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                            document.getElementById("nome").innerHTML = usuario.nome
+                            document.getElementById("email").innerHTML = usuario.email
+                            let status = document.getElementById("status")
+                            status.style.cursor = "pointer"
+
+                            if (reserva.status === "CONFIRMADO") {
+                                status.style.backgroundColor = "#56AF5A"
+                                status.title = "Confirmado"
+                            } else if (reserva.status === "FINALIZADO") {
+                                status.style.backgroundColor = "tomato"
+                                status.title = "Finalizado"
+                            } else {
+                                status.style.backgroundColor = "#fccd32"
+                                status.title = "Em análise"
+                            }
+                            let disponivel = 118 - parseInt(reserva.participantes)
+                        })
                     }
                 }
 

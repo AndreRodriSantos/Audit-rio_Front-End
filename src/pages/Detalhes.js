@@ -1,5 +1,5 @@
 import styles from "../css/Detalhes.module.css"
-import { Chart, PieControllerChartOptions, PieController } from "chart.js";
+import Grafico from "../components/grafico";
 
 export default function Detalhes() {
     return (
@@ -48,7 +48,7 @@ export default function Detalhes() {
 
                         </div>
                         <div className={styles.grafico} id="grafico">
-                            <canvas id="ChartParticipantes"></canvas>
+                                {/* <Grafico></Grafico> */}
                         </div>
                     </div>
                 </div>
@@ -71,30 +71,3 @@ function Fechar() {
     payment.style.display = "none"
     principal.style.display = "none"
 } 
-
-export function ChamaGrafico(disponivel, participantes){
-//Grafico de Gêneros --------------------------
-  let labels = ['Disponivel' , 'Participantes'];
-
-  let data = {
-    labels: labels,
-    datasets: [{
-      label: 'Quantidade de Participantes',
-      data: [{disponivel} , {participantes}],
-      backgroundColor: ['gray', 'red']
-    }]
-  };
-
-  let config = {
-    type: "pie",
-    data: data,
-    options: {
-
-    }
-  };
-    
-  const ChartGenero = new Chart(
-    document.getElementById('ChartParticipantes'),
-    config
-  );
-}

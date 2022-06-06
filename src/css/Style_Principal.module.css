@@ -60,6 +60,9 @@
     padding: 10px;
 }
 
+.justificativa{
+    display: none;
+}
 
 .menu {
     width: 300px;

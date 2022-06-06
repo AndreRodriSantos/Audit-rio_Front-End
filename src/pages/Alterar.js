@@ -1,6 +1,6 @@
 import cadastraUsuario, { alteraUsuario, pegaTypes, pegaUsuario, sendId } from "../Js/API";
 import styles from '../css/Style_Alterar.module.css';
-import auditorio from '../IMG/Gato de Botas 2.mp4'
+import auditorio from '../IMG/video-auditorio.mp4'
 import user from '../IMG/UserImg.png'
 
 export default function Alterar() {

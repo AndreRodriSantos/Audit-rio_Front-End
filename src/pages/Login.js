@@ -3,7 +3,7 @@ import cadastraUsuario, { cadUser, fazGet, login, pegaTypes, pegaUsuario } from 
 import styles from '../css/Style_Login.module.css';
 import triangulo from '../IMG/trianguloEsquerda.png'
 import projetor from '../IMG/projetor.gif'
-import auditorio from '../IMG/Gato de Botas 2.mp4'
+import auditorio from '../IMG/video-auditorio.mp4'
 import logo from '../IMG/logo.png'
 
 function Login() {
