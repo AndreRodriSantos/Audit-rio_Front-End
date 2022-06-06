@@ -5,11 +5,13 @@ import '../css/DropDown.css';
 import { logout, listaReservas, img, pegaTodosUsuarios, contador, pesquisaReserva } from '../Js/API.js'
 import Reserva, { Confirmacao } from "./Reserva";
 import Calendario from "../components/calendario.js";
+import Detalhes from "./Detalhes";
 
 function Principal() {
   return (
     <div className={styles.container}>
       <Reserva></Reserva>
+      <Detalhes></Detalhes>
       <div className={styles.header}>
 
         <a href="https://www.sp.senai.br/" target="blank" className={styles.logo_A}>
@@ -201,8 +203,7 @@ function Principal() {
                 <h5 className={styles.title_reserva}>Reservas</h5>
               </div>
 
-              <div className={styles.div_pesquisa}>
-                <form onSubmit={pesquisaReserva}>
+                <form onSubmit={pesquisaReserva} className={styles.div_pesquisa}>
                   <div className={styles.base_pes}>
                     <button type="submit" className={styles.lupa}>
                       <i className="fa-solid fa-magnifying-glass"></i>
@@ -210,7 +211,6 @@ function Principal() {
                     <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} id="pesquisa"/>
                   </div>
                 </form>
-              </div>
 
               <ul className={styles.lista} id="lista" onLoad={listaReservas()}>
                 <table id="Janeiro" className={styles.tabela_mes}>

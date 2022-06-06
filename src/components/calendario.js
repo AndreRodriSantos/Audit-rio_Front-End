@@ -76,15 +76,25 @@ function chamaCalendar() {
                 if (i >= first_day.getDay()) {
                     day.classList.add('calendar_day_hover')
                     day.innerHTML = i - first_day.getDay() + 1
-                    day.innerHTML += `<span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>`
+
                     if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
                         day.classList.add('curr_date')
+                        day.title = "Hoje"
                     }
                 }
+                day.addEventListener('click', function () {
+                    limparClasse()
+                    day.classList.add("day_selected")
+                })
                 calendar_days.appendChild(day)
+            }
+        }
+        
+        function limparClasse(){
+            const days = document.querySelectorAll(".calendar_day_hover")
+            for (let index = 0; index < days.length; index++) {
+                let day = days[index]
+                    day.classList.remove("day_selected")
             }
         }
 

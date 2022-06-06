@@ -151,6 +151,17 @@
   background-color: lightgray;
 }
 
+.calendar_days .day_selected {
+  color: #ffffff;
+  background-color: #2884B2;
+}
+.calendar_days .day_selected {
+  color: #ffffff;
+  background-color: #2884B2;
+  font-weight: bold;
+  font-size: 19px;
+}
+
 @keyframes to-top {
   0% {
       transform: translateY(100%);

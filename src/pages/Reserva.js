@@ -7,7 +7,7 @@ export function Reserva() {
     return (
         <div className={styles.principal} id="principal">
 
-            <div className={styles.payment} id="payment" action="cadastro">
+            <div className={styles.payment} id="payment">
              
                 <div className={styles.form}>
                     <div className={styles.title_form}>
@@ -85,7 +85,7 @@ export function Confirmacao() {
     }
 }
 
-export function Fechar() {
+function Fechar() {
     const payment = document.getElementById("payment");
     const principal = document.getElementById("principal");
     document.getElementById("dataInicio").value = ""

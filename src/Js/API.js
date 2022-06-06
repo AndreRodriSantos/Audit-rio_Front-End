@@ -3,7 +3,7 @@ import { history } from './history'
 import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
 import { isAuthenticatedAdmin } from './auth'
-import { Fechar } from '../pages/Reserva'
+import { ChamaGrafico, ConfirmacaoDetalhes } from '../pages/Detalhes'
 
 /* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
@@ -17,7 +17,11 @@ function fazPost(url, body) {
     if (url == "http://localhost:8080/api/reservation/save") {
         request.onload = function () {
             if (request.status == 200) {
-                sucesso("Reserva Cadastrada com sucesso")
+                refresh("reserva")
+            } else if (request.status == 406) {
+                erro("Erro: Escolha uma data e horário válidos")
+            } else if (request.status == 400) {
+                erro("Erro: Data inválida.\n Verifique se não colocou uma data passada")
             } else {
                 erro("Erro: Cadastro inválido.\nVerifique os campos")
             }
@@ -27,9 +31,7 @@ function fazPost(url, body) {
     if (url == "http://localhost:8080/api/user/cadastrar") {
         request.onload = function () {
             if (request.status == 200) {
-                sucesso("Usuário Cadastrado com sucesso")
-                history.push("/Login")
-
+                refresh("cadastro")
             } else {
                 erro("Erro: Cadastro inválido.\nVerifique os campos")
             }
@@ -45,10 +47,9 @@ function fazPost(url, body) {
                 token = token.replace('"}', "")
                 console.log(token)
                 sessionStorage.setItem("token", token)
-
-                sucesso("Usuário Logado!!")
                 history.push("/Principal")
-                refresh()
+                refresh("login")
+
             } else if (request.status == 401) {
                 erro("Erro: Senha ou NIF incorretos")
             } else if (request.status == 404) {
@@ -69,6 +70,23 @@ export function fazGet(url) {
     return request.responseText
 }
 
+window.onload = function () {
+    var reloading = sessionStorage.getItem("reloading");
+    if (reloading == "login") {
+        sucesso("Usuário Logado com sucesso!!")
+        sessionStorage.removeItem("reloading");
+    } else if (reloading == "cadastro") {
+        sucesso("Usuário Cadastrado com sucesso")
+        sessionStorage.removeItem("reloading");
+    } else if (reloading == "alteracao") {
+        sucesso("Alteração realizada com sucesso!!")
+        sessionStorage.removeItem("reloading")
+    } else if (reloading == "reserva") {
+        sucesso("Reserva Cadastrada com sucesso")
+        sessionStorage.removeItem("reloading")
+    }
+}
+
 export function fazPut(url, body) {
     let request = new XMLHttpRequest()
     request.open("PUT", url, true)
@@ -78,6 +96,18 @@ export function fazPut(url, body) {
     request.setRequestHeader("Access-Control-Allow-Methods", "PUT")
     request.setRequestHeader('Access-Control-Allow-Origin', '*');
     request.send(JSON.stringify(body))
+
+    let id = sendId();
+
+    if (url == "http://localhost:8080/api/user/" + id) {
+        request.onload = function () {
+            if (request.status === 200) {
+                refresh("alteracao")
+            } else {
+                erro("Ocorreu um erro ao Alterar tente novamente")
+            }
+        }
+    }
 }
 
 export function fazDelete(url) {
@@ -259,27 +289,28 @@ export function pegaUsuario() {
     }, 5);
 }
 
-export function pesquisaReserva(event){
+export function pesquisaReserva(event) {
     const p = document.getElementById("pesquisa").value
     history.push("/Pesquisa")
 
     setTimeout(() => {
-    let reservas = fazGet("http://localhost:8080/api/reservation/findbyall/" + p)
-    reservas = JSON.parse(reservas)
+        let reservas = fazGet("http://localhost:8080/api/reservation/findbyall/" + p)
+        reservas = JSON.parse(reservas)
 
-    const lista = document.getElementById("listaPesquisa")
+        const lista = document.getElementById("listaPesquisa")
 
-    for(let i = 0; i < reservas.length; i++){
-        const reserva = reservas[i]
+        for (let i = 0; i < reservas.length; i++) {
+            const reserva = reservas[i]
 
-        const linha = document.createElement("li")
-        linha.innerHTML = reserva.id + " " + reserva.titulo + " " + reserva.dataInicio
-        lista.appendChild(linha)
-    }
-}, 5);
+            const linha = document.createElement("li")
+            linha.innerHTML = reserva.id + " " + reserva.titulo + " " + reserva.dataInicio
+            lista.appendChild(linha)
+        }
+    }, 5);
 }
 
-export function alteraUsuario() {
+export function alteraUsuario(event) {
+    event.preventDefault()
     let id = sendId()
     let url = ("http://localhost:8080/api/user/" + id)
     let usuario = pegaUsuario()
@@ -331,15 +362,13 @@ export function reserva(event) {
 
     fazPost(url, body)
     sendingEmail(dataInicio, dataTermino)
-    Fechar()
 }
 
 let listaCriada = false
 
-export function refresh() {
-    setTimeout(function () {
-        window.location.reload()
-    }, 0.1);
+export function refresh(r) {
+    sessionStorage.setItem("reloading", r);
+    window.location.reload()
 }
 
 //Constrói a lista de Reservas
@@ -374,7 +403,7 @@ export function listaReservas() {
                 const tdId = document.createElement("td")
                 tdId.innerHTML = reserva.id
                 linha.appendChild(tdId)
-                
+
                 //Título da Reserva
                 const tdTitulo = document.createElement("td")
                 tdTitulo.innerHTML = reserva.titulo
@@ -456,6 +485,10 @@ export function listaReservas() {
                             refresh()
                         })
 
+                        detalhes.addEventListener('click', function () {
+                            ConfirmacaoDetalhes()
+                        })
+
                     } else if (status.textContent == "CONFIRMADO") {
                         const recusar = document.createElement("a")
                         recusar.innerHTML = "Cancelar"
@@ -472,6 +505,34 @@ export function listaReservas() {
                             fazDelete(url)
                             refresh()
                         })
+
+                        detalhes.addEventListener('click', function () {
+                            ConfirmacaoDetalhes()
+                            console.log(reserva);
+                            document.getElementById("id").innerHTML = reserva.id
+                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                            document.getElementById("nome").innerHTML = usuario.nome
+                            document.getElementById("email").innerHTML = usuario.email
+                            let status = document.getElementById("status")
+                            status.style.cursor = "pointer"
+
+                            if(reserva.status === "CONFIRMADO"){
+                                status.style.backgroundColor = "#56AF5A"
+                                status.title = "Confirmado"
+                            }else if(reserva.status === "FINALIZADO"){
+                                status.style.backgroundColor = "tomato"
+                                status.title = "Finalizado"
+                            }else{
+                                status.style.backgroundColor = "#fccd32"
+                                status.title = "Em análise"
+                            }
+                            let disponivel =  118 - parseInt(reserva.participantes) 
+                            ChamaGrafico(disponivel, parseInt(reserva.participantes) )
+                        })
+
                     } else {
                         const detalhes = document.createElement("a")
                         detalhes.innerHTML = "Detalhes"
