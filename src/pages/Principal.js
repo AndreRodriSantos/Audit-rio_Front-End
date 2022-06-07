@@ -6,16 +6,16 @@ import { logout, listaReservas, img, pegaTodosUsuarios, contador, pesquisaReserv
 import Reserva, { Confirmacao } from "./Reserva";
 import Calendario from "../components/calendario.js";
 import Detalhes from "./Detalhes";
+import Justificativa from "./Justificativa";
+import Certeza from "./Certeza";
 
 function Principal() {
   return (
     <div className={styles.container}>
       <Reserva></Reserva>
       <Detalhes></Detalhes>
-      <div className={styles.justificativa} id="justificativa">
-        <input type="text"></input>
-        <button className={styles.botao_just}/>
-      </div>
+      <Justificativa></Justificativa>
+      <Certeza></Certeza>
       <div className={styles.header}>
 
         <a href="https://www.sp.senai.br/" target="blank" className={styles.logo_A}>

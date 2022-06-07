@@ -4,6 +4,9 @@ import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
 import { isAuthenticatedAdmin } from './auth'
 import { ConfirmacaoDetalhes } from '../pages/Detalhes'
+import Grafico, { pegaParticipantes, state } from '../components/grafico'
+import { ConfirmacaoJust } from '../pages/Justificativa'
+import { FecharConfirmacao } from '../pages/Certeza'
 
 /* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
@@ -23,7 +26,7 @@ function fazPost(url, body) {
             } else if (request.status == 400) {
                 erro("Erro: Data inválida.\n Verifique se não colocou uma data passada")
             } else {
-                erro("Erro: Cadastro inválido.\nVerifique os campos")
+                erro("Erro: Cadastro inválido.\nEste horário já está reservado")
             }
         }
     }
@@ -233,7 +236,7 @@ export function listaUsuariosComuns() {
                     console.log(id);
                     let url = ("http://localhost:8080/api/user/" + id);
                     fazDelete(url)
-                    refresh("delete")
+                    refresh()
                 })
 
                 tdExcluir.appendChild(btn_delete)
@@ -276,10 +279,11 @@ export function sendingEmail(dataInicio, dataTermino) {
     console.log("Nome " + nome);
 }
 
-export function sendingEmailUser() {
+export function sendingEmailUser(justificativa, email) {
     let idUser = sendId()
     let data = fazGet("http://localhost:8080/api/user/" + idUser)
-    console.log(data);
+    console.log(data)
+    console.log(email)
     let user = JSON.parse(data)
     let nome = user.nome
     let url = ("http://localhost:8080/api/email/sending-email");
@@ -287,12 +291,11 @@ export function sendingEmailUser() {
     var body = {
         "ownerRef": nome,
         "emailFrom": "auditoriocotia138@gmail.com",
-        "emailTo": "andrerodrisantos15@gmail.com",
-        "subject": "Reservar do Auditorio",
-        "text": "Eu " + nome + " estou enviando esse email para solicitar uma reserva no auditorio, acesse esse link para o site http://localhost:3000/Principal"
+        "emailTo": email,
+        "subject": "Reserva Recusada",
+        "text": "Sua reserva foi recusada por " + nome + ", pois: " + justificativa
     }
     fazPost(url, body)
-    console.log("Nome " + nome);
 }
 
 export function pegaUsuario() {
@@ -367,6 +370,7 @@ export function alteraUsuario(event) {
 //Salva uma Reserva
 export function reserva(event) {
     event.preventDefault();
+    FecharConfirmacao();
     let url = ("http://localhost:8080/api/reservation/save");
     let titulo = document.getElementById("titulo").value
     let descricao = document.getElementById("descricao").value
@@ -507,14 +511,19 @@ export function listaReservas() {
                         })
 
                         recusar.addEventListener('click', function () {
-                            let id = reserva.id
-                            let url = ("http://localhost:8080/api/reservation/deleta/" + id)
-                            fazDelete(url)
-                            refresh()
+                            ConfirmacaoJust()
                         })
 
-                        detalhes.addEventListener('click', function () {
-                            ConfirmacaoDetalhes()
+                        const enviar = document.getElementById("enviar")
+
+                        enviar.addEventListener('click', function () {
+                            let id = reserva.id
+                            let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                            const just = document.getElementById("justificativa").value
+                            const email = usuario.email
+                            sendingEmailUser(just, email)
+                            fazDelete(url)
+                            refresh()
                         })
 
                         detalhes.addEventListener('click', function () {
@@ -541,6 +550,8 @@ export function listaReservas() {
                                 status.title = "Em análise"
                             }
                             let disponivel = 118 - parseInt(reserva.participantes)
+                            state.datasets[0].data[0] = disponivel;
+                            state.datasets[0].data[1] = parseInt(reserva.participantes);
                         })
 
                     } else if (status.textContent == "CONFIRMADO") {
@@ -554,8 +565,17 @@ export function listaReservas() {
                         divDrop.appendChild(detalhes)
 
                         recusar.addEventListener('click', function () {
+                            ConfirmacaoJust()
+                        })
+
+                        const enviar = document.getElementById("enviar")
+
+                        enviar.addEventListener('click', function () {
                             let id = reserva.id
                             let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                            const just = document.getElementById("justificativa").value
+                            const email = usuario.email
+                            sendingEmailUser(just, email)
                             fazDelete(url)
                             refresh()
                         })
@@ -584,12 +604,42 @@ export function listaReservas() {
                                 status.title = "Em análise"
                             }
                             let disponivel = 118 - parseInt(reserva.participantes)
+                            state.datasets[0].data[0] = disponivel;
+                            state.datasets[0].data[1] = parseInt(reserva.participantes);
                         })
 
                     } else {
                         const detalhes = document.createElement("a")
                         detalhes.innerHTML = "Detalhes"
                         divDrop.appendChild(detalhes)
+
+                        detalhes.addEventListener('click', function () {
+                            ConfirmacaoDetalhes()
+                            console.log(reserva);
+                            document.getElementById("id").innerHTML = reserva.id
+                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                            document.getElementById("nome").innerHTML = usuario.nome
+                            document.getElementById("email").innerHTML = usuario.email
+                            let status = document.getElementById("status")
+                            status.style.cursor = "pointer"
+
+                            if (reserva.status === "CONFIRMADO") {
+                                status.style.backgroundColor = "#56AF5A"
+                                status.title = "Confirmado"
+                            } else if (reserva.status === "FINALIZADO") {
+                                status.style.backgroundColor = "tomato"
+                                status.title = "Finalizado"
+                            } else {
+                                status.style.backgroundColor = "#fccd32"
+                                status.title = "Em análise"
+                            }
+                            let disponivel = 118 - parseInt(reserva.participantes)
+                            state.datasets[0].data[0] = disponivel;
+                            state.datasets[0].data[1] = parseInt(reserva.participantes);
+                        })
                     }
                 }//Se não, é comum ou usuario não logado
                 else {
@@ -641,6 +691,8 @@ export function listaReservas() {
                                 status.title = "Em análise"
                             }
                             let disponivel = 118 - parseInt(reserva.participantes)
+                            state.datasets[0].data[0] = disponivel;
+                            state.datasets[0].data[1] = parseInt(reserva.participantes);
                         })
 
                     } else {
@@ -673,6 +725,8 @@ export function listaReservas() {
                                 status.title = "Em análise"
                             }
                             let disponivel = 118 - parseInt(reserva.participantes)
+                            state.datasets[0].data[0] = disponivel;
+                            state.datasets[0].data[1] = parseInt(reserva.participantes);
                         })
                     }
                 }

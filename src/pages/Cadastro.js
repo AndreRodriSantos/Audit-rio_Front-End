@@ -51,7 +51,7 @@ export default function Cadastro() {
                         </div>
 
                         <div className={styles.User}>
-                            <input type="text" placeholder="NIF" name="nif" required id="nif" className={styles.input} /><br />
+                            <input type="number" placeholder="NIF" name="nif" required id="nif" className={styles.input} /><br />
                             <i className="fa-solid fa-user-large" id={styles.user_ico}></i>
                         </div>
 

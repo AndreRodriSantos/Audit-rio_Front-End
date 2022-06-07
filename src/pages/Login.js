@@ -29,7 +29,7 @@ function Login() {
                         <h1 className={styles.title2}>Faça seu login</h1>
 
                         <div className={styles.User}>
-                            <input type="text" placeholder="NIF" name="nif" required id="loginNif" className={styles.input} /><br />
+                            <input type="number" placeholder="NIF" name="nif" required id="loginNif" className={styles.input} /><br />
                             <i className="fa-solid fa-user-large" id={styles.user_ico}></i>
                         </div>
 

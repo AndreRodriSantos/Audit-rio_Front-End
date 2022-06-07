@@ -1,5 +1,7 @@
 import styles from "../css/Detalhes.module.css"
 import Grafico from "../components/grafico";
+import $ from "jquery"
+import { refresh } from "../Js/API";
 
 export default function Detalhes() {
     return (
@@ -19,7 +21,7 @@ export default function Detalhes() {
                         <div className={styles.id_status}>
                             <div>
                                 <span className={styles.title}>Id:</span>
-                                <span id="id"></span>
+                                <span id="id" className={styles.id}></span>
                             </div>
                             <div>
                                 <span className={styles.title}>Status:</span>
@@ -48,7 +50,7 @@ export default function Detalhes() {
 
                         </div>
                         <div className={styles.grafico} id="grafico">
-                                {/* <Grafico></Grafico> */}
+                            <Grafico/>
                         </div>
                     </div>
                 </div>
@@ -70,4 +72,5 @@ function Fechar() {
     const principal = document.getElementById("principalDetalhes");
     payment.style.display = "none"
     principal.style.display = "none"
+    refresh("")
 } 

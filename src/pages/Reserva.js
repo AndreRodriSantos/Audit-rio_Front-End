@@ -2,6 +2,7 @@ import React from "react";
 import { reserva } from "../Js/API";
 import styles from "../css/Style_Reserva.module.css"
 import { erro } from "../components/mensagem";
+import { confirmacaoCert } from "./Certeza";
 
 export function Reserva() {
     return (
@@ -21,7 +22,7 @@ export function Reserva() {
                     </div>
 
                     <div className="formAdmin">
-                        <form onSubmit={reserva}>
+                        <form onSubmit={confirmacaoCert}>
                             <input type="hidden" name="id" ></input>
 
                             <div className={styles.datas}>
