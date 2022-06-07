@@ -1,4 +1,4 @@
-.principal{
+.principal {
     overflow: hidden;
     display: flex;
     flex-direction: row;
@@ -6,12 +6,13 @@
     height: 100%;
 }
 
-.div_form{
+.div_form {
     width: 70%;
     height: 100%;
     display: flex;
 }
-.div_projetor{
+
+.div_projetor {
     width: 100%;
     height: 80%;
     display: flex;
@@ -20,13 +21,13 @@
     justify-items: center;
 }
 
-.alterar{
-    position: absolute; 
-    top: 70px;  
+.alterar {
+    position: absolute;
+    top: 70px;
     right: 5px;
     font-size: 24px;
     color: white;
-    background-color: red;  
+    background-color: red;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -36,7 +37,7 @@
     height: 50px;
 }
 
-.div_direita{
+.div_direita {
     width: 30%;
     height: 100%;
     display: flex;
@@ -44,7 +45,8 @@
     justify-content: center;
     justify-items: center;
 }
-.projetor{
+
+.projetor {
     margin-bottom: 25%;
     width: 45%;
     min-width: 100px;
@@ -52,13 +54,13 @@
     min-height: 400px;
 }
 
-.home{
-    position: absolute; 
-    top: 5px;  
+.home {
+    position: absolute;
+    top: 5px;
     right: 5px;
     font-size: 24px;
     color: white;
-    background-color: red;  
+    background-color: red;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -68,70 +70,73 @@
     height: 50px;
 }
 
-.div_title{
-   height: 20%;
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   justify-items: center;
+.div_title {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
 }
 
 
-.div_title a{
+.div_title a {
     font-family: "Cosi Azure";
     font-size: 100px;
     font-weight: 800;
     text-decoration: none;
     text-transform: uppercase;
     color: #fefefe00;
-    -webkit-text-stroke: 1px #FFF; 
+    -webkit-text-stroke: 1px #FFF;
     margin-right: 100%;
 }
 
-.div_title span::before{
+.div_title span::before {
     width: 0;
     color: #fff;
     overflow: hidden;
     position: absolute;
     content: attr(data-text);
-    transition: all 1s cubic-bezier(0.84, 0 , 0.08, 0.99);
+    transition: all 1s cubic-bezier(0.84, 0, 0.08, 0.99);
 }
 
-.div_title span:hover::before{
+.div_title span:hover::before {
     width: 100%;
 }
 
-.span{
+.span {
     width: 400px;
     position: relative;
     display: block;
 }
 
-.home:hover{
+.home:hover {
     font-size: 28px;
 }
 
-html{
+html {
     overflow: hidden;
 }
-.trianguloEsquerda{
+
+.trianguloEsquerda {
     width: 100%;
     height: 100%;
 }
 
-.video_div{
+.video_div {
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: -1000;
 }
-.video{
+
+.video {
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: cover;  
+    object-fit: cover;
 }
+
 .form_base {
     position: absolute;
     left: 3%;
@@ -180,7 +185,7 @@ html{
     margin: 0 auto;
     width: 400px;
     height: 100%;
-    
+
 }
 
 .title2 {
@@ -206,19 +211,19 @@ html{
     outline: none;
 }
 
-#user_ico{
+#user_ico {
     position: absolute;
     bottom: 15px;
     left: 5px;
 }
 
-#lock_ico{
+#lock_ico {
     position: absolute;
     bottom: 15px;
     left: 5px;
 }
 
-#sign_ico{
+#sign_ico {
     margin-right: 20px;
 }
 
@@ -241,4 +246,43 @@ html{
     color: #000;
 }
 
+@media screen and (max-width: 1600px) {
 
+
+    .div_title {
+        position: absolute;
+        top: 10%;
+    }
+
+
+    .div_title a {
+        font-family: "Cosi Azure";
+        font-size: 100px;
+        font-weight: 800;
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #fefefe00;
+        -webkit-text-stroke: 1px #FFF;
+        margin-right: 100%;
+    }
+
+    .div_title span::before {
+        width: 0;
+        color: #fff;
+        overflow: hidden;
+        position: absolute;
+        content: attr(data-text);
+        transition: all 1s cubic-bezier(0.84, 0, 0.08, 0.99);
+    }
+
+    .div_title span:hover::before {
+        width: 100%;
+    }
+
+    .span {
+        width: 400px;
+        position: relative;
+        display: block;
+    }
+
+}

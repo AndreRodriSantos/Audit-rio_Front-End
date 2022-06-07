@@ -9,10 +9,10 @@
     --white: #ffffff;
     --black: #212123;
     --blue: #2884B2;
-    --pink:#E12E6C;
+    --pink: #E12E6C;
     --red: #FF0000;
     --green: #56AF5A;
-    
+
 }
 
 .header {
@@ -60,7 +60,7 @@
     padding: 10px;
 }
 
-.justificativa{
+.justificativa {
     display: none;
 }
 
@@ -142,16 +142,16 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
-   
+
 }
 
-.title_calen_base{
+.title_calen_base {
     position: absolute;
     top: 5%;
     left: 5%;
 }
 
-.title_calendario{
+.title_calendario {
     font-size: 25px;
     font-weight: 600;
     color: var(--black);
@@ -159,7 +159,7 @@ a {
 
 /* LISTA USER */
 
-.users_lista{
+.users_lista {
     position: relative;
     left: 25px;
     bottom: -60px;
@@ -170,7 +170,7 @@ a {
     background-color: var(--white);
 }
 
-.btn_NC{
+.btn_NC {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -181,7 +181,7 @@ a {
     color: #2A92CF;
 }
 
-.title_User{
+.title_User {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -193,18 +193,18 @@ a {
     font-size: 18px;
 }
 
-.title_NC{
+.title_NC {
     font-size: 14px;
     margin-left: 5px;
 }
 
-.base_user{
+.base_user {
     position: relative;
     top: 60px;
     height: 100%;
 }
 
-.listaUsers{
+.listaUsers {
     position: relative;
     top: 8%;
     width: 90%;
@@ -214,7 +214,7 @@ a {
     overflow-x: hidden;
 }
 
-.header_user{
+.header_user {
     position: absolute;
     top: 0;
     width: 100%;
@@ -224,14 +224,14 @@ a {
     justify-content: center;
 }
 
-.title_menu{
+.title_menu {
     margin: 0 4.5%;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
 }
 
-.linha_menu{
+.linha_menu {
     position: absolute;
     width: 90%;
     height: 2px;
@@ -244,6 +244,7 @@ li {
     margin: 20px;
     list-style: none;
     text-transform: capitalize;
+    text-align: center;
 }
 
 .users_lista h1 {
@@ -297,7 +298,7 @@ li {
     align-items: center;
 }
 
-.title{
+.title {
     position: absolute;
     right: 10px;
     top: 0;
@@ -308,7 +309,8 @@ li {
     height: 50px;
 
 }
-.name{
+
+.name {
     font-size: 18px;
     color: var(--black);
 }
@@ -360,12 +362,12 @@ li {
     height: 50px;
 }
 
-.sub_name{
+.sub_name {
     font-size: 16px;
     color: var(--black);
 }
 
-.base_color_qnd1{
+.base_color_qnd1 {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -384,7 +386,7 @@ li {
     color: #fff;
 }
 
-.base_color_qnd2{
+.base_color_qnd2 {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -403,7 +405,7 @@ li {
     color: #fff;
 }
 
-.base_color_qnd3{
+.base_color_qnd3 {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -571,7 +573,7 @@ li {
     font-size: 40px;
 }
 
-.reservas{
+.reservas {
     position: relative;
     width: 100%;
     height: 80%;
@@ -588,20 +590,20 @@ li {
     border: none;
 }
 
-.base_lista{
+.base_lista {
     position: relative;
     width: 100%;
     height: 90%;
     border-radius: 20px;
-    margin: 2% 50px; 
+    margin: 2% 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--white);
-    
+
 }
 
-.postion_text_reserva{
+.postion_text_reserva {
     position: absolute;
     top: 2%;
     left: 5%;
@@ -612,17 +614,17 @@ li {
     justify-content: left;
 }
 
-.title_reserva{
+.title_reserva {
     font-size: 28px;
     font-weight: 500;
     color: var(--black);
 }
 
-.div_pesquisa{
-    position: absolute; 
-    height: 60px;
+.div_pesquisa {
+    position: absolute;
+    top: 0;
+    height: 86px;
     width: 30%;
-    top: 1%;
     right: 5%;
     display: flex;
     display: flex;
@@ -630,17 +632,17 @@ li {
     justify-content: right;
 }
 
-.base_pes{
+.base_pes {
     position: relative;
-    width: 80%; 
-    height: 50px;
-    border-radius: 50px;   
+    width: 80%;
+    height: 45px;
+    border-radius: 50px;
     background-color: var(--black);
     display: flex;
     align-items: center;
 }
 
-.pesquisa_reservas{
+.pesquisa_reservas {
     position: relative;
     left: 10%;
     width: 70%;
@@ -652,7 +654,7 @@ li {
     color: rgba(255, 255, 255, 0.63);
 }
 
-.pesquisa_reservas::placeholder{
+.pesquisa_reservas::placeholder {
     font-size: 20px;
     color: var(--white);
 }
@@ -661,10 +663,10 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
-  -webkit-appearance:none;
+    -webkit-appearance: none;
 }
 
-.lupa{
+.lupa {
     position: relative;
     background-color: transparent;
     border: none;
@@ -681,17 +683,17 @@ input[type="search"]::-webkit-search-results-decoration {
     transition: ease 0.2s;
 }
 
-.lupa:hover{
+.lupa:hover {
     font-size: 25px;
     transition: ease 0.2s;
 }
 
 .pesquisa_reservas:-webkit-autofill,
-.pesquisa_reservas:-webkit-autofill:hover, 
-.pesquisa_reservas:-webkit-autofill:focus{
-  -webkit-text-fill-color: rgb(255, 255, 255);
-  -webkit-box-shadow: 0 0 0px 1000px rgb(35, 35, 35) inset;
-  transition: background-color 5000s ease-in-out 0s;
+.pesquisa_reservas:-webkit-autofill:hover,
+.pesquisa_reservas:-webkit-autofill:focus {
+    -webkit-text-fill-color: rgb(255, 255, 255);
+    -webkit-box-shadow: 0 0 0px 1000px rgb(35, 35, 35) inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .lista {
@@ -706,7 +708,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .tabela_mes thead {
     height: 50px;
     background-color: #F5F6F8;
-  
+
 }
 
 .tabela_mes tr {
@@ -719,7 +721,7 @@ input[type="search"]::-webkit-search-results-decoration {
     color: var(--black);
     font-size: 30px;
     font-weight: 400;
-    column-span: 4; 
+    column-span: 4;
 }
 
 .mes {
@@ -741,7 +743,7 @@ input[type="search"]::-webkit-search-results-decoration {
     font-size: 15px;
 }
 
-td button{
+td button {
     width: 50px;
     background-color: transparent;
     border: none;
@@ -749,21 +751,102 @@ td button{
     font-size: 20px;
     cursor: pointer;
     font-weight: bold;
-    transition: 0.1s;  
+    transition: 0.1s;
 }
 
-td button:hover{
+td button:hover {
     font-size: 25px;
 }
 
-*::-webkit-scrollbar{
-    background-color:white;
+*::-webkit-scrollbar {
+    background-color: white;
     width: 10px;
 }
-*::-webkit-scrollbar-thumb{
+
+*::-webkit-scrollbar-thumb {
     background-color: rgb(192, 192, 192);
     border-radius: 10px;
-    
+
 }
 
-  
+@media screen and (max-width: 1600px) {
+
+    .principal {
+        width: 90%;
+        height: 550px;
+    }
+
+    .pesquisa_reservas::placeholder {
+        font-size: 18px;
+    }
+
+    .base_pes {
+        position: relative;
+        width: 100%;
+    }
+
+    .div_pesquisa {
+        height: 64px;
+    }
+
+    .pesquisa_reservas {
+        left: 10%;
+        width: 90%;
+    }
+
+    .base_lista {
+        height: 80%;
+    }
+
+    .calendario {
+        height: 200px;
+    }
+
+    .listaUsers {
+        height: 60%;
+    }
+
+    .title_User {
+        left: 10px;
+        font-size: 16px;
+    }
+
+    .btn_NC {
+        right: 10px;
+    }
+
+    .calendar {
+        transform: scale(0.5);
+    }
+
+    .header_lista {
+        left: 5%;
+        width: 90%;
+
+    }
+
+    .qnd_header {
+        width: 185px;
+        left: -1%;
+        margin-left: 10px;
+
+    }
+
+    .title {
+        position: relative;
+        top: -5%;
+        left: 20px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        height: 25px;
+    }
+
+    .name {
+        font-size: 16px;
+    }
+
+    .btn_header {
+        right: -2%;
+    }
+}

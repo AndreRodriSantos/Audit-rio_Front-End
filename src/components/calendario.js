@@ -91,10 +91,10 @@ function chamaCalendar() {
         }
         
         function limparClasse(){
-            const days = document.querySelectorAll(".calendar_day_hover")
-            for (let index = 0; index < days.length; index++) {
-                let day = days[index]
-                    day.classList.remove("day_selected")
+            let filhos = document.querySelectorAll('.calendar_days > *');
+            for (let index = 0; index < filhos.length; index++) {
+                let day = filhos[index]
+                day.classList.remove("day_selected")
             }
         }
 

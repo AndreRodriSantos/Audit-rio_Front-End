@@ -74,7 +74,6 @@
   background-color: var(--red);
   color: var(--white);
   border-radius: 25%;
-  
 }
 
 .calendar_days div.curr_date span {
@@ -170,5 +169,19 @@
   100% {
       transform: translateY(0);
       opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+
+  .calendar {
+
+    transform: scale(0.7);
+    margin: -60px 0 0 -30px;
+
+  }
+
+  .calendar_header {
+    width: 110%;
   }
 }

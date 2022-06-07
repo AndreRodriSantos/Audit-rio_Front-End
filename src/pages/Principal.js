@@ -69,9 +69,7 @@ function Principal() {
 
             <div className={styles.base_user}>
               <div className={styles.header_user}>
-                <span className={styles.title_menu}>titular da conta</span>
-                <span className={styles.title_menu}>dias / horas</span>
-                <span className={styles.title_menu}>sobre</span>
+                <span className={styles.title_menu}>Titular da conta</span>
                 {/* Linha */}
                 <span className={styles.linha_menu} ></span>
 

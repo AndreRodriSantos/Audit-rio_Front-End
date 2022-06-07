@@ -87,7 +87,7 @@ window.onload = function () {
     } else if (reloading == "reserva") {
         sucesso("Reserva Cadastrada com sucesso")
         sessionStorage.removeItem("reloading")
-    }else if(reloading == "delete"){
+    } else if (reloading == "delete") {
         sucesso("Usuário deletado com sucesso")
         sessionStorage.removeItem("reloading")
     }
@@ -231,7 +231,7 @@ export function listaUsuariosComuns() {
                 let btn_delete = document.createElement("button")
                 btn_delete.innerHTML = "X"
 
-                btn_delete.addEventListener('click',function(){
+                btn_delete.addEventListener('click', function () {
                     let id = usuario.id
                     console.log(id);
                     let url = ("http://localhost:8080/api/user/" + id);
@@ -270,7 +270,7 @@ export function sendingEmail(dataInicio, dataTermino) {
     let url = ("http://localhost:8080/api/email/sending-email");
     var body = {
         "ownerRef": nome,
-        "emailFrom": "auditoriocotia138@gmail.com",
+        "emailFrom": "auditoriocotia@yahoo.com",
         "emailTo": "andrerodrisantos15@gmail.com",
         "subject": "Reservar do Auditorio",
         "text": "Eu " + nome + " estou enviando esse email para solicitar uma reserva no auditorio, acesse esse link para o site http://localhost:3000/Principal, data inicio: " + dataInicio + " data termino: " + dataTermino
@@ -290,7 +290,7 @@ export function sendingEmailUser(justificativa, email) {
 
     var body = {
         "ownerRef": nome,
-        "emailFrom": "auditoriocotia138@gmail.com",
+        "emailFrom": "auditoriocotia@yahoo.com",
         "emailTo": email,
         "subject": "Reserva Recusada",
         "text": "Sua reserva foi recusada por " + nome + ", pois: " + justificativa
@@ -322,9 +322,9 @@ export function pegaUsuario() {
     }, 5);
 }
 
-export function pesquisaReserva(event) {
+export function pesquisaReserva() {
     const p = document.getElementById("pesquisa").value
-    history.push("/Pesquisa")
+
     setTimeout(() => {
         let reservas = fazGet("http://localhost:8080/api/reservation/findbyall/" + p)
         reservas = JSON.parse(reservas)
@@ -333,7 +333,6 @@ export function pesquisaReserva(event) {
 
         for (let i = 0; i < reservas.length; i++) {
             const reserva = reservas[i]
-
             const linha = document.createElement("li")
             linha.innerHTML = reserva.id + " " + reserva.titulo + " " + reserva.dataInicio
             lista.appendChild(linha)
@@ -511,19 +510,19 @@ export function listaReservas() {
                         })
 
                         recusar.addEventListener('click', function () {
-                            ConfirmacaoJust()
-                        })
-
-                        const enviar = document.getElementById("enviar")
-
-                        enviar.addEventListener('click', function () {
                             let id = reserva.id
-                            let url = ("http://localhost:8080/api/reservation/deleta/" + id)
-                            const just = document.getElementById("justificativa").value
-                            const email = usuario.email
-                            sendingEmailUser(just, email)
-                            fazDelete(url)
-                            refresh()
+                            ConfirmacaoJust()
+                            const enviar = document.getElementById("enviar")
+
+                            enviar.addEventListener('click', function () {
+                                console.log(id);
+                                let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                                const just = document.getElementById("justificativa").value
+                                const email = usuario.email
+                                sendingEmailUser(just, email)
+                                fazDelete(url)
+                                refresh()
+                            })
                         })
 
                         detalhes.addEventListener('click', function () {
@@ -565,21 +564,21 @@ export function listaReservas() {
                         divDrop.appendChild(detalhes)
 
                         recusar.addEventListener('click', function () {
-                            ConfirmacaoJust()
-                        })
-
-                        const enviar = document.getElementById("enviar")
-
-                        enviar.addEventListener('click', function () {
                             let id = reserva.id
-                            let url = ("http://localhost:8080/api/reservation/deleta/" + id)
-                            const just = document.getElementById("justificativa").value
-                            const email = usuario.email
-                            sendingEmailUser(just, email)
-                            fazDelete(url)
-                            refresh()
-                        })
+                            ConfirmacaoJust()
+                            const enviar = document.getElementById("enviar")
 
+                            enviar.addEventListener('click', function () {
+                                console.log(id);
+                                let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                                const just = document.getElementById("justificativa").value
+                                const email = usuario.email
+                                sendingEmailUser(just, email)
+                                fazDelete(url)
+                                refresh()
+                            })
+                        })
+                        
                         detalhes.addEventListener('click', function () {
                             ConfirmacaoDetalhes()
                             console.log(reserva);
