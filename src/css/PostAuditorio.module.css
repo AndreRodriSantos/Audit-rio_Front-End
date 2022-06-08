@@ -24,7 +24,7 @@
 }
 
 .insta{
-    position: absolute;
+    position: relative;
     top: 20%;
     width: 100%;
     height: 80%;
@@ -32,11 +32,13 @@
     overflow-x: hidden;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    text-align: center;
+    /* flex-wrap: wrap; */
+   
 }
 
 .insta img{
-    margin: 2% 0 2% 7%; 
+    border: 30px solid #fff;
     width: 450px;
     height: 450px;
     

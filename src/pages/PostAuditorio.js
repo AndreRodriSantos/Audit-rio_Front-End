@@ -16,7 +16,7 @@ export function PostAuditorio() {
             </div>
 
             <div id="insta" className={styles.insta}>
-
+        
             </div>
 
         </div>

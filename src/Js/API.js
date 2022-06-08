@@ -1,10 +1,9 @@
-import { createElement } from 'react'
 import { history } from './history'
 import $ from "jquery"
 import { erro, sucesso } from '../components/mensagem'
 import { isAuthenticatedAdmin } from './auth'
 import { ConfirmacaoDetalhes } from '../pages/Detalhes'
-import Grafico, { pegaParticipantes, state } from '../components/grafico'
+import { state } from '../components/grafico'
 import { ConfirmacaoJust } from '../pages/Justificativa'
 import { FecharConfirmacao } from '../pages/Certeza'
 
@@ -332,7 +331,7 @@ export function pesquisaReserva(event) {
 
         const lista = document.getElementById("listaPesquisaBody")
 
-        if (reservas.length > 1) {
+        if (reservas.length > 0) {
 
             const linhas = document.querySelectorAll("#listaPesquisaBody > *")
 
@@ -344,6 +343,9 @@ export function pesquisaReserva(event) {
 
             const divLista = document.getElementById("listaPesquisa")
             divLista.style.display = "flex"
+
+            const divListaPesquisa = document.getElementById("lista")
+            divListaPesquisa.style.display = "none"
 
             const x = document.getElementById("fecharPesquisa")
             x.style.visibility = "visible"
@@ -360,17 +362,108 @@ export function pesquisaReserva(event) {
                 titulo.innerHTML = reserva.titulo
                 linha.appendChild(titulo)
 
-                const data = document.createElement("td")
-                data.innerHTML = reserva.dataInicio
-                linha.appendChild(data)
+                const tdData = document.createElement("td")
+                tdData.style.color = "gray"
 
-                const hora = document.createElement("td")
-                hora.innerHTML = reserva.dataTermino
-                linha.appendChild(hora)
+                let dataInicio = (JSON.stringify(reserva.dataInicio))
+                let horaInicio = dataInicio.substring(12, 17)
+                dataInicio = dataInicio.substring(1, 11)
+
+                /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
+                dataInicio = dataFormatada(dataInicio)
+
+                let dataTermino = (JSON.stringify(reserva.dataTermino))
+                let horaTermino = dataTermino.substring(12, 17)
+                dataTermino = dataTermino.substring(1, 11)
+
+                /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
+                dataTermino = dataFormatada(dataTermino)
+
+                tdData.innerHTML = dataInicio + "  -  " + dataTermino
+                tdData.style.textAlign = "center"
+                linha.appendChild(tdData)
+
+                const tdHora =  document.createElement("td")
+                tdHora.innerHTML = horaInicio + "  -  " + horaTermino
+                tdHora.style.color = "gray"
+                linha.appendChild(tdHora)
 
                 const usuario = document.createElement("td")
                 usuario.innerHTML = reserva.usuario.nome
                 linha.appendChild(usuario)
+
+                lista.appendChild(linha)
+            }
+        }else {
+            erro("Não existem resultados para está pesquisa")
+        }
+
+    }, 5);
+}
+
+export function pesquisaUsuario(event) {
+    event.preventDefault();
+    const p = document.getElementById("pesquisa").value
+
+    setTimeout(() => {
+        let usuarios = fazGet("http://localhost:8080/api/user/findusuario/" + p)
+        usuarios = JSON.parse(usuarios)
+
+        const lista = document.getElementById("listaPesquisaBody")
+
+        if (usuarios.length > 0) {
+
+            const linhas = document.querySelectorAll("#listaPesquisaBody > *")
+
+            if(linhas.length > 0){
+                for (let l = 0; l < linhas.length; l++) {
+                    linhas[l].remove()
+                }
+            } 
+
+            const divLista = document.getElementById("listaPesquisa")
+            divLista.style.display = "flex"
+
+            const divListaPesquisa = document.getElementById("lista")
+            divListaPesquisa.style.display = "none"
+
+            const x = document.getElementById("fecharPesquisa")
+            x.style.visibility = "visible"
+
+            for (let i = 0; i < usuarios.length; i++) {
+                const usuario = usuarios[i]
+                const linha = document.createElement("tr")
+
+                const tdId = document.createElement("td")
+                tdId.innerHTML = usuario.id
+                linha.appendChild(tdId)
+
+                const tdNif = document.createElement("td")
+                tdNif.innerHTML = usuario.nif
+                linha.appendChild(tdNif)
+
+                const tdNome = document.createElement("td")
+                tdNome.innerHTML = usuario.nome
+                linha.appendChild(tdNome)
+
+                const tdEmail = document.createElement("td")
+                tdEmail.innerHTML = usuario.email
+                linha.appendChild(tdEmail)
+
+                const tdExcluir = document.createElement("td")
+                let btn_delete = document.createElement("button")
+                btn_delete.innerHTML = "X"
+
+                btn_delete.addEventListener('click', function () {
+                    let id = usuario.id
+                    console.log(id);
+                    let url = ("http://localhost:8080/api/user/" + id);
+                    fazDelete(url)
+                    refresh()
+                })
+
+                tdExcluir.appendChild(btn_delete)
+                linha.append(tdExcluir)
 
                 lista.appendChild(linha)
             }

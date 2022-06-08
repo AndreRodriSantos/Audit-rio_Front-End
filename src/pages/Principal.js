@@ -28,15 +28,7 @@ function Principal() {
           <a href="/Login" className={styles.cadastro} title="Login">
             <i className="fa-solid fa-reply"></i>
           </a>
-
-          <a href="/Verifica" className={styles.cadastro} title="Lista de Usuários">
-            <i className="fa-solid fa-list"></i>
-          </a>
-
-          {/* <a href="#" className={styles.help} title="Informações" onClick={img}>
-            <i className="fa-solid fa-ins"></i>
-          </a> */}
-
+           
           <a href="/Cadastro" className={styles.cadastro} title="Cadastro">
             <i className="fa-solid fa-user-plus"></i>
           </a>
@@ -76,7 +68,7 @@ function Principal() {
 
               </div>
               <ul id="listaUsuarios" className={styles.listaUsers} onLoad={pegaTodosUsuarios()}>
-
+              
               </ul>
             </div>
 
@@ -170,13 +162,13 @@ function Principal() {
 
             <div className={styles.btn_header}>
 
-              <button className={styles.btns_header} onClick={window.print} title="Imprimir">
+              <a className={styles.btns_header} href="/Verifica" title="Lista de Usuários">
                 <div className={styles.base_icons_btn}>
                   <div className={styles.base_color_btn1}>
-                    <i className="fa-solid fa-print"></i>
+                  <i className="fa-solid fa-list"></i>
                   </div>
                 </div>
-              </button>
+              </a>
 
               <a className={styles.btns_header} href="/PostAuditorio" title="Auditório Fotos">
                 <div className={styles.base_icons_btn}>

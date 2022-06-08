@@ -8,9 +8,6 @@ import Verifica from './pages/Verifica';
 import { PostAuditorio } from './pages/PostAuditorio';
 import { erro } from './components/mensagem';
 import Alterar from './pages/Alterar';
-import Pesquisa from './pages/Pesquisa';
-import Detalhes from './pages/Detalhes';
-import Justificativa from './pages/Justificativa';
 
 const PrivateRouteAdmin = (props) => {
     if (isAuthenticatedAdmin() === true) {
@@ -25,6 +22,7 @@ const PrivateRoute = (props) => {
     if (isAuthenticated() === true) {
         return <Route {...props} />
     } else {
+        erro("Precisa estar logado para acessar aquela página")
         return <Redirect to="/" push></Redirect>
     }
 }
@@ -35,10 +33,9 @@ export default function Routes() {
             <Switch>
                 <Route path='/' exact component={Login}></Route>
                 <Route path='/Login' component={Login}></Route>
-                <Route path='/Cadastro' component={Cadastro} />
+                <PrivateRouteAdmin path='/Cadastro' component={Cadastro} />
                 <Route path='/Principal' component={Principal} />
                 <Route path='/PostAuditorio' component={PostAuditorio} />
-                <Route path='/Pesquisa' component={Pesquisa} />
                 <PrivateRouteAdmin path='/Verifica' component={Verifica} />
                 <PrivateRoute path='/Alterar' component={Alterar} />
                 <Route path='*' exact component={Login}></Route>
