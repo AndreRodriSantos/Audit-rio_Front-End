@@ -322,21 +322,62 @@ export function pegaUsuario() {
     }, 5);
 }
 
-export function pesquisaReserva() {
+export function pesquisaReserva(event) {
+    event.preventDefault();
     const p = document.getElementById("pesquisa").value
 
     setTimeout(() => {
         let reservas = fazGet("http://localhost:8080/api/reservation/findbyall/" + p)
         reservas = JSON.parse(reservas)
 
-        const lista = document.getElementById("listaPesquisa")
+        const lista = document.getElementById("listaPesquisaBody")
 
-        for (let i = 0; i < reservas.length; i++) {
-            const reserva = reservas[i]
-            const linha = document.createElement("li")
-            linha.innerHTML = reserva.id + " " + reserva.titulo + " " + reserva.dataInicio
-            lista.appendChild(linha)
+        if (reservas.length > 1) {
+
+            const linhas = document.querySelectorAll("#listaPesquisaBody > *")
+
+            if(linhas.length > 0){
+                for (let l = 0; l < linhas.length; l++) {
+                    linhas[l].remove()
+                }
+            } 
+
+            const divLista = document.getElementById("listaPesquisa")
+            divLista.style.display = "flex"
+
+            const x = document.getElementById("fecharPesquisa")
+            x.style.visibility = "visible"
+
+            for (let i = 0; i < reservas.length; i++) {
+                const reserva = reservas[i]
+                const linha = document.createElement("tr")
+
+                const id = document.createElement("td")
+                id.innerHTML = reserva.id
+                linha.appendChild(id)
+
+                const titulo = document.createElement("td")
+                titulo.innerHTML = reserva.titulo
+                linha.appendChild(titulo)
+
+                const data = document.createElement("td")
+                data.innerHTML = reserva.dataInicio
+                linha.appendChild(data)
+
+                const hora = document.createElement("td")
+                hora.innerHTML = reserva.dataTermino
+                linha.appendChild(hora)
+
+                const usuario = document.createElement("td")
+                usuario.innerHTML = reserva.usuario.nome
+                linha.appendChild(usuario)
+
+                lista.appendChild(linha)
+            }
+        }else {
+            erro("Não existem resultados para está pesquisa")
         }
+
     }, 5);
 }
 
@@ -513,6 +554,7 @@ export function listaReservas() {
                             let id = reserva.id
                             ConfirmacaoJust()
                             const enviar = document.getElementById("enviar")
+                            document.getElementById("justificativa").focus();
 
                             enviar.addEventListener('click', function () {
                                 console.log(id);
@@ -567,6 +609,7 @@ export function listaReservas() {
                             let id = reserva.id
                             ConfirmacaoJust()
                             const enviar = document.getElementById("enviar")
+                            document.getElementById("justificativa").focus();
 
                             enviar.addEventListener('click', function () {
                                 console.log(id);
@@ -578,7 +621,7 @@ export function listaReservas() {
                                 refresh()
                             })
                         })
-                        
+
                         detalhes.addEventListener('click', function () {
                             ConfirmacaoDetalhes()
                             console.log(reserva);

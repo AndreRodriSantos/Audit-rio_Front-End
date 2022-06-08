@@ -24,7 +24,7 @@ function Verifica() {
                             <div className={styles.lupa}>
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>
-                            <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} />
+                            <input type="search" placeholder="Busca Pelo Usuário" className={styles.pesquisa_reservas} />
                         </div>
                     </div>
 

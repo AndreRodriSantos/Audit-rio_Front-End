@@ -5,8 +5,11 @@ export default function Certeza() {
     return (
         <div className={styles.principal} id="principalCert">
             <div className={styles.payment} id="paymentCert">
+                <div className={styles.div_title}>
+                    <span>Tem Certeza?</span>
+                </div>
                 <div className={styles.div_just}>
-                    <span>Tem certeza? Após criar a reserva ela não poderá ser alterada, somente excluída.</span>
+                    <span>Após criar a reserva ela não poderá ser alterada, somente excluída.</span>
                 </div>
                 <div className={styles.botoes}>
                     <button id="cancelar" onClick={FecharConfirmacao}>Cancelar</button>

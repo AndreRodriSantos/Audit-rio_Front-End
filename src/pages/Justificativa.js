@@ -20,10 +20,12 @@ export default function Justificativa() {
 
 export function ConfirmacaoJust() {
     const token = sessionStorage.getItem("token")
+    
     const payment = document.getElementById("paymentJust");
     const principal = document.getElementById("principalJust");
     payment.style.display = "flex"
     principal.style.display = "flex"
+    
 }
 
 function Fechar() {

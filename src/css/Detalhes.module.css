@@ -231,8 +231,6 @@ canvas{
     display: flex;
     align-items: center;
     color: #383838;
-    text-transform: capitalize;
     padding: 5px;
     font-weight: bold;
-
 }
