@@ -133,7 +133,6 @@ function chamaCalendar() {
             ++curr_year.value
             generateCalendar(curr_month.value, curr_year.value)
         }
-
     }, 5);
 }
 

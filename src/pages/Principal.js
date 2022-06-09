@@ -53,7 +53,7 @@ function Principal() {
           </div>
 
           <div className={styles.users_lista}>
-            <h3 className={styles.title_User}>Reservado por</h3>
+            <h3 className={styles.title_User}>Usuários</h3>
 
             <a className={styles.btn_NC} href="/Cadastro">
               <i className="fa-solid fa-circle-plus"></i>
@@ -61,15 +61,15 @@ function Principal() {
             </a>
 
             <div className={styles.base_user}>
-              <div className={styles.header_user}>
-                <span className={styles.title_menu}>Titular da conta</span>
-                {/* Linha */}
-                <span className={styles.linha_menu} ></span>
 
-              </div>
-              <ul id="listaUsuarios" className={styles.listaUsers} onLoad={pegaTodosUsuarios()}>
-              
-              </ul>
+              <table>
+                <thead className={styles.users_head}>
+                  <tr><th>Titular da conta</th><th>Tipo</th></tr>
+                </thead>
+                <tbody id="listaUsuarios" className={styles.listaUsers} onLoad={pegaTodosUsuarios()}>
+
+                </tbody>
+              </table>
             </div>
 
           </div>

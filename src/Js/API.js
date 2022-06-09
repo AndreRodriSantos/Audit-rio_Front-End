@@ -189,9 +189,14 @@ export function pegaTodosUsuarios() {
         if (lista.childElementCount == 0) {
             for (let i = 0; i < users.length; i++) {
                 let usuario = users[i];
-                let li = document.createElement("li")
-                li.innerHTML = usuario.nome
-                lista.appendChild(li)
+                const linha = document.createElement("tr")
+                let nome = document.createElement("td")
+                let tipo = document.createElement("td")
+                nome.innerHTML = usuario.nome
+                tipo.innerHTML = usuario.type
+                linha.appendChild(nome)
+                linha.appendChild(tipo)
+                lista.appendChild(linha)
             }
         }
     }, 1);
@@ -335,11 +340,11 @@ export function pesquisaReserva(event) {
 
             const linhas = document.querySelectorAll("#listaPesquisaBody > *")
 
-            if(linhas.length > 0){
+            if (linhas.length > 0) {
                 for (let l = 0; l < linhas.length; l++) {
                     linhas[l].remove()
                 }
-            } 
+            }
 
             const divLista = document.getElementById("listaPesquisa")
             divLista.style.display = "flex"
@@ -371,6 +376,7 @@ export function pesquisaReserva(event) {
 
                 /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
                 dataInicio = dataFormatada(dataInicio)
+                horaInicio = formataHora(horaInicio)
 
                 let dataTermino = (JSON.stringify(reserva.dataTermino))
                 let horaTermino = dataTermino.substring(12, 17)
@@ -378,12 +384,13 @@ export function pesquisaReserva(event) {
 
                 /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
                 dataTermino = dataFormatada(dataTermino)
+                horaTermino = formataHora(horaTermino)
 
                 tdData.innerHTML = dataInicio + "  -  " + dataTermino
                 tdData.style.textAlign = "center"
                 linha.appendChild(tdData)
 
-                const tdHora =  document.createElement("td")
+                const tdHora = document.createElement("td")
                 tdHora.innerHTML = horaInicio + "  -  " + horaTermino
                 tdHora.style.color = "gray"
                 linha.appendChild(tdHora)
@@ -394,7 +401,7 @@ export function pesquisaReserva(event) {
 
                 lista.appendChild(linha)
             }
-        }else {
+        } else {
             erro("Não existem resultados para está pesquisa")
         }
 
@@ -415,11 +422,11 @@ export function pesquisaUsuario(event) {
 
             const linhas = document.querySelectorAll("#listaPesquisaBody > *")
 
-            if(linhas.length > 0){
+            if (linhas.length > 0) {
                 for (let l = 0; l < linhas.length; l++) {
                     linhas[l].remove()
                 }
-            } 
+            }
 
             const divLista = document.getElementById("listaPesquisa")
             divLista.style.display = "flex"
@@ -467,7 +474,7 @@ export function pesquisaUsuario(event) {
 
                 lista.appendChild(linha)
             }
-        }else {
+        } else {
             erro("Não existem resultados para está pesquisa")
         }
 
@@ -536,6 +543,27 @@ export function refresh(r) {
     window.location.reload()
 }
 
+function formataHora(h) {
+
+    let hora = h.substring(0, 2) + ""
+    console.log(hora.length);
+    let minuto = h.substring(3, 6)
+    if(hora == "00"){
+        hora = "21"
+    }else if(hora == "01"){
+        hora = "22"
+    }else{
+        hora = hora - 3 + ""
+    }
+
+    if(hora.length == 1){
+        hora = "0" + hora
+    }
+    
+    let horaFormatada = hora + ":" + minuto
+    return horaFormatada
+}
+
 //Constrói a lista de Reservas
 export function listaReservas() {
     setTimeout(() => {
@@ -585,6 +613,7 @@ export function listaReservas() {
 
                 /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
                 dataInicio = dataFormatada(dataInicio)
+                horaInicio = formataHora(horaInicio)
 
                 let dataTermino = (JSON.stringify(reserva.dataTermino))
                 let horaTermino = dataTermino.substring(12, 17)
@@ -592,6 +621,7 @@ export function listaReservas() {
 
                 /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
                 dataTermino = dataFormatada(dataTermino)
+                horaTermino = formataHora(horaTermino)
 
                 tdData.innerHTML = dataInicio + "  -  " + dataTermino + "<br/>" + horaInicio + "  -  " + horaTermino
                 tdData.style.textAlign = "center"
