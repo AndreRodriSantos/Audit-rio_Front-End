@@ -206,6 +206,10 @@ a {
     height: 100%;
 }
 
+.base_user table{
+    width: 100%;
+}
+
 .listaUsers {
     position: relative;
     top: 8%;

@@ -26,6 +26,22 @@
     z-index: 10;
 }
 
+.paymentAlterar{
+    width: 800px;
+    height: 550px;
+    background-color: #fff;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: none;  
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 0 0 13px 2px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
 .close {
     width: 20px;
     height: 20px;

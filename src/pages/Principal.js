@@ -9,11 +9,13 @@ import Detalhes from "./Detalhes";
 import Justificativa from "./Justificativa";
 import Certeza from "./Certeza";
 import { FecharPesquisa, PesquisaReserva } from "../components/PesquisaReserva";
+import { AlteraReserva } from "../components/alteraReserva";
 
 function Principal() {
   return (
     <div className={styles.container}>
       <Reserva></Reserva>
+      <AlteraReserva></AlteraReserva>
       <Detalhes></Detalhes>
       <Justificativa></Justificativa>
       <Certeza></Certeza>

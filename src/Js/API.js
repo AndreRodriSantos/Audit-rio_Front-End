@@ -6,6 +6,7 @@ import { ConfirmacaoDetalhes } from '../pages/Detalhes'
 import { state } from '../components/grafico'
 import { ConfirmacaoJust } from '../pages/Justificativa'
 import { FecharConfirmacao } from '../pages/Certeza'
+import { ConfirmacaoAlterar } from '../components/alteraReserva'
 
 /* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
@@ -546,20 +547,19 @@ export function refresh(r) {
 function formataHora(h) {
 
     let hora = h.substring(0, 2) + ""
-    console.log(hora.length);
     let minuto = h.substring(3, 6)
-    if(hora == "00"){
+    if (hora == "00") {
         hora = "21"
-    }else if(hora == "01"){
+    } else if (hora == "01") {
         hora = "22"
-    }else{
+    } else {
         hora = hora - 3 + ""
     }
 
-    if(hora.length == 1){
+    if (hora.length == 1) {
         hora = "0" + hora
     }
-    
+
     let horaFormatada = hora + ":" + minuto
     return horaFormatada
 }
@@ -652,6 +652,7 @@ export function listaReservas() {
                 //Se for Admin
                 if (isAuthenticatedAdmin() == true) {
                     if (status.textContent == "ANALISE") {
+                        let id = sendId()
 
                         const confirmar = document.createElement("a")
                         confirmar.innerHTML = "Confirmar"
@@ -663,6 +664,36 @@ export function listaReservas() {
                         detalhes.innerHTML = "Detalhes"
 
                         divDrop.appendChild(confirmar)
+
+                        if (usuario.id == id) {
+                            const alterar = document.createElement("a")
+                            alterar.innerHTML = "Alterar"
+                            divDrop.appendChild(alterar)
+
+                            alterar.addEventListener('click', function () {
+                                let id = reserva.id
+
+                                let dataInicio = reserva.dataInicio
+                                let horaInicio = dataInicio.substring(11, 17)
+                                dataInicio = dataInicio.substring(0, 11)
+                                horaInicio = formataHora(horaInicio)
+                                dataInicio = dataInicio + horaInicio
+
+                                let dataTermino = reserva.dataTermino
+                                let horaTermino = dataTermino.substring(11, 17)
+                                dataTermino = dataTermino.substring(0, 11)
+                                horaTermino = formataHora(horaTermino)
+                                dataTermino = dataTermino + horaTermino
+
+                                document.getElementById("dataInicioAlterar").value = dataInicio
+                                document.getElementById("dataTerminoAlterar").value = dataTermino
+                                document.getElementById("participantesAlterar").innerHTML = reserva.participantes
+                                document.getElementById("myRangeAlterar").value = reserva.participantes
+
+                                ConfirmacaoAlterar()
+                            })
+                        }
+
                         divDrop.appendChild(recusar)
                         divDrop.appendChild(detalhes)
 
@@ -719,6 +750,7 @@ export function listaReservas() {
                         })
 
                     } else if (status.textContent == "CONFIRMADO") {
+                        let id = sendId()
                         const recusar = document.createElement("a")
                         recusar.innerHTML = "Cancelar"
 
@@ -726,6 +758,36 @@ export function listaReservas() {
                         detalhes.innerHTML = "Detalhes"
 
                         divDrop.appendChild(recusar)
+
+                        if (usuario.id == id) {
+                            const alterar = document.createElement("a")
+                            alterar.innerHTML = "Alterar"
+                            divDrop.appendChild(alterar)
+
+                            alterar.addEventListener('click', function () {
+                                let id = reserva.id
+
+                                let dataInicio = reserva.dataInicio
+                                let horaInicio = dataInicio.substring(11, 17)
+                                dataInicio = dataInicio.substring(0, 11)
+                                horaInicio = formataHora(horaInicio)
+                                dataInicio = dataInicio + horaInicio
+
+                                let dataTermino = reserva.dataTermino
+                                let horaTermino = dataTermino.substring(11, 17)
+                                dataTermino = dataTermino.substring(0, 11)
+                                horaTermino = formataHora(horaTermino)
+                                dataTermino = dataTermino + horaTermino
+
+                                document.getElementById("dataInicioAlterar").value = dataInicio
+                                document.getElementById("dataTerminoAlterar").value = dataTermino
+                                document.getElementById("participantesAlterar").innerHTML = reserva.participantes
+                                document.getElementById("myRangeAlterar").value = reserva.participantes
+
+                                ConfirmacaoAlterar()
+                            })
+                        }
+
                         divDrop.appendChild(detalhes)
 
                         recusar.addEventListener('click', function () {
@@ -813,10 +875,14 @@ export function listaReservas() {
                         const recusar = document.createElement("a")
                         recusar.innerHTML = "Cancelar"
 
+                        const alterar = document.createElement("a")
+                        alterar.innerHTML = "Alterar"
+
                         const detalhes = document.createElement("a")
                         detalhes.innerHTML = "Detalhes"
 
                         divDrop.appendChild(recusar)
+                        divDrop.appendChild(alterar)
                         divDrop.appendChild(detalhes)
 
                         recusar.addEventListener('click', function () {
@@ -830,6 +896,29 @@ export function listaReservas() {
                             } else {
                                 erro("Voce não pode excluir essa reserva");
                             }
+                        })
+
+                        alterar.addEventListener('click', function () {
+                            let id = reserva.id
+
+                            let dataInicio = reserva.dataInicio
+                            let horaInicio = dataInicio.substring(11, 17)
+                            dataInicio = dataInicio.substring(0, 11)
+                            horaInicio = formataHora(horaInicio)
+                            dataInicio = dataInicio + horaInicio
+
+                            let dataTermino = reserva.dataTermino
+                            let horaTermino = dataTermino.substring(11, 17)
+                            dataTermino = dataTermino.substring(0, 11)
+                            horaTermino = formataHora(horaTermino)
+                            dataTermino = dataTermino + horaTermino
+
+                            document.getElementById("dataInicioAlterar").value = dataInicio
+                            document.getElementById("dataTerminoAlterar").value = dataTermino
+                            document.getElementById("participantesAlterar").innerHTML = reserva.participantes
+                            document.getElementById("myRangeAlterar").value = reserva.participantes
+
+                            ConfirmacaoAlterar()
                         })
 
                         detalhes.addEventListener('click', function () {
@@ -986,8 +1075,18 @@ function confirmarReserva(id) {
     let reserva = pegaReserva(id)
 
     let dataInicio = reserva.dataInicio
-    let idUser = reserva.id
+    let horaInicio = dataInicio.substring(11, 17)
+    dataInicio = dataInicio.substring(0, 11)
+    horaInicio = formataHora(horaInicio)
+    dataInicio = dataInicio + horaInicio
+
     let dataTermino = reserva.dataTermino
+    let horaTermino = dataTermino.substring(11, 17)
+    dataTermino = dataTermino.substring(0, 11)
+    horaTermino = formataHora(horaTermino)
+    dataTermino = dataTermino + horaTermino
+
+    let idUser = reserva.id
     let titulo = reserva.titulo
     let descricao = reserva.descricao
     let usuario = reserva.usuario
@@ -1009,7 +1108,6 @@ function confirmarReserva(id) {
 
     fazPut(url, body)
 }
-
 
 //metodo de formatar uma data para formado br
 function dataFormatada(date) {
