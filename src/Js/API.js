@@ -114,6 +114,17 @@ export function fazPut(url, body) {
             }
         }
     }
+
+    const usuario = body.usuario
+    const idReserva =  usuario.id
+
+    if(url == "http://localhost:8080/api/reservation/" + idReserva){
+        if (request.status === 200) {
+            refresh("alteracao")
+        } else {
+            erro("Ocorreu um erro ao Alterar tente novamente")
+        }
+    }
 }
 
 export function fazDelete(url) {
@@ -685,10 +696,17 @@ export function listaReservas() {
                                 horaTermino = formataHora(horaTermino)
                                 dataTermino = dataTermino + horaTermino
 
+                                const usuario = reserva.usuario
+                                document.getElementById("idAlterar").value = id
                                 document.getElementById("dataInicioAlterar").value = dataInicio
                                 document.getElementById("dataTerminoAlterar").value = dataTermino
                                 document.getElementById("participantesAlterar").innerHTML = reserva.participantes
                                 document.getElementById("myRangeAlterar").value = reserva.participantes
+                                document.getElementById("tituloAlterar").value = reserva.titulo
+                                document.getElementById("usuarioAlterar").value = usuario.id
+                                document.getElementById("descricaoAlterar").value = reserva.descricao
+
+                                console.log(document.getElementById("usuarioAlterar").value);
 
                                 ConfirmacaoAlterar()
                             })
@@ -779,10 +797,16 @@ export function listaReservas() {
                                 horaTermino = formataHora(horaTermino)
                                 dataTermino = dataTermino + horaTermino
 
+                                const usuario = reserva.usuario
+
+                                document.getElementById("idAlterar").value = id
                                 document.getElementById("dataInicioAlterar").value = dataInicio
                                 document.getElementById("dataTerminoAlterar").value = dataTermino
                                 document.getElementById("participantesAlterar").innerHTML = reserva.participantes
                                 document.getElementById("myRangeAlterar").value = reserva.participantes
+                                document.getElementById("tituloAlterar").value = reserva.titulo
+                                document.getElementById("usuarioAlterar").value = usuario.id
+                                document.getElementById("descricaoAlterar").value = reserva.descricao
 
                                 ConfirmacaoAlterar()
                             })
@@ -913,10 +937,16 @@ export function listaReservas() {
                             horaTermino = formataHora(horaTermino)
                             dataTermino = dataTermino + horaTermino
 
+                            const usuario = reserva.usuario
+
+                            document.getElementById("idAlterar").value = id
                             document.getElementById("dataInicioAlterar").value = dataInicio
                             document.getElementById("dataTerminoAlterar").value = dataTermino
                             document.getElementById("participantesAlterar").innerHTML = reserva.participantes
                             document.getElementById("myRangeAlterar").value = reserva.participantes
+                            document.getElementById("tituloAlterar").value = reserva.titulo
+                            document.getElementById("usuarioAlterar").value = usuario.id
+                            document.getElementById("descricaoAlterar").value = reserva.descricao
 
                             ConfirmacaoAlterar()
                         })
@@ -1063,6 +1093,53 @@ export function pegaTypes() {
             }
         }
     }, 1);
+}
+
+/* setTimeout(() => {
+    const btnAlterar = document.getElementById("alterarReserva")
+    btnAlterar.addEventListener('submit', function () {
+        const id = document.getElementById("idAlterar").value
+        console.log(id);
+        alterarReserva(id)
+    })
+}, 5); */
+
+
+export function alterarReserva() {
+    let id =  document.getElementById("idAlterar").value
+
+    let url = ("http://localhost:8080/api/reservation/" + id)
+    let reserva = pegaReserva(id)
+    console.log(reserva);
+
+    let dataInicio = document.getElementById("dataInicioAlterar").value
+    console.log(dataInicio);
+
+    let dataTermino = document.getElementById("dataTerminoAlterar").value
+    console.log(dataTermino);
+
+    let titulo = document.getElementById("tituloAlterar").value
+    let descricao = document.getElementById("descricaoAlterar").value
+    let usuario = document.getElementById("usuarioAlterar").value
+    let status = reserva.status
+    let numParticipantes = document.getElementById("participantesAlterar").textContent
+
+    usuario = fazGet("http://localhost:8080/api/user/" + usuario)
+    usuario = JSON.parse(usuario)
+
+    let body = {
+        "usuario": usuario,
+        "status": status,
+        "participantes": numParticipantes,
+        "id": id,
+        "dataInicio": dataInicio,
+        "dataTermino": dataTermino,
+        "titulo": titulo,
+        "descricao": descricao
+    }
+
+    console.log(body);
+    fazPut(url, body)
 }
 
 function pegaReserva(id) {

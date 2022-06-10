@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../css/Style_Reserva.module.css"
 import { erro } from "../components/mensagem";
+import { alterarReserva } from "../Js/API";
 
 export function AlteraReserva() {
     return (
@@ -20,8 +21,12 @@ export function AlteraReserva() {
                     </div>
 
                     <div className="formAdmin">
-                        <form>
-                            <input type="hidden" name="id" ></input>
+                        <form id="alterarReserva" onSubmit={alterarReserva}>
+                            <input type="hidden" id="idAlterar" name="id" ></input>
+                            <input type="hidden" id="descricaoAlterar" name="descricao" ></input>
+                            <input type="hidden" id="tituloAlterar" name="titulo"></input>
+                            <input type="hidden" id="usuarioAlterar" name="usuario"></input>
+
 
                             <div className={styles.datas}>
 
