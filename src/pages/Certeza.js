@@ -13,7 +13,7 @@ export default function Certeza() {
                 </div>
                 <div className={styles.botoes}>
                     <button id="cancelar" onClick={FecharConfirmacao}>Cancelar</button>
-                    <button onClick={reserva}>Confirmar</button>
+                    <button>Confirmar</button>
                 </div>
             </div>
         </div>

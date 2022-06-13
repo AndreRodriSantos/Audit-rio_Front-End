@@ -1,5 +1,6 @@
 import { React, Component } from "react"
 import '../css/Calendar.css'
+import { fazGet, reserva } from "../Js/API";
 
 export default class Calendario extends Component {
     render() {
@@ -54,13 +55,14 @@ function chamaCalendar() {
 
             let calendar_days = calendar.querySelector('.calendar_days')
             let calendar_header_year = calendar.querySelector('#year')
+            document.querySelector('#month_picker').setAttribute("data_month", month + 1)
 
             let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
             calendar_days.innerHTML = ''
 
             let currDate = new Date()
-            if (!month) month = currDate.getMonth()
+            if (month == null) month = currDate.getMonth()
             if (!year) year = currDate.getFullYear()
 
             let curr_month = `${month_names[month]}`
@@ -76,21 +78,69 @@ function chamaCalendar() {
                 if (i >= first_day.getDay()) {
                     day.classList.add('calendar_day_hover')
                     day.innerHTML = i - first_day.getDay() + 1
+                    day.innerHTML += `<span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>`
 
                     if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
                         day.classList.add('curr_date')
                         day.title = "Hoje"
                     }
                 }
+
                 day.addEventListener('click', function () {
                     limparClasse()
                     day.classList.add("day_selected")
                 })
+
                 calendar_days.appendChild(day)
             }
+
+            let reservas = fazGet("http://localhost:8080/api/reservation")
+            reservas = JSON.parse(reservas)
+
+            let dias = document.querySelectorAll('.calendar_days > *');
+            for (let index = 0; index < dias.length; index++) {
+                let dia = dias[index]
+
+                let mes = document.getElementById("month_picker").getAttribute("data_month")
+                let ano = document.getElementById("year").textContent
+                let diaFormat = dia.textContent.replaceAll(" ", "") + ""
+                diaFormat = diaFormat.replaceAll("\n", "")
+
+                let data = diaFormat + "-" + mes + "-" + ano
+
+                for (let i = 0; i < reservas.length; i++) {
+                    let reserva = reservas[i]
+                    let dataInicio = (JSON.stringify(reserva.dataInicio))
+                    dataInicio = dataInicio.substring(0, 11)
+                    dataInicio = dataFormatadaCalendar(dataInicio)
+                    
+
+                    if(dataInicio == data){
+                        dia.style.background = "green"
+                        dia.style.color = "white"
+                        dia.title = reserva.titulo
+                        
+                    }
+                }
+            }
+
+            
         }
-        
-        function limparClasse(){
+
+        function dataFormatadaCalendar(date) {
+            var data = new Date(date),
+                dia = data.getDate(),
+                dia = (dia).toString(),
+                mes = (data.getMonth() + 1).toString(),
+                anoF = data.getFullYear();
+            return dia + "-" + mes + "-" + anoF;
+        }
+
+
+        function limparClasse() {
             let filhos = document.querySelectorAll('.calendar_days > *');
             for (let index = 0; index < filhos.length; index++) {
                 let day = filhos[index]
@@ -104,6 +154,7 @@ function chamaCalendar() {
             let month = document.createElement('div')
             month.innerHTML = `<div data_month="${index}">${e}</div>`
             month.querySelector('div').onclick = () => {
+                document.querySelector('#month_picker').setAttribute("data_month", index + 1)
                 month_list.classList.remove('show')
                 curr_month.value = index
                 generateCalendar(index, curr_year.value)

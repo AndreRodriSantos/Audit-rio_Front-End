@@ -7,6 +7,7 @@ import { state } from '../components/grafico'
 import { ConfirmacaoJust } from '../pages/Justificativa'
 import { FecharConfirmacao } from '../pages/Certeza'
 import { ConfirmacaoAlterar } from '../components/alteraReserva'
+import { setSelectionRange } from '@testing-library/user-event/dist/utils'
 
 /* FAZ POST ---- Manda um objeto Json para que o back-end possa consumir*/
 function fazPost(url, body) {
@@ -93,6 +94,7 @@ window.onload = function () {
     }
 }
 
+
 export function fazPut(url, body) {
     let request = new XMLHttpRequest()
     request.open("PUT", url, true)
@@ -115,14 +117,17 @@ export function fazPut(url, body) {
         }
     }
 
-    const usuario = body.usuario
-    const idReserva =  usuario.id
+    let idReserva = document.getElementById("idAlterar").value
 
-    if(url == "http://localhost:8080/api/reservation/" + idReserva){
-        if (request.status === 200) {
-            refresh("alteracao")
-        } else {
-            erro("Ocorreu um erro ao Alterar tente novamente")
+    if (url == "http://localhost:8080/api/reservation/" + idReserva) {
+        request.onload = function () {
+            if (request.status === 200) {
+                refresh("alteracao")
+            } else if(request.status == 406 || request.status == 400) {
+                erro("Erro: Data ou horário inválido, verifique os campos ")
+            }else{
+                erro("Ocorreu um erro ao Alterar tente novamente")
+            }
         }
     }
 }
@@ -312,6 +317,42 @@ export function sendingEmailUser(justificativa, email) {
         "text": "Sua reserva foi recusada por " + nome + ", pois: " + justificativa
     }
     fazPost(url, body)
+}
+
+export function sendingEmailConfirmada(email) {
+    let idUser = sendId()
+    let data = fazGet("http://localhost:8080/api/user/" + idUser)
+    console.log(data)
+    console.log(email)
+    let user = JSON.parse(data)
+    let nome = user.nome
+    let url = ("http://localhost:8080/api/email/sending-email");
+
+    var body = {
+        "ownerRef": nome,
+        "emailFrom": "auditorio_senai@yahoo.com",
+        "emailTo": email,
+        "subject": "Reserva Confirmada",
+        "text": "Sua Reserva Foi Confirmada por " + nome
+    }
+    fazPost(url, body)
+}
+export function sendingEmailAlterar(id) {
+    let idUser = sendId()
+    let data = fazGet("http://localhost:8080/api/user/" + idUser)
+    console.log(data);
+    let user = JSON.parse(data)
+    let nome = user.nome
+    let url = ("http://localhost:8080/api/email/sending-email");
+    var body = {
+        "ownerRef": nome,
+        "emailFrom": "auditorio_senai@yahoo.com",
+        "emailTo": "brunoviniciuslink7@gmail.com",
+        "subject": "Alterar Reservar do Auditorio",
+        "text": "Eu " + nome + " estou enviando esse email para alterar uma reserva de numero " + id + " no auditório , acesse esse link para o site http://localhost:3000/Principal, para confirmar a Reserva"
+    }
+    fazPost(url, body)
+    console.log("Nome " + nome);
 }
 
 export function pegaUsuario() {
@@ -522,7 +563,6 @@ export function alteraUsuario(event) {
 //Salva uma Reserva
 export function reserva(event) {
     event.preventDefault();
-    FecharConfirmacao();
     let url = ("http://localhost:8080/api/reservation/save");
     let titulo = document.getElementById("titulo").value
     let descricao = document.getElementById("descricao").value
@@ -709,6 +749,7 @@ export function listaReservas() {
                                 console.log(document.getElementById("usuarioAlterar").value);
 
                                 ConfirmacaoAlterar()
+                                sendingEmailAlterar(id)
                             })
                         }
 
@@ -719,6 +760,7 @@ export function listaReservas() {
                             let id = reserva.id
                             console.log(id);
                             confirmarReserva(id)
+                            sendingEmailConfirmada(usuario.email)
                             refresh()
                         })
 
@@ -809,6 +851,7 @@ export function listaReservas() {
                                 document.getElementById("descricaoAlterar").value = reserva.descricao
 
                                 ConfirmacaoAlterar()
+                                sendingEmailAlterar(id)
                             })
                         }
 
@@ -949,6 +992,7 @@ export function listaReservas() {
                             document.getElementById("descricaoAlterar").value = reserva.descricao
 
                             ConfirmacaoAlterar()
+                            sendingEmailAlterar(id)
                         })
 
                         detalhes.addEventListener('click', function () {
@@ -1105,8 +1149,9 @@ export function pegaTypes() {
 }, 5); */
 
 
-export function alterarReserva() {
-    let id =  document.getElementById("idAlterar").value
+export function alterarReserva(event) {
+    event.preventDefault()
+    let id = document.getElementById("idAlterar").value
 
     let url = ("http://localhost:8080/api/reservation/" + id)
     let reserva = pegaReserva(id)

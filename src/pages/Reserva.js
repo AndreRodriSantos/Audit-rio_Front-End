@@ -22,7 +22,7 @@ export function Reserva() {
                     </div>
 
                     <div className="formAdmin">
-                        <form onSubmit={confirmacaoCert}>
+                        <form onSubmit={reserva}>
                             <input type="hidden" name="id" ></input>
 
                             <div className={styles.datas}>
@@ -59,7 +59,7 @@ export function Reserva() {
                                 <p className={styles.value}><span id="participantes"></span></p>
                             </div>
 
-                            <button type="submit" className={styles.btn} onClick={Confirmacao}>Criar</button>
+                            <button type="submit" className={styles.btn}>Criar</button>
 
                         </form>
 
