@@ -51,8 +51,18 @@ function fazPost(url, body) {
                 token = token.replace('"}', "")
                 console.log(token)
                 sessionStorage.setItem("token", token)
-                history.push("/Principal")
-                refresh("login")
+                let id = sendId()
+
+                let usuario = fazGet("http://localhost:8080/api/user/" + id)
+                usuario = JSON.parse(usuario)
+
+                if (usuario.contLogin == 1) {
+                    history.push("/Help")
+                    refresh("login")
+                } else {
+                    history.push("/Principal")
+                    refresh("login")
+                }
 
             } else if (request.status == 401) {
                 erro("Erro: Senha ou NIF incorretos")
@@ -123,9 +133,9 @@ export function fazPut(url, body) {
         request.onload = function () {
             if (request.status === 200) {
                 refresh("alteracao")
-            } else if(request.status == 406 || request.status == 400) {
+            } else if (request.status == 406 || request.status == 400) {
                 erro("Erro: Data ou horário inválido, verifique os campos ")
-            }else{
+            } else {
                 erro("Ocorreu um erro ao Alterar tente novamente")
             }
         }
@@ -595,7 +605,7 @@ export function refresh(r) {
     window.location.reload()
 }
 
-function formataHora(h) {
+export function formataHora(h) {
 
     let hora = h.substring(0, 2) + ""
     let minuto = h.substring(3, 6)
@@ -1232,7 +1242,7 @@ function confirmarReserva(id) {
 }
 
 //metodo de formatar uma data para formado br
-function dataFormatada(date) {
+export function dataFormatada(date) {
     var data = new Date(date),
         dia = data.getDate(),
         dia = (dia + 1).toString(),

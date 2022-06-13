@@ -71,7 +71,7 @@
 
 .calendar_days div.curr_date,
 .calendar_days div.curr_date:hover {
-  background-color: var(--red);
+  background-color: gray;
   color: var(--white);
   border-radius: 25%;
 }

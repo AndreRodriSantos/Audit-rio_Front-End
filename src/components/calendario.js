@@ -1,6 +1,8 @@
 import { React, Component } from "react"
 import '../css/Calendar.css'
-import { fazGet, reserva } from "../Js/API";
+import { dataFormatada, fazGet, formataHora, reserva } from "../Js/API";
+import { ConfirmacaoDetalhes } from "../pages/Detalhes";
+import { state } from "./grafico";
 
 export default class Calendario extends Component {
     render() {
@@ -116,18 +118,99 @@ function chamaCalendar() {
                     let dataInicio = (JSON.stringify(reserva.dataInicio))
                     dataInicio = dataInicio.substring(0, 11)
                     dataInicio = dataFormatadaCalendar(dataInicio)
-                    
 
-                    if(dataInicio == data){
-                        dia.style.background = "green"
-                        dia.style.color = "white"
-                        dia.title = reserva.titulo
-                        
+                    let usuario = reserva.usuario
+
+                    if (dataInicio == data) {
+                        if (reserva.status === "CONFIRMADO") {
+                            dia.style.backgroundColor = "#56AF5A"
+                            dia.style.color = "#fff"
+                        } else if (reserva.status === "FINALIZADO") {
+                            dia.style.backgroundColor = "red"
+                            dia.style.color = "#fff"
+                        } else {
+                            dia.style.backgroundColor = "#fccd32"
+                        }
+
+                        dia.addEventListener("dblclick", function () {
+                            let dataInicio = reserva.dataInicio + ""
+                            dataInicio = dataInicio.substring(0, 10)
+                            console.log(dataInicio);
+
+                            const lista = document.getElementById("listaPesquisaBody")
+                            const linhas = document.querySelectorAll("#listaPesquisaBody > *")
+
+                            let reservasCalendario = fazGet("http://localhost:8080/api/reservation/findbyall/" + dataInicio)
+                            reservasCalendario = JSON.parse(reservasCalendario)
+                            console.log(reservas);
+
+                            if (linhas.length > 0) {
+                                for (let l = 0; l < linhas.length; l++) {
+                                    linhas[l].remove()
+                                }
+                            }
+
+                            const divLista = document.getElementById("listaPesquisa")
+                            divLista.style.display = "flex"
+
+                            const divListaPesquisa = document.getElementById("lista")
+                            divListaPesquisa.style.display = "none"
+
+                            const x = document.getElementById("fecharPesquisa")
+                            x.style.visibility = "visible"
+
+                            for (let i = 0; i < reservasCalendario.length; i++) {
+                                const reserva = reservasCalendario[i]
+                                const linha = document.createElement("tr")
+
+                                const id = document.createElement("td")
+                                id.innerHTML = reserva.id
+                                linha.appendChild(id)
+
+                                const titulo = document.createElement("td")
+                                titulo.innerHTML = reserva.titulo
+                                linha.appendChild(titulo)
+
+                                const tdData = document.createElement("td")
+                                tdData.style.color = "gray"
+
+                                let dataInicio = (JSON.stringify(reserva.dataInicio))
+                                let horaInicio = dataInicio.substring(12, 17)
+                                dataInicio = dataInicio.substring(1, 11)
+
+                                /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
+                                dataInicio = dataFormatada(dataInicio)
+                                horaInicio = formataHora(horaInicio)
+
+                                let dataTermino = (JSON.stringify(reserva.dataTermino))
+                                let horaTermino = dataTermino.substring(12, 17)
+                                dataTermino = dataTermino.substring(1, 11)
+
+                                /* CHAMANDO O METODO DE FORMATAR JÁ ATRIBUINDO A VARIAVEL*/
+                                dataTermino = dataFormatada(dataTermino)
+                                horaTermino = formataHora(horaTermino)
+
+                                tdData.innerHTML = dataInicio + "  -  " + dataTermino
+                                tdData.style.textAlign = "center"
+                                linha.appendChild(tdData)
+
+                                const tdHora = document.createElement("td")
+                                tdHora.innerHTML = horaInicio + "  -  " + horaTermino
+                                tdHora.style.color = "gray"
+                                linha.appendChild(tdHora)
+
+                                const usuario = document.createElement("td")
+                                usuario.innerHTML = reserva.usuario.nome
+                                linha.appendChild(usuario)
+
+                                lista.appendChild(linha)
+                            }
+                        })
                     }
                 }
             }
 
-            
+
         }
 
         function dataFormatadaCalendar(date) {

@@ -39,6 +39,10 @@ function Principal() {
             <i className="fa-solid fa-user-edit"></i>
           </a>
 
+          <a href="/Help" className={styles.alterar} title="Alterar">
+            <i className="fa-solid fa-info"></i>
+          </a>
+
           <a className={styles.log_off} onClick={logout} title="Sair">
             <i className="fa-solid fa-person-walking-arrow-right"></i>
           </a>
