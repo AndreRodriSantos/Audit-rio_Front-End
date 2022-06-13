@@ -220,7 +220,7 @@ export function Help() {
                                 <span className='descricao_end'>
                                     Agora você esta preparado
                                     para utilizar nosso sistema
-                                    se divirda.
+                                    divirta-se.
                                 </span>
                             </div>
 

@@ -39,7 +39,7 @@ function Principal() {
             <i className="fa-solid fa-user-edit"></i>
           </a>
 
-          <a href="/Help" className={styles.alterar} title="Alterar">
+          <a href="/Help" className={styles.alterar} title="Tutorial">
             <i className="fa-solid fa-info"></i>
           </a>
 

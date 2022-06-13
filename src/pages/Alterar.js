@@ -1,4 +1,4 @@
-import cadastraUsuario, { alteraUsuario, pegaTypes, pegaUsuario, sendId } from "../Js/API";
+import cadastraUsuario, { alteraUsuario, excluirUsuario, fazDelete, pegaTypes, pegaUsuario, sendId } from "../Js/API";
 import styles from '../css/Style_Alterar.module.css';
 import auditorio from '../IMG/video-auditorio.mp4'
 import user from '../IMG/UserImg.png'
@@ -30,6 +30,7 @@ export default function Alterar() {
                         <input type="hidden" name="id" id="id"></input>
                         <input type="hidden" name="nif" id="nif"></input>
                         <input type="hidden" name="type" id="tipo"></input>
+                        <input type="hidden" name="contLogin" id="contLogin"></input>
 
                         <div className={styles.User}>
                             <input type="text" placeholder="NOME" name="nome" required id="nome" className={styles.input} /><br />
@@ -48,27 +49,12 @@ export default function Alterar() {
 
                         <button className={styles.btn} type="submit"> <i className="fa-solid fa-user-edit" id={styles.sign_ico}></i>Alterar</button>
 
+                        <button className={styles.btn} type="button" onClick={excluirUsuario}> <i className="fa-solid fa-trash" id={styles.sign_ico}></i>Excluir</button>
+
                     </form>
                 </div>
             </div>
         </div>
     )
-}
-
-function fileChange() {
-    let photo = document.getElementById('imgPhoto');
-    let file = document.getElementById('fileImage');
-
-    if (file.files.length <= 0) {
-        return;
-    }
-
-    let reader = new FileReader();
-
-    reader.onload = () => {
-        photo.src = reader.result;
-    }
-
-    reader.readAsDataURL(file.files[0]);
 }
 

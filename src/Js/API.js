@@ -101,6 +101,9 @@ window.onload = function () {
     } else if (reloading == "delete") {
         sucesso("Usuário deletado com sucesso")
         sessionStorage.removeItem("reloading")
+    }else if(reloading == "delete"){
+        sucesso("Exclusão feita com sucesso")
+        sessionStorage.removeItem("reloading")
     }
 }
 
@@ -149,6 +152,18 @@ export function fazDelete(url) {
     request.setRequestHeader("Access-Control-Allow-Methods", "DELETE")
     request.setRequestHeader('Access-Control-Allow-Origin', '*');
     request.send()
+
+    let id = sendId()
+
+    if (url == "http://localhost:8080/api/user/" + id) {
+        request.onload = function () {
+            if(request.status == 200){
+                logout()
+            }else{
+                erro("Não foi possível excluir, você possuí reservas cadastradas")
+            }
+        }
+    }
 }
 
 /*  USUÁRIO */
@@ -279,6 +294,12 @@ export function listaUsuariosComuns() {
     }, 1);
 }
 
+export function excluirUsuario() {
+    let id = document.getElementById("id").value
+    let url = ("http://localhost:8080/api/user/" + id);
+    fazDelete(url)
+}
+
 //pega o tipo do usuario logado
 export function decodaToken() {
     let data = fazGet("http://localhost:8080/api/user/decodaToken")
@@ -376,8 +397,10 @@ export function pegaUsuario() {
         let inputNome = document.getElementById("nome")
         let inputEmail = document.getElementById("email")
         let inputNif = document.getElementById("nif")
+        let inputCont = document.getElementById("contLogin")
 
         inputType.value = usuario.type
+        inputCont.value = usuario.contLogin
         inputId.value = usuario.id
         inputNome.value = usuario.nome
         inputEmail.value = usuario.email
@@ -554,15 +577,18 @@ export function alteraUsuario(event) {
     let senha = document.getElementById("senha").value
     let nif = document.getElementById("nif").value
     let tipo = document.getElementById("tipo").value
+    let contLogin = document.getElementById("contLogin").value
 
     var body = {
         "id": id,
         "nif": nif,
         "nome": nome,
         "email": email,
+        "contLogin": contLogin,
         "senha": senha,
         "type": tipo
     }
+
     console.log(body);
     fazPut(url, body)
 }
