@@ -13,8 +13,9 @@ export class PesquisaReserva extends Component {
                             <th>Id</th>
                             <th>Titulo</th>
                             <th>Data</th>
-                            <th>Hora</th>
                             <th>Usuario</th>
+                            <th>Status</th>
+                            <th>Opções</th>
                         </tr>
                     </thead>
                     <tbody id="listaPesquisaBody" className={styles.body}>

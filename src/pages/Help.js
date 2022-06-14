@@ -22,9 +22,9 @@ export function Help() {
             </div>
 
             <div className='base_list'>
-                <ul class="base__help">
-                    <li class="base__informacao">
-                        <div class="informacao0" >
+                <ul className="base__help">
+                    <li className="base__informacao">
+                        <div className="informacao0" >
                             <div className='card_imagem'>
                                 <img src={perguntaD} />
                             </div>
@@ -32,7 +32,7 @@ export function Help() {
 
                                 <div className='card_posicao'>
                                     <div className='card_numero'>
-                                        <i class="fa-solid fa-1"></i>
+                                        <i className="fa-solid fa-1"></i>
                                     </div>
                                     <div className='text_numero'>
                                         <span className='text_posicao'>Primeiro Passo</span>
@@ -48,15 +48,15 @@ export function Help() {
                             </div>
 
                         </div>
-                        <div class="base__img0" >
-                            <div class="img0" >
+                        <div className="base__img0" >
+                            <div className="img0" >
                                 <video src={PrimeiroPasso} autoPlay loop className="video" muted type="mp4" />
                             </div>
                         </div>
                     </li>
 
-                    <li class="base__informacao" >
-                        <div class="informacao2" >
+                    <li className="base__informacao" >
+                        <div className="informacao2" >
                             <div className='card_imagem'>
                                 <img src={perguntaE} />
                             </div>
@@ -64,7 +64,7 @@ export function Help() {
 
                                 <div className='card_posicao'>
                                     <div className='card_numero'>
-                                        <i class="fa-solid fa-2"></i>
+                                        <i className="fa-solid fa-2"></i>
                                     </div>
                                     <div className='text_numero'>
                                         <span className='text_posicao'>Segundo Passo</span>
@@ -79,15 +79,15 @@ export function Help() {
                                 </div>
                             </div>
                         </div>
-                        <div class="base__img2" >
-                            <div class="img2" >
+                        <div className="base__img2" >
+                            <div className="img2" >
                                 <video src={SegundoPasso} autoPlay loop className="video2" muted type="mp4" />
                             </div>
                         </div>
                     </li>
 
-                    <li class="base__informacao">
-                        <div class="informacao" >
+                    <li className="base__informacao">
+                        <div className="informacao" >
                             <div className='card_imagem'>
                                 <img src={perguntaD} />
                             </div>
@@ -95,7 +95,7 @@ export function Help() {
 
                                 <div className='card_posicao'>
                                     <div className='card_numero'>
-                                        <i class="fa-solid fa-3"></i>
+                                        <i className="fa-solid fa-3"></i>
                                     </div>
                                     <div className='text_numero'>
                                         <span className='text_posicao'>Terceiro Passo</span>
@@ -110,15 +110,15 @@ export function Help() {
                                 </div>
                             </div>
                         </div>
-                        <div class="base__img" >
-                            <div class="img" >
+                        <div className="base__img" >
+                            <div className="img" >
                                 <video src={TerceiroPasso} autoPlay loop className="video1" muted type="mp4" />
                             </div>
                         </div>
                     </li>
 
-                    <li class="base__informacao">
-                        <div class="informacao2" >
+                    <li className="base__informacao">
+                        <div className="informacao2" >
                             <div className='card_imagem'>
                                 <img src={perguntaE} />
                             </div>
@@ -126,7 +126,7 @@ export function Help() {
 
                                 <div className='card_posicao'>
                                     <div className='card_numero'>
-                                        <i class="fa-solid fa-4"></i>
+                                        <i className="fa-solid fa-4"></i>
                                     </div>
                                     <div className='text_numero'>
                                         <span className='text_posicao'>Quarto Passo</span>
@@ -142,15 +142,15 @@ export function Help() {
                                 </div>
                             </div>
                         </div>
-                        <div class="base__img2" >
-                            <div class="img2" >
+                        <div className="base__img2" >
+                            <div className="img2" >
                                 <video src={QuartoPasso} autoPlay loop className="video2" muted type="mp4" />
                             </div>
                         </div>
                     </li>
 
-                    <li class="base__informacao">
-                        <div class="informacao" >
+                    <li className="base__informacao">
+                        <div className="informacao" >
                             <div className='card_imagem'>
                                 <img src={perguntaD} />
                             </div>
@@ -158,7 +158,7 @@ export function Help() {
 
                                 <div className='card_posicao'>
                                     <div className='card_numero'>
-                                        <i class="fa-solid fa-5"></i>
+                                        <i className="fa-solid fa-5"></i>
                                     </div>
                                     <div className='text_numero'>
                                         <span className='text_posicao'>Quinto Passo</span>
@@ -173,15 +173,15 @@ export function Help() {
                                 </div>
                             </div>
                         </div>
-                        <div class="base__img" >
-                            <div class="img" >
+                        <div className="base__img" >
+                            <div className="img" >
                                 <video src={QuintoPasso} autoPlay loop className="video1" muted type="mp4" />
                             </div>
                         </div>
                     </li>
 
-                    <li class="base__informacao">
-                        <div class="informacao2" >
+                    <li className="base__informacao">
+                        <div className="informacao2" >
                             <div className='card_imagem'>
                                 <img src={perguntaE} />
                             </div>
@@ -189,7 +189,7 @@ export function Help() {
 
                                 <div className='card_posicao'>
                                     <div className='card_numero'>
-                                        <i class="fa-solid fa-6"></i>
+                                        <i className="fa-solid fa-6"></i>
                                     </div>
                                     <div className='text_numero'>
                                         <span className='text_posicao'>Sexto Passo</span>
@@ -203,15 +203,15 @@ export function Help() {
                                 </div>
                             </div>
                         </div>
-                        <div class="base__img2" >
-                            <div class="img2" >
+                        <div className="base__img2" >
+                            <div className="img2" >
                                 <video src={QuintoPasso} autoPlay loop className="video2" muted type="mp4" />
                             </div>
                         </div>
                     </li>
                     <li className="Tuturial_Final">
                         <div className="Circle_Final">
-                            <div class="Circle">
+                            <div className="Circle">
                                 <img className="Circle_Img" src={perguntaF} />
                             </div>
                         </div>
@@ -225,7 +225,7 @@ export function Help() {
                             </div>
 
                             <a href='/Principal' className="btn_final">
-                                <i class="fa-solid fa-reply"></i>
+                                <i className="fa-solid fa-reply"></i>
                                 <span className='votar_bnt'>Voltar</span>
                             </a>
 

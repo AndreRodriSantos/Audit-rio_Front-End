@@ -1,8 +1,15 @@
 import { React, Component } from "react"
 import '../css/Calendar.css'
-import { dataFormatada, fazGet, formataHora, reserva } from "../Js/API";
+import { dataFormatada, fazGet, formataHora, sendingEmailAlterar, sendingEmailConfirmada, sendingEmailUser } from "../Js/API";
 import { ConfirmacaoDetalhes } from "../pages/Detalhes";
-import { state } from "./grafico";
+import { ConfirmacaoJust } from "../pages/Justificativa";
+import { ConfirmacaoAlterar } from "./alteraReserva";
+import { erro } from '../components/mensagem'
+import { isAuthenticatedAdmin } from '../Js/auth'
+import { state } from '../components/grafico'
+import { refresh, sendId, fazDelete, confirmarReserva } from "../Js/API";
+import { Confirmacao } from "../pages/Reserva";
+import { dblClick } from "@testing-library/user-event/dist/click";
 
 export default class Calendario extends Component {
     render() {
@@ -135,14 +142,14 @@ function chamaCalendar() {
                         dia.addEventListener("dblclick", function () {
                             let dataInicio = reserva.dataInicio + ""
                             dataInicio = dataInicio.substring(0, 10)
-                            console.log(dataInicio);
+
 
                             const lista = document.getElementById("listaPesquisaBody")
                             const linhas = document.querySelectorAll("#listaPesquisaBody > *")
 
                             let reservasCalendario = fazGet("http://localhost:8080/api/reservation/findbyall/" + dataInicio)
                             reservasCalendario = JSON.parse(reservasCalendario)
-                            console.log(reservas);
+
 
                             if (linhas.length > 0) {
                                 for (let l = 0; l < linhas.length; l++) {
@@ -194,14 +201,405 @@ function chamaCalendar() {
                                 tdData.style.textAlign = "center"
                                 linha.appendChild(tdData)
 
-                                const tdHora = document.createElement("td")
-                                tdHora.innerHTML = horaInicio + "  -  " + horaTermino
-                                tdHora.style.color = "gray"
-                                linha.appendChild(tdHora)
+                                const user = document.createElement("td")
+                                user.innerHTML = reserva.usuario.nome
+                                linha.appendChild(user)
 
-                                const usuario = document.createElement("td")
-                                usuario.innerHTML = reserva.usuario.nome
-                                linha.appendChild(usuario)
+                                //status da reserva
+                                const status = document.createElement("td")
+                                status.innerHTML = reserva.status
+                                status.style.fontWeight = "bold"
+                                status.style.textAlign = "center"
+
+                                if (reserva.status === "CONFIRMADO") {
+                                    status.style.color = "#56AF5A"
+                                    status.title = "Confirmado"
+                                } else if (reserva.status === "FINALIZADO") {
+                                    status.style.color = "tomato"
+                                    status.title = "Finalizado"
+                                } else {
+                                    status.style.color = "#fccd32"
+                                    status.title = "Em análise"
+                                }
+
+                                linha.appendChild(status)
+
+                                const tdBtn = document.createElement("td")
+                                tdBtn.classList.add("dropdown")
+                                const dropBtn = document.createElement("button")
+                                dropBtn.classList.add("dropbtn")
+                                const divDrop = document.createElement("div")
+                                divDrop.classList.add("dropdown_content")
+                                dropBtn.innerHTML = "..."
+
+                                const usuario = reserva.usuario
+
+
+                                //Se for Admin
+                                if (isAuthenticatedAdmin() == true) {
+                                    if (status.textContent == "ANALISE") {
+                                        let id = sendId()
+
+                                        const confirmar = document.createElement("a")
+                                        confirmar.innerHTML = "Confirmar"
+
+                                        const recusar = document.createElement("a")
+                                        recusar.innerHTML = "Recusar"
+
+                                        const detalhes = document.createElement("a")
+                                        detalhes.innerHTML = "Detalhes"
+
+                                        divDrop.appendChild(confirmar)
+
+                                        if (usuario.id == id) {
+                                            const alterar = document.createElement("a")
+                                            alterar.innerHTML = "Alterar"
+                                            divDrop.appendChild(alterar)
+
+                                            alterar.addEventListener('click', function () {
+                                                let id = reserva.id
+
+                                                let dataInicio = reserva.dataInicio
+                                                let horaInicio = dataInicio.substring(11, 17)
+                                                dataInicio = dataInicio.substring(0, 11)
+                                                horaInicio = formataHora(horaInicio)
+                                                dataInicio = dataInicio + horaInicio
+
+                                                let dataTermino = reserva.dataTermino
+                                                let horaTermino = dataTermino.substring(11, 17)
+                                                dataTermino = dataTermino.substring(0, 11)
+                                                horaTermino = formataHora(horaTermino)
+                                                dataTermino = dataTermino + horaTermino
+
+                                                const usuario = reserva.usuario
+                                                document.getElementById("idAlterar").value = id
+                                                document.getElementById("dataInicioAlterar").value = dataInicio
+                                                document.getElementById("dataTerminoAlterar").value = dataTermino
+                                                document.getElementById("participantesAlterar").innerHTML = reserva.participantes
+                                                document.getElementById("myRangeAlterar").value = reserva.participantes
+                                                document.getElementById("tituloAlterar").value = reserva.titulo
+                                                document.getElementById("usuarioAlterar").value = usuario.id
+                                                document.getElementById("descricaoAlterar").value = reserva.descricao
+
+                                                console.log(document.getElementById("usuarioAlterar").value);
+
+                                                ConfirmacaoAlterar()
+                                                sendingEmailAlterar(id)
+                                            })
+                                        }
+
+                                        divDrop.appendChild(recusar)
+                                        divDrop.appendChild(detalhes)
+
+                                        confirmar.addEventListener('click', function () {
+                                            let id = reserva.id
+
+                                            confirmarReserva(id)
+                                            sendingEmailConfirmada(usuario.email)
+                                            refresh()
+                                        })
+
+                                        recusar.addEventListener('click', function () {
+                                            let id = reserva.id
+                                            ConfirmacaoJust()
+                                            const enviar = document.getElementById("enviar")
+                                            document.getElementById("justificativa").focus();
+
+                                            enviar.addEventListener('click', function () {
+
+                                                let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                                                const just = document.getElementById("justificativa").value
+                                                const email = usuario.email
+                                                sendingEmailUser(just, email)
+                                                fazDelete(url)
+                                                refresh()
+                                            })
+                                        })
+
+                                        detalhes.addEventListener('click', function () {
+                                            ConfirmacaoDetalhes()
+
+                                            document.getElementById("id").innerHTML = reserva.id
+                                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                                            document.getElementById("nome").innerHTML = usuario.nome
+                                            document.getElementById("email").innerHTML = usuario.email
+                                            let status = document.getElementById("status")
+                                            status.style.cursor = "pointer"
+
+                                            if (reserva.status === "CONFIRMADO") {
+                                                status.style.backgroundColor = "#56AF5A"
+                                                status.title = "Confirmado"
+                                            } else if (reserva.status === "FINALIZADO") {
+                                                status.style.backgroundColor = "tomato"
+                                                status.title = "Finalizado"
+                                            } else {
+                                                status.style.backgroundColor = "#fccd32"
+                                                status.title = "Em análise"
+                                            }
+                                            let disponivel = 118 - parseInt(reserva.participantes)
+                                            state.datasets[0].data[0] = disponivel;
+                                            state.datasets[0].data[1] = parseInt(reserva.participantes);
+                                        })
+
+                                    } else if (status.textContent == "CONFIRMADO") {
+                                        let id = sendId()
+                                        const recusar = document.createElement("a")
+                                        recusar.innerHTML = "Cancelar"
+
+                                        const detalhes = document.createElement("a")
+                                        detalhes.innerHTML = "Detalhes"
+
+                                        divDrop.appendChild(recusar)
+
+                                        if (usuario.id == id) {
+                                            const alterar = document.createElement("a")
+                                            alterar.innerHTML = "Alterar"
+                                            divDrop.appendChild(alterar)
+
+                                            alterar.addEventListener('click', function () {
+                                                let id = reserva.id
+
+                                                let dataInicio = reserva.dataInicio
+                                                let horaInicio = dataInicio.substring(11, 17)
+                                                dataInicio = dataInicio.substring(0, 11)
+                                                horaInicio = formataHora(horaInicio)
+                                                dataInicio = dataInicio + horaInicio
+
+                                                let dataTermino = reserva.dataTermino
+                                                let horaTermino = dataTermino.substring(11, 17)
+                                                dataTermino = dataTermino.substring(0, 11)
+                                                horaTermino = formataHora(horaTermino)
+                                                dataTermino = dataTermino + horaTermino
+
+                                                const usuario = reserva.usuario
+
+                                                document.getElementById("idAlterar").value = id
+                                                document.getElementById("dataInicioAlterar").value = dataInicio
+                                                document.getElementById("dataTerminoAlterar").value = dataTermino
+                                                document.getElementById("participantesAlterar").innerHTML = reserva.participantes
+                                                document.getElementById("myRangeAlterar").value = reserva.participantes
+                                                document.getElementById("tituloAlterar").value = reserva.titulo
+                                                document.getElementById("usuarioAlterar").value = usuario.id
+                                                document.getElementById("descricaoAlterar").value = reserva.descricao
+
+                                                ConfirmacaoAlterar()
+                                                sendingEmailAlterar(id)
+                                            })
+                                        }
+
+                                        divDrop.appendChild(detalhes)
+
+                                        recusar.addEventListener('click', function () {
+                                            let id = reserva.id
+                                            ConfirmacaoJust()
+                                            const enviar = document.getElementById("enviar")
+                                            document.getElementById("justificativa").focus();
+
+                                            enviar.addEventListener('click', function () {
+
+                                                let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                                                const just = document.getElementById("justificativa").value
+                                                const email = usuario.email
+                                                sendingEmailUser(just, email)
+                                                fazDelete(url)
+                                                refresh()
+                                            })
+                                        })
+
+                                        detalhes.addEventListener('click', function () {
+                                            ConfirmacaoDetalhes()
+
+                                            document.getElementById("id").innerHTML = reserva.id
+                                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                                            document.getElementById("nome").innerHTML = usuario.nome
+                                            document.getElementById("email").innerHTML = usuario.email
+                                            let status = document.getElementById("status")
+                                            status.style.cursor = "pointer"
+
+                                            if (reserva.status === "CONFIRMADO") {
+                                                status.style.backgroundColor = "#56AF5A"
+                                                status.title = "Confirmado"
+                                            } else if (reserva.status === "FINALIZADO") {
+                                                status.style.backgroundColor = "tomato"
+                                                status.title = "Finalizado"
+                                            } else {
+                                                status.style.backgroundColor = "#fccd32"
+                                                status.title = "Em análise"
+                                            }
+                                            let disponivel = 118 - parseInt(reserva.participantes)
+                                            state.datasets[0].data[0] = disponivel;
+                                            state.datasets[0].data[1] = parseInt(reserva.participantes);
+                                        })
+
+                                    } else {
+                                        const detalhes = document.createElement("a")
+                                        detalhes.innerHTML = "Detalhes"
+                                        divDrop.appendChild(detalhes)
+
+                                        detalhes.addEventListener('click', function () {
+                                            ConfirmacaoDetalhes()
+
+                                            document.getElementById("id").innerHTML = reserva.id
+                                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                                            document.getElementById("nome").innerHTML = usuario.nome
+                                            document.getElementById("email").innerHTML = usuario.email
+                                            let status = document.getElementById("status")
+                                            status.style.cursor = "pointer"
+
+                                            if (reserva.status === "CONFIRMADO") {
+                                                status.style.backgroundColor = "#56AF5A"
+                                                status.title = "Confirmado"
+                                            } else if (reserva.status === "FINALIZADO") {
+                                                status.style.backgroundColor = "tomato"
+                                                status.title = "Finalizado"
+                                            } else {
+                                                status.style.backgroundColor = "#fccd32"
+                                                status.title = "Em análise"
+                                            }
+                                            let disponivel = 118 - parseInt(reserva.participantes)
+                                            state.datasets[0].data[0] = disponivel;
+                                            state.datasets[0].data[1] = parseInt(reserva.participantes);
+                                        })
+                                    }
+                                }//Se não, é comum ou usuario não logado
+                                else {
+                                    let id = sendId()
+                                    if (usuario.id == id) {
+                                        const recusar = document.createElement("a")
+                                        recusar.innerHTML = "Cancelar"
+
+                                        const alterar = document.createElement("a")
+                                        alterar.innerHTML = "Alterar"
+
+                                        const detalhes = document.createElement("a")
+                                        detalhes.innerHTML = "Detalhes"
+
+                                        divDrop.appendChild(recusar)
+                                        divDrop.appendChild(alterar)
+                                        divDrop.appendChild(detalhes)
+
+                                        recusar.addEventListener('click', function () {
+                                            let id = reserva.id
+                                            let url = ("http://localhost:8080/api/reservation/deleta/" + id)
+                                            let idIgual = reserva.usuario.id
+                                            let userId = sendId()
+                                            if (userId == idIgual) {
+                                                fazDelete(url)
+                                                refresh()
+                                            } else {
+                                                erro("Voce não pode excluir essa reserva");
+                                            }
+                                        })
+
+                                        alterar.addEventListener('click', function () {
+                                            let id = reserva.id
+
+                                            let dataInicio = reserva.dataInicio
+                                            let horaInicio = dataInicio.substring(11, 17)
+                                            dataInicio = dataInicio.substring(0, 11)
+                                            horaInicio = formataHora(horaInicio)
+                                            dataInicio = dataInicio + horaInicio
+
+                                            let dataTermino = reserva.dataTermino
+                                            let horaTermino = dataTermino.substring(11, 17)
+                                            dataTermino = dataTermino.substring(0, 11)
+                                            horaTermino = formataHora(horaTermino)
+                                            dataTermino = dataTermino + horaTermino
+
+                                            const usuario = reserva.usuario
+
+                                            document.getElementById("idAlterar").value = id
+                                            document.getElementById("dataInicioAlterar").value = dataInicio
+                                            document.getElementById("dataTerminoAlterar").value = dataTermino
+                                            document.getElementById("participantesAlterar").innerHTML = reserva.participantes
+                                            document.getElementById("myRangeAlterar").value = reserva.participantes
+                                            document.getElementById("tituloAlterar").value = reserva.titulo
+                                            document.getElementById("usuarioAlterar").value = usuario.id
+                                            document.getElementById("descricaoAlterar").value = reserva.descricao
+
+                                            ConfirmacaoAlterar()
+                                            sendingEmailAlterar(id)
+                                        })
+
+                                        detalhes.addEventListener('click', function () {
+                                            ConfirmacaoDetalhes()
+
+                                            document.getElementById("id").innerHTML = reserva.id
+                                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                                            document.getElementById("nome").innerHTML = usuario.nome
+                                            document.getElementById("email").innerHTML = usuario.email
+                                            let status = document.getElementById("status")
+                                            status.style.cursor = "pointer"
+
+                                            if (reserva.status === "CONFIRMADO") {
+                                                status.style.backgroundColor = "#56AF5A"
+                                                status.title = "Confirmado"
+                                            } else if (reserva.status === "FINALIZADO") {
+                                                status.style.backgroundColor = "tomato"
+                                                status.title = "Finalizado"
+                                            } else {
+                                                status.style.backgroundColor = "#fccd32"
+                                                status.title = "Em análise"
+                                            }
+                                            let disponivel = 118 - parseInt(reserva.participantes)
+                                            state.datasets[0].data[0] = disponivel;
+                                            state.datasets[0].data[1] = parseInt(reserva.participantes);
+                                        })
+
+                                    } else {
+                                        const detalhes = document.createElement("a")
+                                        detalhes.innerHTML = "Detalhes"
+
+                                        divDrop.appendChild(detalhes)
+
+                                        detalhes.addEventListener('click', function () {
+                                            ConfirmacaoDetalhes()
+
+                                            document.getElementById("id").innerHTML = reserva.id
+                                            document.getElementById("titulo_reserva").innerHTML = reserva.titulo
+                                            document.getElementById("data").innerHTML = dataInicio + " - " + dataTermino
+                                            document.getElementById("hora").innerHTML = horaInicio + " - " + horaTermino
+                                            document.getElementById("descricao_reserva").innerHTML = reserva.descricao
+                                            document.getElementById("nome").innerHTML = usuario.nome
+                                            document.getElementById("email").innerHTML = usuario.email
+                                            let status = document.getElementById("status")
+                                            status.style.cursor = "pointer"
+
+                                            if (reserva.status === "CONFIRMADO") {
+                                                status.style.backgroundColor = "#56AF5A"
+                                                status.title = "Confirmado"
+                                            } else if (reserva.status === "FINALIZADO") {
+                                                status.style.backgroundColor = "tomato"
+                                                status.title = "Finalizado"
+                                            } else {
+                                                status.style.backgroundColor = "#fccd32"
+                                                status.title = "Em análise"
+                                            }
+                                            let disponivel = 118 - parseInt(reserva.participantes)
+                                            state.datasets[0].data[0] = disponivel;
+                                            state.datasets[0].data[1] = parseInt(reserva.participantes);
+                                        })
+                                    }
+                                }
+
+                                tdBtn.appendChild(dropBtn)
+                                tdBtn.appendChild(divDrop)
+                                tdBtn.appendChild(dropBtn)
+                                linha.appendChild(tdBtn)
+
+                                lista.appendChild(linha)
 
                                 lista.appendChild(linha)
                             }

@@ -26,7 +26,7 @@ function Verifica() {
                             <button type="submit" className={styles.lupa}>
                                 <i className="fa-solid fa-magnifying-glass"></i>
                             </button>
-                            <input type="search" placeholder="Busca Pelo Usuario" className={styles.pesquisa_reservas} id="pesquisa" />
+                            <input type="search" placeholder="Busca Pelo Usuario" className={styles.pesquisa_reservas} id="pesquisa" required/>
                         </div>
                         <span className={styles.fecharPesquisa} id="fecharPesquisa" onClick={refresh}>X</span>
                     </form>

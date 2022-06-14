@@ -1,5 +1,5 @@
 import styles from "../css/Certeza.module.css"
-import { reserva } from "../Js/API";
+import { excluirUsuario, reserva } from "../Js/API";
 
 export default function Certeza() {
     return (
@@ -9,11 +9,11 @@ export default function Certeza() {
                     <span>Tem Certeza?</span>
                 </div>
                 <div className={styles.div_just}>
-                    <span>Após criar a reserva ela não poderá ser alterada, somente excluída.</span>
+                    <span>Após a confirmação sua conta será completamente excluida dos registros, caso você não possua nenhuma reserva cadastrada</span>
                 </div>
                 <div className={styles.botoes}>
                     <button id="cancelar" onClick={FecharConfirmacao}>Cancelar</button>
-                    <button>Confirmar</button>
+                    <button onClick={excluirUsuario}>Confirmar</button>
                 </div>
             </div>
         </div>
@@ -31,7 +31,6 @@ export function confirmacaoCert(event) {
 export function FecharConfirmacao() {
     const payment = document.getElementById("paymentCert");
     const principal = document.getElementById("principalCert");
-    document.getElementById("justificativa").innerHTML = ""
     payment.style.display = "none"
     principal.style.display = "none"
 }

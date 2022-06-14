@@ -30,7 +30,7 @@ function Principal() {
           <a href="/Login" className={styles.cadastro} title="Login">
             <i className="fa-solid fa-reply"></i>
           </a>
-           
+
           <a href="/Cadastro" className={styles.cadastro} title="Cadastro">
             <i className="fa-solid fa-user-plus"></i>
           </a>
@@ -171,7 +171,7 @@ function Principal() {
               <a className={styles.btns_header} href="/Verifica" title="Lista de Usuários">
                 <div className={styles.base_icons_btn}>
                   <div className={styles.base_color_btn1}>
-                  <i className="fa-solid fa-list"></i>
+                    <i className="fa-solid fa-list"></i>
                   </div>
                 </div>
               </a>
@@ -206,16 +206,17 @@ function Principal() {
 
               <form onSubmit={pesquisaReserva} className={styles.div_pesquisa}>
                 <div className={styles.base_pes}>
-                  <button type="submit" className={styles.lupa}>
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                  <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} id="pesquisa" />
+                    <button type="submit" className={styles.lupa}>
+                      <i className="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                  
+                  <input type="search" placeholder="Busca Pela Reserva" className={styles.pesquisa_reservas} id="pesquisa" required/>
                 </div>
                 <span className={styles.fecharPesquisa} id="fecharPesquisa" onClick={FecharPesquisa}>X</span>
               </form>
 
               <div className={styles.div_lista}>
-              <PesquisaReserva></PesquisaReserva>
+                <PesquisaReserva></PesquisaReserva>
                 <ul className={styles.lista} id="lista" onLoad={listaReservas()}>
                   <table id="Janeiro" className={styles.tabela_mes}>
 

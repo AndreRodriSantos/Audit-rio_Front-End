@@ -2,10 +2,12 @@ import cadastraUsuario, { alteraUsuario, excluirUsuario, fazDelete, pegaTypes, p
 import styles from '../css/Style_Alterar.module.css';
 import auditorio from '../IMG/video-auditorio.mp4'
 import user from '../IMG/UserImg.png'
+import Certeza, { confirmacaoCert } from "./Certeza";
 
 export default function Alterar() {
     return (
         <div className={styles.principal} onLoad={pegaUsuario()}>
+            <Certeza/>
 
             <div className={styles.video_div}>
                 <video src={auditorio} autoPlay loop className={styles.video} muted type="mp4" />
@@ -49,7 +51,7 @@ export default function Alterar() {
 
                         <button className={styles.btn} type="submit"> <i className="fa-solid fa-user-edit" id={styles.sign_ico}></i>Alterar</button>
 
-                        <button className={styles.btn} type="button" onClick={excluirUsuario}> <i className="fa-solid fa-trash" id={styles.sign_ico}></i>Excluir</button>
+                        <button className={styles.btn} type="button" onClick={confirmacaoCert}> <i className="fa-solid fa-trash" id={styles.sign_ico}></i>Excluir</button>
 
                     </form>
                 </div>
